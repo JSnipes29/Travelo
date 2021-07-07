@@ -75,7 +75,7 @@ App that lets users build maps of their favorite places and share it. Can also s
 <img src="wireframe_drawing.png" width=600>
 
 ### [BONUS] Digital Wireframes & Mockups
-
+<img src="wireframe_pic.png" width=600>
 ### [BONUS] Interactive Prototype
 
 ## Schema 
