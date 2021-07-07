@@ -45,8 +45,9 @@ App that lets users build maps of their favorite places and share it. Can also s
 * Login 
 * Register - User signs up or logs into their account
    * Upon Download/Reopening of the application, the user is prompted to log in to gain access to their profile information to be properly matched with another person. 
-* Discover Screen - Users can scroll through a list of trips and pictures of other users
-* Room Screen - Users can communicate with other users to plan a trip and post it to the feed
+* Discover Screen - Users can scroll through a list of trips, planned trips, and pictures of other users
+* New Trip - Users can communicate with other users to plan a trip and post it to the feed
+* Current Trips - Users can look at there planned trips. Can complete them.
 * Profile Screen 
    * Allows user to upload a photo and fill in information that is interesting to them and others
 * Settings Screen
@@ -56,14 +57,16 @@ App that lets users build maps of their favorite places and share it. Can also s
 
 **Tab Navigation** (Tab to Screen)
 
-* Room Selection
+* Home
+* New Trip
+* Current Trips
 * Profile
 * Setting
 
 **Flow Navigation** (Screen to Screen)
 
 * Forced Log-in -> Account creation if no log in is available
-* Room Selection -> Jumps to room with other users
+* New Trip -> Create or join a room with others to make a new roadtrip
 * Profile -> Text field to be modified. 
 * Settings -> Toggle settings
 
