@@ -33,11 +33,13 @@ App that lets users build maps of their favorite places and share it. Can also s
 * User can view feed to see other trips of other users
 * Users can join a room with friends to plan a roadtrip
 * User can create a room for friends
+* User can click location on map and see recommended places to visit near the location
 
 **Optional Nice-to-have Stories**
 
 * [fill in your optional user stories here]
 * DM other users
+* Chat with other users in a room
 * Follow other users
 
 ### 2. Screen Archetypes
