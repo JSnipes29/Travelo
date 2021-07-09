@@ -11,10 +11,8 @@ Original App Design Project - README
 
 ## Overview
 ### Description
-[Description of your app]
 App that lets users build maps of their favorite places and share it. Can also share roadtrips
 ### App Evaluation
-[Evaluation of your app across the following attributes]
 - **Category:** Traveling/ Social Media
 - **Mobile:** Mobile-first experience
 - **Story:** A mix of traveling and social media. Users can share there experiences with other users while also using the app to plan new roadtrips with family and friends
@@ -28,7 +26,6 @@ App that lets users build maps of their favorite places and share it. Can also s
 
 **Required Must-have Stories**
 
-* [fill in your required user stories here]
 * Users can log in
 * User can view feed to see other trips of other users
 * Users can join a room with friends to plan a roadtrip
@@ -37,7 +34,6 @@ App that lets users build maps of their favorite places and share it. Can also s
 
 **Optional Nice-to-have Stories**
 
-* [fill in your optional user stories here]
 * DM other users
 * Chat with other users in a room
 * Follow other users
@@ -73,19 +69,92 @@ App that lets users build maps of their favorite places and share it. Can also s
 * Settings -> Toggle settings
 
 ## Wireframes
-[Add picture of your hand sketched wireframes in this section]
 <img src="wireframe_drawing.png" width=600>
 
-### [BONUS] Digital Wireframes & Mockups
+### Digital Wireframes & Mockups
 <img src="wireframe_pic.png" width=600>
-### [BONUS] Interactive Prototype
+### Interactive Prototype
 <img src='wireframe.gif' title='Wireframe Walkthrough' width='' alt='Wireframe Walkthrough' />
 
 ## Schema 
-[This section will be completed in Unit 9]
+
 ### Models
-[Add table of models]
+#### Post
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique id for the user post (default field) |
+   | author        | Pointer to User| creator of post |
+   | map           | Object   | JSON object that contains details of map user posted |
+   | caption       | String   | image caption by author |
+   | commentsCount | Number   | number of comments that has been posted to an image |
+   | likesCount    | Number   | number of likes for the post |
+   | createdAt     | DateTime | date when post is created (default field) |
+   
+   #### User
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | userId        | String   | unique id for the user (default field) |
+   | username      | String   | unique username for the user (default field) |
+   | password      | String   | password for the user (default field) |
+   | profileImage  | File     | profile image of user |
+   | createdAt     | DateTime | date when user is created (default field) |
+   | inbox         | Object   | JSON object that contains details of the user's inbox |
+   
+   #### Room
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String | unique id for the room (default field) |
+   | users         | Array  | Array of the users in the room |
+   | owner         | Pointer to User | owner of room |
+   | map           | Object   | JSON object that contains details of map user posted |
+   | createdAt     | DateTime | date when user is created (default field) |
+   | messages      | Array | JSON array of messages in the room |
 ### Networking
 - [Add list of network requests by screen ]
-- [Create basic snippets for each Parse network request]
+- - Home Feed Screen
+      - (Read/GET) Query all posts
+         ```java
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.include(Post.KEY_USER);
+        query.setLimit(LIMIT);
+        query.addDescendingOrder(Post.KEY_CREATED_AT);
+        query.findInBackground((posts, e) -> {
+            if (e != null) {
+                Log.e(TAG, "Couldn't get post", e);
+                return;
+            }
+            for (Post post: posts) {
+                Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
+            }
+            // Todo: Do something with post
+        });
+         ```
+      - (Create/POST) Create a new like on a post
+      - (Delete) Delete existing like
+      - (Create/POST) Create a new comment on a post
+      - (Delete) Delete existing comment
+   - Room Screen
+      - (Create/POST) Create a new post object
+      - (Create/POST) Create a message to other users in the room
+      - (Read/GET) Query all messages from users
+   - Profile Screen
+      - (Read/GET) Query logged in user object
+       ```java
+        ParseUser user = ParseUser.getCurrentUser();
+        ```
+      - (Update/PUT) Update user profile image
+        ```java
+        user.put("profileImage", parseFile);
+        user.saveInBackground();
+         ``` 
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
+##### YELP API
+- Base URL - [https://api.yelp.com/v3](https://api.yelp.com/v3)
+
+   HTTP Verb | Endpoint | Description
+   ----------|----------|------------
+    `GET`    | /businesses/search | Search for businesses by keyword, category, location, price level, etc
+    `GET`    | /businesses/{id} | Get rich business data, such as name, address, phone number, photos, Yelp rating, price levels and hours of operation
