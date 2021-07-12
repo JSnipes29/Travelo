@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Travelo</string>
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="new_username_hint">New Username</string>
+    <string name="new_password_hint">New Password</string>
+    <string name="create_account">Create Account</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+
 </resources>
