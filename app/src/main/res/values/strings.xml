@@ -7,5 +7,11 @@
     <string name="create_account">Create Account</string>
     <string name="login">Login</string>
     <string name="sign_up">Sign Up</string>
+    <string name="home">Home</string>
+    <string name="settings">Settings</string>
+    <string name="profile">Profile</string>
+    <string name="add_trip">Add Trip</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
