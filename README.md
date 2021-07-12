@@ -37,6 +37,7 @@ App that lets users build maps of their favorite places and share it. Can also s
 * DM other users
 * Chat with other users in a room
 * Follow other users
+* Create an itinerary for trips
 
 ### 2. Screen Archetypes
 
