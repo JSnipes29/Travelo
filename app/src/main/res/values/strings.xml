@@ -11,6 +11,10 @@
     <string name="settings">Settings</string>
     <string name="profile">Profile</string>
     <string name="add_trip">Add Trip</string>
+    <string name="create_trip">Create Trip</string>
+    <string name="join_trip">Join Trip</string>
+    <string name="room_id">Room Id</string>
+    <string name="enter">Enter</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

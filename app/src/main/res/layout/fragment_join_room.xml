@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.JoinRoomFragment">
+
+
+    <Button
+        android:id="@+id/btnEnter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etRoomId"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:text="@string/enter"
+        android:backgroundTint="?colorPrimary"
+        android:textColor="?colorOnPrimary"/>
+
+    <TextView
+        android:id="@+id/tvCreateTrip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:fontFamily="@font/cursive"
+        android:text="@string/join_trip"
+        android:textSize="96sp"
+        android:textColor="?colorPrimaryVariant"/>
+
+    <EditText
+        android:id="@+id/etRoomId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvCreateTrip"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:hint="@string/room_id"
+        android:imeOptions="actionDone"
+        android:inputType="text" />
+</RelativeLayout>

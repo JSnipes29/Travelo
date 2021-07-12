@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.travelo.databinding.ActivityMainBinding;
+import com.example.travelo.fragments.AddTripFragment;
 import com.example.travelo.fragments.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -39,13 +40,13 @@ public class MainActivity extends AppCompatActivity {
                             fragment = new HomeFragment();
                             break;
                         case R.id.action_add_trip:
-                            fragment = new HomeFragment();
+                            fragment = new AddTripFragment();
                             break;
                         case R.id.action_profile:
                             fragment = new HomeFragment();
                             break;
                         case R.id.action_settings:
-                            fragment = null;
+                            fragment = new HomeFragment();
                             break;
                         default:
                             fragment = null;

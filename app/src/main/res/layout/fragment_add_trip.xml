@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.AddTripFragment">
+
+
+    <Button
+        android:id="@+id/btnJoinTrip"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnCreateTrip"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:backgroundTint="?colorPrimary"
+        android:text="@string/join_trip"
+        android:textColor="?colorOnPrimary" />
+
+    <Button
+        android:id="@+id/btnCreateTrip"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvAddTrip"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:backgroundTint="?colorPrimary"
+        android:text="@string/create_trip"
+        android:textColor="?colorOnPrimary" />
+
+    <TextView
+        android:id="@+id/tvAddTrip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="136dp"
+        android:fontFamily="@font/cursive"
+        android:text="@string/add_trip"
+        android:textColor="?colorPrimaryVariant"
+        android:textSize="96sp" />
+
+</RelativeLayout>
