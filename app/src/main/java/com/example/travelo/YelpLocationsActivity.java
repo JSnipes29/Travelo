@@ -38,6 +38,9 @@ public class YelpLocationsActivity extends AppCompatActivity {
         binding = ActivityYelpLocationsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        double lat = getIntent().getDoubleExtra("lat", 0.0);
+        double lon = getIntent().getDoubleExtra("lon",0.0);
+        Log.i(TAG, "Lat: " + lat + " Lon: " + lon);
         businesses = new ArrayList<>();
         adapter = new YelpAdapter(this, businesses);
         binding.rvBusinesses.setAdapter(adapter);
@@ -48,7 +51,7 @@ public class YelpLocationsActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         YelpService yelpService = retrofit.create(YelpService.class);
-        yelpService.searchLocations("Bearer " + API_KEY,39.1, -75.5).enqueue(new Callback<YelpSearchResult>() {
+        yelpService.searchLocations("Bearer " + API_KEY,lat, lon).enqueue(new Callback<YelpSearchResult>() {
             @Override
             public void onResponse(Call<YelpSearchResult> call, Response<YelpSearchResult> response) {
                 Log.i(TAG, "onResponse: " + response);
