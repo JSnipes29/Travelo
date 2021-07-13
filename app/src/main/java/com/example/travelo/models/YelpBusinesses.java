@@ -18,4 +18,23 @@ public class YelpBusinesses {
     @SerializedName("url")
     String url;
 
+    public String getName() {
+        return name;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public int getReviewCount() {
+        return reviewCount;
+    }
+
+    public String getUrl() {
+        return url;
+    }
 }

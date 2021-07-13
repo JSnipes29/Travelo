@@ -10,4 +10,8 @@ public class YelpSearchResult {
     @SerializedName("businesses")
     List<YelpBusinesses> businesses;
 
+    public List<YelpBusinesses> getBusinesses() {
+        return businesses;
+    }
+
 }
