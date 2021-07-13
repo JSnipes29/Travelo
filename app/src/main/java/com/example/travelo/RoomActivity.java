@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.travelo.databinding.ActivityRoomBinding;
+import com.example.travelo.fragments.EditMapFragment;
 import com.example.travelo.fragments.RoomMessagesFragment;
 import com.example.travelo.models.Room;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -61,10 +62,7 @@ public class RoomActivity extends AppCompatActivity {
                 Fragment fragment;
                 switch (item.getItemId()) {
                     case R.id.action_map:
-                        Bundle bundle1 = new Bundle();
-                        bundle1.putParcelable("room", Parcels.wrap(room));
-                        fragment = new RoomMessagesFragment();
-                        fragment.setArguments(bundle1);
+                        fragment = new EditMapFragment();
                         break;
                     case R.id.action_message:
                         Bundle bundle = new Bundle();
