@@ -28,6 +28,7 @@ public class CreateRoomFragment extends DialogFragment {
 
     FragmentCreateRoomBinding binding;
     public static final String TAG = "CreateRoomFragment";
+    Room room;
 
     public CreateRoomFragment() {
         // Required empty public constructor
@@ -50,12 +51,11 @@ public class CreateRoomFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         binding = FragmentCreateRoomBinding.inflate(getLayoutInflater(), container, false);
         View view = binding.getRoot();
-
-        binding.btnCreate.setOnClickListener(v -> create());
+        binding.btnCreate.setOnClickListener(v -> create(v));
         return view;
     }
 
-    public void create() {
+    public void create(View v) {
         String roomId = binding.etRoomId.getText().toString();
         // Don't create room if id is empty
         if (roomId.isEmpty()) {
@@ -63,11 +63,13 @@ public class CreateRoomFragment extends DialogFragment {
             return;
         }
         Room room = new Room(roomId);
+        String id = room.getObjectId();
         room.setOwner(ParseUser.getCurrentUser());
         JSONArray users = new JSONArray();
         JSONObject obj = new JSONObject();
         try {
             obj.put("username", ParseUser.getCurrentUser().getUsername());
+            obj.put("ready", false);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -76,13 +78,20 @@ public class CreateRoomFragment extends DialogFragment {
         room.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error saving room");
+                    dismiss();
+                    return;
+                }
                 Log.i(TAG, "Done Creating Room");
+                Toast.makeText(v.getContext(), "Created Trip!", Toast.LENGTH_SHORT).show();
+                dismiss();
+                Intent intent = new Intent(v.getContext(), RoomActivity.class);
+                intent.putExtra("room", id);
+                startActivity(intent);
             }
         });
-        Toast.makeText(getContext(), "Created Trip!", Toast.LENGTH_SHORT).show();
-        dismiss();
-        Intent intent = new Intent(getContext(), RoomActivity.class);
-        startActivity(intent);
+
 
     }
 }

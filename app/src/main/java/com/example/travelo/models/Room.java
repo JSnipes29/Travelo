@@ -6,6 +6,7 @@ import com.parse.ParseUser;
 
 import org.json.JSONArray;
 
+
 @ParseClassName("Room")
 public class Room extends ParseObject {
     public Room() {}
@@ -18,6 +19,7 @@ public class Room extends ParseObject {
     public static final String KEY_OWNER = "owner";
     public static final String KEY_MESSAGES = "messages";
     public static final String KEY_USERS = "users";
+    public static final String KEY_ROOM_ID = "roomId";
 
     public ParseUser getOwner() {
         return getParseUser(KEY_OWNER);
@@ -40,6 +42,10 @@ public class Room extends ParseObject {
 
     public void setUsers(JSONArray messages) {
         put(KEY_USERS, messages);
+    }
+
+    public String getRoomId() {
+        return getString(KEY_ROOM_ID);
     }
 
 }
