@@ -30,14 +30,17 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="User can join and create room and open up the room fragment">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_parceler_parceler_api_1_1_12.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/RoomMessagesFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_map_24.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_message_24.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_send_24.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_room_messages.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_bottom_navigation_room.xml" afterDir="false" />
+    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="User can send messages to server">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_exifinterface_exifinterface_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_github_bumptech_glide_annotations_4_11_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_github_bumptech_glide_disklrucache_4_11_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_github_bumptech_glide_gifdecoder_4_11_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_github_bumptech_glide_glide_4_11_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/adapters/ChatAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/message_incoming.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/message_outgoing.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/message_incoming.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/message_outgoing.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -49,14 +52,12 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules/app/Travelo.app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/Travelo.app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/RoomActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/RoomActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/CreateRoomFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/CreateRoomFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/models/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/models/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_room.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_room.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/RoomMessagesFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/RoomMessagesFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_room_messages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_room_messages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -64,7 +65,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[VirtualDevicePath@/Users/jsnipes/.android/avd/Pixel_4_XL_API_30.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[VirtualDevicePath@/Users/jsnipes/.android/avd/Pixel_4_API_29.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -101,8 +102,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="resourceFile" />
+        <option value="layoutResourceFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -119,8 +121,8 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="VirtualDevicePath@/Users/jsnipes/.android/avd/Pixel_4_XL_API_30.avd" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-07-12T20:55:05.965699Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="VirtualDevicePath@/Users/jsnipes/.android/avd/Pixel_4_API_29.avd" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-07-13T19:01:36.053549Z" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="memory.settings.postsync.last.time.stamp" value="1626192503942" />
@@ -260,7 +262,14 @@
       <option name="project" value="LOCAL" />
       <updated>1626134785264</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="User can send messages to server">
+      <created>1626193669848</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1626193669848</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -283,9 +292,14 @@
     <MESSAGE value="Added bottom navigation bar and toolbar as action bar" />
     <MESSAGE value="Created and implemented create and join room fragments" />
     <MESSAGE value="User can join and create room and open up the room fragment" />
-    <option name="LAST_COMMIT_MESSAGE" value="User can join and create room and open up the room fragment" />
+    <MESSAGE value="User can send messages to server" />
+    <option name="LAST_COMMIT_MESSAGE" value="User can send messages to server" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="780" y="224" key="#com.intellij.ide.util.MemberChooser" timestamp="1626194803030">
+      <screen x="0" y="25" width="1792" height="1010" />
+    </state>
+    <state x="780" y="224" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626194803030" />
     <state x="706" y="264" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1626128639591">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
@@ -294,33 +308,53 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="472" y="270" key="AndroidCreateResourceDirectoryDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626120850049" />
-    <state x="472" y="270" key="AndroidCreateResourceFileDialog" timestamp="1626188467020">
+    <state x="472" y="270" key="AndroidCreateResourceFileDialog" timestamp="1626194260826">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state x="472" y="270" key="AndroidCreateResourceFileDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626188467020" />
+    <state x="472" y="270" key="AndroidCreateResourceFileDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626194260826" />
+    <state x="741" y="273" key="AndroidProcessChooserDialog" timestamp="1626201832545">
+      <screen x="0" y="25" width="1792" height="1010" />
+    </state>
+    <state x="741" y="273" key="AndroidProcessChooserDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626201832545" />
     <state x="759" y="412" key="Github.ShareDialog" timestamp="1625865227316">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="759" y="412" key="Github.ShareDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1625865227316" />
-    <state width="1358" height="224" key="GridCell.Tab.0.bottom" timestamp="1626192551079">
+    <state width="1358" height="260" key="GridCell.Tab.0.bottom" timestamp="1626202336878">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="224" key="GridCell.Tab.0.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626192551079" />
-    <state width="1358" height="224" key="GridCell.Tab.0.center" timestamp="1626192551078">
+    <state width="1358" height="260" key="GridCell.Tab.0.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626202336878" />
+    <state width="1358" height="260" key="GridCell.Tab.0.center" timestamp="1626202336877">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="224" key="GridCell.Tab.0.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626192551078" />
-    <state width="1358" height="224" key="GridCell.Tab.0.left" timestamp="1626192551077">
+    <state width="1358" height="260" key="GridCell.Tab.0.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626202336877" />
+    <state width="1358" height="260" key="GridCell.Tab.0.left" timestamp="1626202336877">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="224" key="GridCell.Tab.0.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626192551077" />
-    <state width="1358" height="224" key="GridCell.Tab.0.right" timestamp="1626192551079">
+    <state width="1358" height="260" key="GridCell.Tab.0.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626202336877" />
+    <state width="1358" height="260" key="GridCell.Tab.0.right" timestamp="1626202336878">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="224" key="GridCell.Tab.0.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626192551079" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626134796857">
+    <state width="1358" height="260" key="GridCell.Tab.0.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626202336878" />
+    <state width="1358" height="260" key="GridCell.Tab.1.bottom" timestamp="1626202336880">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626134796857" />
+    <state width="1358" height="260" key="GridCell.Tab.1.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626202336880" />
+    <state width="1358" height="260" key="GridCell.Tab.1.center" timestamp="1626202336879">
+      <screen x="0" y="25" width="1792" height="1010" />
+    </state>
+    <state width="1358" height="260" key="GridCell.Tab.1.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626202336879" />
+    <state width="1358" height="260" key="GridCell.Tab.1.left" timestamp="1626202336879">
+      <screen x="0" y="25" width="1792" height="1010" />
+    </state>
+    <state width="1358" height="260" key="GridCell.Tab.1.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626202336879" />
+    <state width="1358" height="260" key="GridCell.Tab.1.right" timestamp="1626202336880">
+      <screen x="0" y="25" width="1792" height="1010" />
+    </state>
+    <state width="1358" height="260" key="GridCell.Tab.1.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626202336880" />
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626193678655">
+      <screen x="0" y="25" width="1792" height="1010" />
+    </state>
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626193678655" />
   </component>
 </project>

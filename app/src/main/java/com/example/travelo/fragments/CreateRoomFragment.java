@@ -67,9 +67,11 @@ public class CreateRoomFragment extends DialogFragment {
         room.setOwner(ParseUser.getCurrentUser());
         JSONArray users = new JSONArray();
         JSONObject obj = new JSONObject();
+        String profileUrl = ParseUser.getCurrentUser().getParseFile("profileImage").getUrl();
         try {
             obj.put("username", ParseUser.getCurrentUser().getUsername());
             obj.put("ready", false);
+            obj.put("profileImageUrl", profileUrl);
         } catch (JSONException e) {
             e.printStackTrace();
         }

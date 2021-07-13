@@ -17,5 +17,7 @@
     <string name="enter">Enter</string>
     <string name="message_hint">Type here</string>
     <string name="send">Send</string>
+    <string name="profile_me">My Profile Pic</string>
+    <string name="profile_other">Other profile pic</string>
 
 </resources>
