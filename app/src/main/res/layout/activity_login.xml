@@ -51,7 +51,9 @@
         android:layout_below="@+id/etPassword"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:text="@string/login" />
+        android:text="@string/login"
+        android:backgroundTint="?colorPrimary"
+        android:textColor="?colorOnPrimary"/>
 
     <Button
         android:id="@+id/btnSignup"
@@ -60,5 +62,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
-        android:text="@string/sign_up" />
+        android:text="@string/sign_up"
+        android:backgroundTint="?colorPrimary"
+        android:textColor="?colorOnPrimary"/>
 </RelativeLayout>

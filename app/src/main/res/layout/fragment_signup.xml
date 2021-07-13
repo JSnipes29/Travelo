@@ -51,5 +51,7 @@
         android:layout_below="@+id/etPassword"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:text="@string/create_account" />
+        android:text="@string/create_account"
+        android:backgroundTint="?colorPrimary"
+        android:textColor="?colorOnPrimary"/>
 </RelativeLayout>
