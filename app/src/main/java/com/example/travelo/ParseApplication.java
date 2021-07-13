@@ -2,7 +2,9 @@ package com.example.travelo;
 
 import android.app.Application;
 
+import com.example.travelo.models.Room;
 import com.parse.Parse;
+import com.parse.ParseObject;
 
 public class ParseApplication extends Application {
 
@@ -10,7 +12,8 @@ public class ParseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        // Register Parse Models
+        ParseObject.registerSubclass(Room.class);
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("56FOAmOXvVk5GqnDojmLIpmnZW8SzMXr8JkIy4Cn")
                 .clientKey("wsE9tdqbYL8gNd96TmlR791XKyOX5szd4ZruZpLZ")
