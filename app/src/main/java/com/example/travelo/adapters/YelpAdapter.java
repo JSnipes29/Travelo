@@ -79,6 +79,12 @@ public class YelpAdapter extends RecyclerView.Adapter<YelpAdapter.ViewHolder> {
                         .transform(new RoundedCorners(32))
                         .into(ivImage);
             }
+
+            if (!business.getButton()) {
+                btnAdd.setClickable(false);
+                btnAdd.setVisibility(View.GONE);
+                return;
+            }
             if (business.getAdded()) {
                 btnAdd.setText(R.string.remove);
                 TypedValue typedValue = new TypedValue();

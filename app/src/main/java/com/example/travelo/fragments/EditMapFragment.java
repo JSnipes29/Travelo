@@ -146,6 +146,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
             Bundle bundle = data.getExtras();
             List<YelpBusinesses> businesses = Parcels.unwrap(bundle.getParcelable("added"));
             Log.i(TAG, "Added Size: " + businesses.size());
+            YelpBusinesses.setButtonAll(businesses, false);
             // Define color of marker icon
             BitmapDescriptor defaultMarker =
                     BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);

@@ -25,10 +25,26 @@ public class YelpBusinesses {
 
     private boolean added;
 
+    private boolean button;
+
     public static void setAddedAll(List<YelpBusinesses> b) {
         for (int i = 0; i < b.size(); i++) {
             b.get(i).setAdded(false);
         }
+    }
+
+    public static void setButtonAll(List<YelpBusinesses> b, boolean value) {
+        for (int i = 0; i < b.size(); i++) {
+            b.get(i).setButton(value);
+        }
+    }
+
+    public void setButton(boolean button) {
+        this.button = button;
+    }
+
+    public boolean getButton() {
+        return button;
     }
 
     public void setAdded(boolean added) {
