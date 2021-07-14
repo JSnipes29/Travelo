@@ -17,4 +17,22 @@
         android:text="@string/waiting"
         android:textColor="?colorPrimary"
         android:textSize="96sp" />
+
+    <TextView
+        android:id="@+id/tvWaitingOn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvWaiting"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp"
+        android:text="@string/waiting_on"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvNames"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvWaitingOn"
+        android:layout_marginTop="10dp" />
 </RelativeLayout>

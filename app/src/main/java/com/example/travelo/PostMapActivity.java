@@ -18,6 +18,7 @@ import com.parse.ParseQuery;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import java.util.Iterator;
 
@@ -54,7 +55,7 @@ public class PostMapActivity extends AppCompatActivity {
         final FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment;
         Bundle bundle = new Bundle();
-        bundle.putParcelable("room", room);
+        bundle.putParcelable("room", Parcels.wrap(room));
         JSONObject users = room.getUsers();
         Iterator<String> iter = users.keys();
         boolean ready = true;
