@@ -1,8 +1,10 @@
 package com.example.travelo;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +14,8 @@ import com.example.travelo.adapters.YelpAdapter;
 import com.example.travelo.databinding.ActivityYelpLocationsBinding;
 import com.example.travelo.models.YelpBusinesses;
 import com.example.travelo.models.YelpSearchResult;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +74,31 @@ public class YelpLocationsActivity extends AppCompatActivity {
                 Log.e(TAG, "onFailure", t);
             }
         });
+
+        // This callback will only be called when the activity is at least Started.
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                List<YelpBusinesses> added = new ArrayList<>();
+                for (int i = 0; i < businesses.size(); i++) {
+                    YelpBusinesses business = businesses.get(i);
+                    if (business.getAdded()) {
+                        added.add(business);
+                    }
+                }
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("added", Parcels.wrap(added));
+                intent.putExtra("lat", lat);
+                intent.putExtra("lon", lon);
+                intent.putExtras(bundle);
+                setResult(RESULT_OK, intent);
+                finish();
+
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
 
     }
 }

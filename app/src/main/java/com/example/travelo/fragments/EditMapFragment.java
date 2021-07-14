@@ -8,20 +8,33 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.BounceInterpolator;
 import android.widget.Toast;
 
 import com.example.travelo.R;
 import com.example.travelo.YelpLocationsActivity;
 import com.example.travelo.databinding.FragmentEditMapBinding;
+import com.example.travelo.models.YelpBusinesses;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.parceler.Parcels;
+
+import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClickListener{
 
@@ -122,5 +135,53 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == YELP_CODE) {
+            Log.i(TAG, "Back from YELP");
+            double lat = data.getDoubleExtra("lat",0.0);
+            double lon = data.getDoubleExtra("lon",0.0);
+            Log.i(TAG, "Lat: " + lat + " Long: " + lon);
+            Bundle bundle = data.getExtras();
+            List<YelpBusinesses> businesses = Parcels.unwrap(bundle.getParcelable("added"));
+            Log.i(TAG, "Added Size: " + businesses.size());
+            // Define color of marker icon
+            BitmapDescriptor defaultMarker =
+                    BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+            Marker marker = map.addMarker(new MarkerOptions()
+                    .position(new LatLng(lat, lon))
+                    .icon(defaultMarker));
+            dropPinEffect(marker);
+        }
+    }
+
+    private void dropPinEffect(final Marker marker) {
+        // Handler allows us to repeat a code block after a specified delay
+        final android.os.Handler handler = new android.os.Handler();
+        final long start = SystemClock.uptimeMillis();
+        final long duration = 1500;
+
+        // Use the bounce interpolator
+        final android.view.animation.Interpolator interpolator =
+                new BounceInterpolator();
+
+        // Animate marker with a bounce updating its position every 15ms
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                long elapsed = SystemClock.uptimeMillis() - start;
+                // Calculate t for bounce based on elapsed time
+                float t = Math.max(
+                        1 - interpolator.getInterpolation((float) elapsed
+                                / duration), 0);
+                // Set the anchor
+                marker.setAnchor(0.5f, 1.0f + 14 * t);
+
+                if (t > 0.0) {
+                    // Post this event again 15ms from now.
+                    handler.postDelayed(this, 15);
+                } else { // done elapsing, show window
+                    marker.showInfoWindow();
+                }
+            }
+        });
     }
 }
