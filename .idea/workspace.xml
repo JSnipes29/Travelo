@@ -30,23 +30,29 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="List of places pops up when user long holds on map">
+    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="Updated to get the right location from long click">
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/jarAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/YelpLocationsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/YelpLocationsActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/adapters/YelpAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/adapters/YelpAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/models/YelpBusinesses.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/models/YelpBusinesses.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_yelp_business.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_yelp_business.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[SerialNumber@13201FDD40005U]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[VirtualDevicePath@/Users/jsnipes/.android/avd/Pixel_4_API_29.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -283,7 +289,14 @@
       <option name="project" value="LOCAL" />
       <updated>1626220047458</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Updated to get the right location from long click">
+      <created>1626220656270</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1626220656270</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -312,7 +325,8 @@
     <MESSAGE value="Updated login screen UI" />
     <MESSAGE value="Set up communication to Yelp API" />
     <MESSAGE value="List of places pops up when user long holds on map" />
-    <option name="LAST_COMMIT_MESSAGE" value="List of places pops up when user long holds on map" />
+    <MESSAGE value="Updated to get the right location from long click" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated to get the right location from long click" />
   </component>
   <component name="WindowStateProjectService">
     <state x="780" y="224" key="#com.intellij.ide.util.MemberChooser" timestamp="1626218773075">
@@ -371,29 +385,13 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state width="1358" height="260" key="GridCell.Tab.1.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626220447923" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626220056648">
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626220662409">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626220056648" />
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626220662409" />
     <state x="634" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1626216331440">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="634" y="250" width="670" height="676" key="search.everywhere.popup/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626216331440" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/travelo/YelpLocationsActivity.java</url>
-          <line>69</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/travelo/YelpLocationsActivity.java</url>
-          <line>56</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

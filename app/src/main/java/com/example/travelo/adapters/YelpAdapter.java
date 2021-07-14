@@ -1,9 +1,11 @@
 package com.example.travelo.adapters;
 
 import android.content.Context;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -53,6 +55,7 @@ public class YelpAdapter extends RecyclerView.Adapter<YelpAdapter.ViewHolder> {
         private RatingBar ratingBar;
         private TextView tvNumReviews;
         private TextView tvUrl;
+        private Button btnAdd;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -61,6 +64,7 @@ public class YelpAdapter extends RecyclerView.Adapter<YelpAdapter.ViewHolder> {
             ratingBar = itemView.findViewById(R.id.rbRatings);
             tvNumReviews = itemView.findViewById(R.id.tvNumReviews);
             tvUrl = itemView.findViewById(R.id.tvBusinessUrl);
+            btnAdd = itemView.findViewById(R.id.btnAdd);
         }
 
         public void bind(YelpBusinesses business) {
@@ -75,6 +79,34 @@ public class YelpAdapter extends RecyclerView.Adapter<YelpAdapter.ViewHolder> {
                         .transform(new RoundedCorners(32))
                         .into(ivImage);
             }
+            if (business.getAdded()) {
+                btnAdd.setText(R.string.remove);
+                TypedValue typedValue = new TypedValue();
+                context.getTheme().resolveAttribute(R.attr.colorOnPrimary, typedValue, true);
+                btnAdd.setBackgroundColor(typedValue.data);
+                context.getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
+                btnAdd.setTextColor(typedValue.data);
+            }
+            btnAdd.setOnClickListener(v -> {
+                if(business.getAdded()) {
+                    btnAdd.setText(R.string.add);
+                    TypedValue typedValue = new TypedValue();
+                    context.getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
+                    btnAdd.setBackgroundColor(typedValue.data);
+                    context.getTheme().resolveAttribute(R.attr.colorOnPrimary, typedValue, true);
+                    btnAdd.setTextColor(typedValue.data);
+                    business.setAdded(false);
+                } else {
+                    btnAdd.setText(R.string.remove);
+                    TypedValue typedValue = new TypedValue();
+                    context.getTheme().resolveAttribute(R.attr.colorOnPrimary, typedValue, true);
+                    btnAdd.setBackgroundColor(typedValue.data);
+                    context.getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
+                    btnAdd.setTextColor(typedValue.data);
+                    business.setAdded(true);
+
+                }
+            });
         }
     }
 }
