@@ -30,6 +30,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
@@ -152,6 +153,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                     .position(new LatLng(lat, lon))
                     .icon(defaultMarker));
             marker.setTag(businesses);
+            marker.setSnippet(ParseUser.getCurrentUser().getUsername());
             dropPinEffect(marker);
         }
     }

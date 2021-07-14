@@ -3,6 +3,7 @@ package com.example.travelo.adapters;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,6 +38,9 @@ public class CustomWindowAdapter implements GoogleMap.InfoWindowAdapter {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         window.setAdapter(adapter);
         window.setLayoutManager(linearLayoutManager);
+
+        TextView snippet = (TextView) v.findViewById(R.id.tvSnippet);
+        snippet.setText(marker.getSnippet());
         // Return info window contents
         return v;
     }
