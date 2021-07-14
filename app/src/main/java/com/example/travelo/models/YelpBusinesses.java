@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
+import java.util.List;
+
 @Parcel
 public class YelpBusinesses {
     @SerializedName("name")
@@ -22,6 +24,12 @@ public class YelpBusinesses {
     String url;
 
     private boolean added;
+
+    public static void setAddedAll(List<YelpBusinesses> b) {
+        for (int i = 0; i < b.size(); i++) {
+            b.get(i).setAdded(false);
+        }
+    }
 
     public void setAdded(boolean added) {
         this.added = added;

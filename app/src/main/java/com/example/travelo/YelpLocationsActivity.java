@@ -66,6 +66,7 @@ public class YelpLocationsActivity extends AppCompatActivity {
                 }
                 businesses.clear();
                 businesses.addAll(body.getBusinesses());
+                YelpBusinesses.setAddedAll(businesses);
                 adapter.notifyDataSetChanged();
             }
 

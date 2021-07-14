@@ -50,12 +50,12 @@ public class YelpAdapter extends RecyclerView.Adapter<YelpAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvName;
-        private ImageView ivImage;
-        private RatingBar ratingBar;
-        private TextView tvNumReviews;
-        private TextView tvUrl;
-        private Button btnAdd;
+        private final TextView tvName;
+        private final ImageView ivImage;
+        private final RatingBar ratingBar;
+        private final TextView tvNumReviews;
+        private final TextView tvUrl;
+        private final Button btnAdd;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,10 +67,10 @@ public class YelpAdapter extends RecyclerView.Adapter<YelpAdapter.ViewHolder> {
             btnAdd = itemView.findViewById(R.id.btnAdd);
         }
 
-        public void bind(YelpBusinesses business) {
+        public void bind(final YelpBusinesses business) {
             tvName.setText(business.getName());
             tvNumReviews.setText(String.valueOf(business.getReviewCount()));
-            tvUrl.setText(business.getUrl());
+            //tvUrl.setText(business.getUrl());
             ratingBar.setRating((float)business.getRating());
             String imageUrl = business.getImageUrl();
             if (imageUrl != null && !imageUrl.isEmpty()) {

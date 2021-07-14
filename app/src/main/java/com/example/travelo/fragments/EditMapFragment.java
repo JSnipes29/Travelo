@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.travelo.R;
 import com.example.travelo.YelpLocationsActivity;
+import com.example.travelo.adapters.CustomWindowAdapter;
 import com.example.travelo.databinding.FragmentEditMapBinding;
 import com.example.travelo.models.YelpBusinesses;
 import com.google.android.gms.maps.GoogleMap;
@@ -74,6 +75,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                 public void onMapReady(GoogleMap map) {
                     loadMap(map);
                     map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                    map.setInfoWindowAdapter(new CustomWindowAdapter(getLayoutInflater(), getContext()));
                 }
             });
         } else {
@@ -149,6 +151,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
             Marker marker = map.addMarker(new MarkerOptions()
                     .position(new LatLng(lat, lon))
                     .icon(defaultMarker));
+            marker.setTag(businesses);
             dropPinEffect(marker);
         }
     }
