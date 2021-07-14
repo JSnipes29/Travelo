@@ -1,6 +1,7 @@
 package com.example.travelo.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,28 +88,19 @@ public class YelpAdapter extends RecyclerView.Adapter<YelpAdapter.ViewHolder> {
             }
             if (business.getAdded()) {
                 btnAdd.setText(R.string.remove);
-                TypedValue typedValue = new TypedValue();
-                context.getTheme().resolveAttribute(R.attr.colorOnPrimary, typedValue, true);
-                btnAdd.setBackgroundColor(typedValue.data);
-                context.getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
-                btnAdd.setTextColor(typedValue.data);
+                btnAdd.setBackgroundColor(Color.BLACK);
+                btnAdd.setTextColor(Color.WHITE);
             }
             btnAdd.setOnClickListener(v -> {
                 if(business.getAdded()) {
                     btnAdd.setText(R.string.add);
-                    TypedValue typedValue = new TypedValue();
-                    context.getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
-                    btnAdd.setBackgroundColor(typedValue.data);
-                    context.getTheme().resolveAttribute(R.attr.colorOnPrimary, typedValue, true);
-                    btnAdd.setTextColor(typedValue.data);
+                    btnAdd.setBackgroundColor(Color.WHITE);
+                    btnAdd.setTextColor(Color.BLACK);
                     business.setAdded(false);
                 } else {
                     btnAdd.setText(R.string.remove);
-                    TypedValue typedValue = new TypedValue();
-                    context.getTheme().resolveAttribute(R.attr.colorOnPrimary, typedValue, true);
-                    btnAdd.setBackgroundColor(typedValue.data);
-                    context.getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
-                    btnAdd.setTextColor(typedValue.data);
+                    btnAdd.setBackgroundColor(Color.BLACK);
+                    btnAdd.setTextColor(Color.WHITE);
                     business.setAdded(true);
 
                 }
