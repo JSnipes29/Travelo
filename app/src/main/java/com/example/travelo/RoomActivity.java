@@ -60,12 +60,16 @@ public class RoomActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment fragment;
+                Bundle bundle;
                 switch (item.getItemId()) {
                     case R.id.action_map:
+                        bundle = new Bundle();
+                        bundle.putParcelable("room", Parcels.wrap(room));
                         fragment = new EditMapFragment();
+                        fragment.setArguments(bundle);
                         break;
                     case R.id.action_message:
-                        Bundle bundle = new Bundle();
+                        bundle = new Bundle();
                         bundle.putParcelable("room", Parcels.wrap(room));
                         fragment = new RoomMessagesFragment();
                         fragment.setArguments(bundle);

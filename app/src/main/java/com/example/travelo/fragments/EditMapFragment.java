@@ -20,6 +20,7 @@ import com.example.travelo.R;
 import com.example.travelo.YelpLocationsActivity;
 import com.example.travelo.adapters.CustomWindowAdapter;
 import com.example.travelo.databinding.FragmentEditMapBinding;
+import com.example.travelo.models.Room;
 import com.example.travelo.models.YelpBusinesses;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -30,8 +31,13 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.parceler.Parcels;
 
 import java.util.List;
@@ -45,6 +51,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
     FragmentEditMapBinding binding;
     MapView mapFragment;
     GoogleMap map;
+    Room room;
 
     public EditMapFragment() {
         // Required empty public constructor
@@ -67,6 +74,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                              Bundle savedInstanceState) {
         binding = FragmentEditMapBinding.inflate(getLayoutInflater(), container, false);
         View view = binding.getRoot();
+        room = (Room) Parcels.unwrap(getArguments().getParcelable("room"));
         mapFragment = (MapView) view.findViewById(R.id.map);
         mapFragment.onCreate(savedInstanceState);
         mapFragment.onResume();
@@ -156,6 +164,30 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
             marker.setTag(businesses);
             marker.setSnippet(ParseUser.getCurrentUser().getUsername());
             dropPinEffect(marker);
+            JSONObject jsonMarker = new JSONObject();
+            try {
+                jsonMarker.put("user", ParseUser.getCurrentUser().getUsername());
+                jsonMarker.put("latitude", lat);
+                jsonMarker.put("longitude", lon);
+                JSONObject jsonMap = room.getMap();
+                JSONArray markers = jsonMap.getJSONArray("markers");
+                markers.put(jsonMarker);
+                jsonMap.put("markers", markers);
+                room.setMap(jsonMap);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Log.e(TAG, "Error loading marker to server", e);
+            }
+            room.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        Log.i(TAG, "Loaded marker to server");
+                    } else {
+                        Log.e(TAG, "Couldn't save markers to server", e);
+                    }
+                }
+            });
         }
     }
 
