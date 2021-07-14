@@ -16,6 +16,7 @@ import com.example.travelo.models.Room;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +35,6 @@ public class PostMapActivity extends AppCompatActivity {
         binding = ActivityPostMapBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
 

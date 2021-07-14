@@ -1,5 +1,6 @@
 package com.example.travelo.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.travelo.MainActivity;
 import com.example.travelo.R;
 import com.example.travelo.adapters.CustomWindowAdapter;
 import com.example.travelo.databinding.FragmentPostMapBinding;
@@ -73,6 +75,18 @@ public class PostMapFragment extends Fragment {
             });
         } else {
             Toast.makeText(getContext(), "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
+        }
+        if (!ParseUser.getCurrentUser().equals(room.getOwner())) {
+            binding.etDescription.setVisibility(View.GONE);
+            binding.btnProceed.setText(R.string.done);
+            binding.btnProceed.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(), MainActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+            });
         }
         return view;
     }
