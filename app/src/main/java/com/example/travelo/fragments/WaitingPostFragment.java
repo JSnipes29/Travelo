@@ -3,6 +3,7 @@ package com.example.travelo.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -51,6 +52,12 @@ public class WaitingPostFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     @Override
@@ -124,10 +131,20 @@ public class WaitingPostFragment extends Fragment {
                         }
                     }
                     adapter.notifyDataSetChanged();
+                    if (users.isEmpty()) {
+                        Log.i(TAG, "Going to post");
+                        final FragmentManager fragmentManager = getParentFragmentManager();
+                        Fragment fragment = new PostMapFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("room", Parcels.wrap(r));
+                        fragment.setArguments(bundle);
+                        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                    }
                 } else {
                     Log.e(TAG, "Error joining room", e);
                 }
             }
         });
+
     }
 }

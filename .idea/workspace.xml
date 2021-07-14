@@ -30,7 +30,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="Usernames appear on waiting list">
+    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="Pull to refresh for waiting list">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/PostMapFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_post_map.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -41,11 +43,9 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/app/Travelo.app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/Travelo.app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/WaitingPostFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/WaitingPostFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_waiting_post.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_waiting_post.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -359,7 +359,14 @@
       <option name="project" value="LOCAL" />
       <updated>1626297439889</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Pull to refresh for waiting list">
+      <created>1626298859330</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1626298859330</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -398,7 +405,8 @@
     <MESSAGE value="Markers coordinates are uploaded to server" />
     <MESSAGE value="Ready button takes user to waiting screen" />
     <MESSAGE value="Usernames appear on waiting list" />
-    <option name="LAST_COMMIT_MESSAGE" value="Usernames appear on waiting list" />
+    <MESSAGE value="Pull to refresh for waiting list" />
+    <option name="LAST_COMMIT_MESSAGE" value="Pull to refresh for waiting list" />
   </component>
   <component name="WindowStateProjectService">
     <state x="780" y="224" key="#com.intellij.ide.util.MemberChooser" timestamp="1626296167591">
@@ -457,10 +465,10 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state width="1358" height="260" key="GridCell.Tab.1.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626220447923" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626297450474">
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626298867560">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626297450474" />
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626298867560" />
     <state x="634" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1626216331440">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>

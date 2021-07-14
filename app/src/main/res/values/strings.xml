@@ -24,5 +24,9 @@
     <string name="remove">Remove</string>
     <string name="waiting">Waiting</string>
     <string name="waiting_on">Waiting On:</string>
+    <string name="final_map">Final Map</string>
+    <string name="description">Description</string>
+    <string name="done">Done</string>
+    <string name="post">Post</string>
 
 </resources>
