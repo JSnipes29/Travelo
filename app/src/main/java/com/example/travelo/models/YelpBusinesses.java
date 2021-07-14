@@ -27,6 +27,16 @@ public class YelpBusinesses {
 
     private boolean button;
 
+
+    public static YelpBusinesses makeBusiness(String name, double ratings, int numRatings, String imageUrl) {
+        YelpBusinesses business = new YelpBusinesses();
+        business.setName(name);
+        business.setRating(ratings);
+        business.setReviewCount(numRatings);
+        business.setImageUrl(imageUrl);
+        return business;
+    }
+
     public static void setAddedAll(List<YelpBusinesses> b) {
         for (int i = 0; i < b.size(); i++) {
             b.get(i).setAdded(false);
@@ -73,5 +83,21 @@ public class YelpBusinesses {
 
     public String getUrl() {
         return url;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public void setReviewCount(int reviewCount) {
+        this.reviewCount = reviewCount;
     }
 }

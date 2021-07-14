@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.travelo.databinding.ActivityPostMapBinding;
+import com.example.travelo.fragments.PostMapFragment;
 import com.example.travelo.fragments.WaitingPostFragment;
 import com.example.travelo.models.Room;
 import com.parse.GetCallback;
@@ -74,7 +75,7 @@ public class PostMapActivity extends AppCompatActivity {
         }
         // If ready go to post fragment
         if (ready) {
-            fragment = new WaitingPostFragment();
+            fragment = new PostMapFragment();
         } else {
            // else go to waiting fragment
             fragment = new WaitingPostFragment();

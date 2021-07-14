@@ -191,6 +191,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                     place.put("name", business.getName());
                     place.put("rating", business.getRating());
                     place.put("num_ratings", business.getReviewCount());
+                    place.put("image_url", business.getImageUrl());
                     places.put(place);
                 }
                 jsonMarker.put("places", places);
