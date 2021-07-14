@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
 import android.widget.Toast;
 
+import com.example.travelo.PostMapActivity;
 import com.example.travelo.R;
 import com.example.travelo.YelpLocationsActivity;
 import com.example.travelo.adapters.CustomWindowAdapter;
@@ -90,6 +91,20 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
         } else {
             Toast.makeText(getContext(), "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
         }
+        binding.btnReady.setOnClickListener(v -> {
+            JSONObject users = room.getUsers();
+            try {
+                users.put(ParseUser.getCurrentUser().getUsername(), true);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            room.setUsers(users);
+            room.saveInBackground();
+            Intent intent = new Intent(getContext(), PostMapActivity.class);
+            String id = room.getObjectId();
+            intent.putExtra("id", id);
+            startActivity(intent);
+        });
         return view;
     }
 
@@ -169,6 +184,16 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                 jsonMarker.put("user", ParseUser.getCurrentUser().getUsername());
                 jsonMarker.put("latitude", lat);
                 jsonMarker.put("longitude", lon);
+                JSONArray places = new JSONArray();
+                for (int i = 0; i < businesses.size(); i++) {
+                    YelpBusinesses business = businesses.get(i);
+                    JSONObject place = new JSONObject();
+                    place.put("name", business.getName());
+                    place.put("rating", business.getRating());
+                    place.put("num_ratings", business.getReviewCount());
+                    places.put(place);
+                }
+                jsonMarker.put("places", places);
                 JSONObject jsonMap = room.getMap();
                 JSONArray markers = jsonMap.getJSONArray("markers");
                 markers.put(jsonMarker);

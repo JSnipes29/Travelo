@@ -65,17 +65,14 @@ public class CreateRoomFragment extends DialogFragment {
         Room room = new Room(roomId);
         String id = room.getObjectId();
         room.setOwner(ParseUser.getCurrentUser());
-        JSONArray users = new JSONArray();
-        JSONObject obj = new JSONObject();
+        JSONObject users = new JSONObject();
         String profileUrl = ParseUser.getCurrentUser().getParseFile("profileImage").getUrl();
         try {
-            obj.put("username", ParseUser.getCurrentUser().getUsername());
-            obj.put("ready", false);
-            obj.put("profileImageUrl", profileUrl);
+            users.put(ParseUser.getCurrentUser().getUsername(), false);
+            //users.put("profileImageUrl", profileUrl);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        users.put(obj);
         room.setUsers(users);
         room.saveInBackground(new SaveCallback() {
             @Override

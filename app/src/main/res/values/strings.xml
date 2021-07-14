@@ -22,5 +22,6 @@
     <string name="ready">Ready</string>
     <string name="add">Add</string>
     <string name="remove">Remove</string>
+    <string name="waiting">Waiting</string>
 
 </resources>

@@ -38,12 +38,12 @@ public class Room extends ParseObject {
         put(KEY_MESSAGES, messages);
     }
 
-    public JSONArray getUsers() {
-        return getJSONArray(KEY_USERS);
+    public JSONObject getUsers() {
+        return getJSONObject(KEY_USERS);
     }
 
-    public void setUsers(JSONArray messages) {
-        put(KEY_USERS, messages);
+    public void setUsers(JSONObject users) {
+        put(KEY_USERS, users);
     }
 
     public String getRoomId() {
