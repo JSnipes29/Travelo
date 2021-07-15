@@ -41,6 +41,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -86,6 +87,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                     loadMap(map);
                     map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                     map.setInfoWindowAdapter(new CustomWindowAdapter(getLayoutInflater(), getContext()));
+                    populateMap();
                 }
             });
         } else {
@@ -214,6 +216,41 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                     }
                 }
             });
+        }
+    }
+
+    // Get the marker data from the Parse server and add it to the map
+    public void populateMap() {
+        JSONObject jsonMap = room.getMap();
+        try {
+            JSONArray markers = jsonMap.getJSONArray("markers");
+            for (int i = 0; i < markers.length(); i++) {
+                JSONObject jsonMarker = markers.getJSONObject(i);
+                List<YelpBusinesses> businesses = new ArrayList<>();
+                double latitude = jsonMarker.getDouble("latitude");
+                double longitude = jsonMarker.getDouble("longitude");
+                String user = jsonMarker.getString("user");
+                JSONArray places = jsonMarker.getJSONArray("places");
+                for (int j = 0; j < places.length(); j++) {
+                    JSONObject place = places.getJSONObject(j);
+                    String name = place.getString("name");
+                    double rating = place.getDouble("rating");
+                    int numRatings = place.getInt("num_ratings");
+                    //String imageUrl = place.getString("image_url");
+                    YelpBusinesses business = YelpBusinesses.makeBusiness(name, rating, numRatings, null);
+                    businesses.add(business);
+                }
+                // Define color of marker icon
+                BitmapDescriptor defaultMarker =
+                        BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+                Marker marker = map.addMarker(new MarkerOptions()
+                        .position(new LatLng(latitude, longitude))
+                        .icon(defaultMarker));
+                marker.setTag(businesses);
+                marker.setSnippet(user);
+            }
+        } catch (JSONException e) {
+            Log.e(TAG,"Error getting markers from server", e);
         }
     }
 
