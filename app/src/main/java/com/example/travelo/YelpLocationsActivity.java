@@ -45,6 +45,17 @@ public class YelpLocationsActivity extends AppCompatActivity {
         binding = ActivityYelpLocationsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        Object obj = Parcels.unwrap(getIntent().getParcelableExtra("markerData"));
+        if (obj != null) {
+            Log.i(TAG, "Coming from long click");
+            List<YelpBusinesses> addedLocations = (List<YelpBusinesses>) obj;
+            adapter = new YelpAdapter(this, addedLocations);
+            binding.rvBusinesses.setAdapter(adapter);
+            binding.rvBusinesses.setLayoutManager(new LinearLayoutManager(this));
+            binding.fabAddLocation.setVisibility(View.GONE);
+            binding.fabAddLocation.setClickable(false);
+            return;
+        }
         lat = getIntent().getDoubleExtra("lat", 0.0);
         lon = getIntent().getDoubleExtra("lon",0.0);
         Log.i(TAG, "Lat: " + lat + " Lon: " + lon);

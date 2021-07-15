@@ -1,9 +1,10 @@
 package com.example.travelo;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -90,6 +91,34 @@ public class DetailsPostActivity extends AppCompatActivity {
                     map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                     map.setInfoWindowAdapter(new CustomWindowAdapter(getLayoutInflater(), DetailsPostActivity.this));
                     populateMap();
+                    map.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+                        @Override
+                        public void onMarkerDragStart(@NonNull Marker marker) {
+                            // Define color of marker icon
+                            BitmapDescriptor defaultMarker =
+                                    BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+                            Marker replace = map.addMarker(new MarkerOptions()
+                                    .position(marker.getPosition())
+                                    .icon(defaultMarker));
+                            replace.setTag(marker.getTag());
+                            replace.setSnippet(marker.getSnippet());
+                            replace.setDraggable(true);
+                            Intent intent = new Intent(DetailsPostActivity.this, YelpLocationsActivity.class);
+                            intent.putExtra("markerData", Parcels.wrap((List<YelpBusinesses>)marker.getTag()));
+                            marker.remove();
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onMarkerDrag(@NonNull Marker marker) {
+
+                        }
+
+                        @Override
+                        public void onMarkerDragEnd(@NonNull Marker marker) {
+
+                        }
+                    });
                 }
             });
         } else {
@@ -127,6 +156,7 @@ public class DetailsPostActivity extends AppCompatActivity {
                         .icon(defaultMarker));
                 marker.setTag(businesses);
                 marker.setSnippet(user);
+                marker.setDraggable(true);
             }
         } catch (JSONException e) {
             Log.e(TAG,"Error getting markers from server", e);
@@ -166,4 +196,5 @@ public class DetailsPostActivity extends AppCompatActivity {
         super.onLowMemory();
         mapView.onLowMemory();
     }
+
 }
