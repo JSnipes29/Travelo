@@ -23,7 +23,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="?colorPrimary"
+        android:backgroundTint="?colorPrimaryVariant"
         android:clickable="true"
         app:srcCompat="@drawable/ic_baseline_add_location_alt_24" />
 </RelativeLayout>
