@@ -15,6 +15,7 @@ import com.example.travelo.MainActivity;
 import com.example.travelo.R;
 import com.example.travelo.adapters.CustomWindowAdapter;
 import com.example.travelo.databinding.FragmentPostMapBinding;
+import com.example.travelo.models.Post;
 import com.example.travelo.models.Room;
 import com.example.travelo.models.YelpBusinesses;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,7 +26,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -76,16 +79,30 @@ public class PostMapFragment extends Fragment {
         } else {
             Toast.makeText(getContext(), "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
         }
-        if (!ParseUser.getCurrentUser().equals(room.getOwner())) {
+        // If the user isn't the owner, they can't add a description
+        // and proceeding just goes to main activity
+        if (!ParseUser.getCurrentUser().getObjectId().equals(room.getOwner().getObjectId())) {
             binding.etDescription.setVisibility(View.GONE);
             binding.btnProceed.setText(R.string.done);
-            binding.btnProceed.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getContext(), MainActivity.class);
-                    startActivity(intent);
-                    getActivity().finish();
-                }
+            binding.btnProceed.setOnClickListener(v -> {
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            });
+        } else {
+            // Else the user can add a description and post to server
+            binding.btnProceed.setOnClickListener(v -> {
+                String description = binding.etDescription.getText().toString();
+                Post post = Post.createPost(room.getMap(), description, room.getProfileImages());
+                post.saveInBackground(e -> {
+                    if (e == null) {
+                        Toast.makeText(getContext(), "Successfully posted map", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Log.e(TAG, "Error posting map", e);
+                    }
+                });
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                startActivity(intent);
             });
         }
         return view;

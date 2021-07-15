@@ -22,6 +22,7 @@ public class Room extends ParseObject {
     public static final String KEY_USERS = "users";
     public static final String KEY_ROOM_ID = "roomId";
     public static final String KEY_MAP = "map";
+    public static final String KEY_PROFILE_IMAGES = "profileImages";
 
     public ParseUser getOwner() {
         return getParseUser(KEY_OWNER);
@@ -56,5 +57,13 @@ public class Room extends ParseObject {
 
     public JSONObject getMap() {
         return getJSONObject(KEY_MAP);
+    }
+
+    public void setProfileImages(JSONObject profileImages) {
+        put(KEY_PROFILE_IMAGES, profileImages);
+    }
+
+    public JSONObject getProfileImages() {
+        return getJSONObject(KEY_PROFILE_IMAGES);
     }
 }
