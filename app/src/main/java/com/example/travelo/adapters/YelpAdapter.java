@@ -2,6 +2,7 @@ package com.example.travelo.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,8 @@ import java.util.List;
 
 public class YelpAdapter extends RecyclerView.Adapter<YelpAdapter.ViewHolder> {
 
+    public static final String TAG = "YelpAdapter";
+
     private Context context;
     private List<YelpBusinesses> businesses;
 
@@ -41,12 +44,22 @@ public class YelpAdapter extends RecyclerView.Adapter<YelpAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull YelpAdapter.ViewHolder holder, int position) {
         YelpBusinesses business = businesses.get(position);
-        holder.bind(business);
+        holder.bind(business, position);
     }
 
     @Override
     public int getItemCount() {
         return businesses.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -68,7 +81,7 @@ public class YelpAdapter extends RecyclerView.Adapter<YelpAdapter.ViewHolder> {
             btnAdd = itemView.findViewById(R.id.btnAdd);
         }
 
-        public void bind(final YelpBusinesses business) {
+        public void bind(final YelpBusinesses business, final int position) {
             tvName.setText(business.getName());
             tvNumReviews.setText(String.valueOf(business.getReviewCount()));
             //tvUrl.setText(business.getUrl());
@@ -90,20 +103,15 @@ public class YelpAdapter extends RecyclerView.Adapter<YelpAdapter.ViewHolder> {
                 btnAdd.setText(R.string.remove);
                 btnAdd.setBackgroundColor(Color.BLACK);
                 btnAdd.setTextColor(Color.WHITE);
+            } else {
+                btnAdd.setText(R.string.add);
+                btnAdd.setBackgroundColor(Color.WHITE);
+                btnAdd.setTextColor(Color.BLACK);
             }
             btnAdd.setOnClickListener(v -> {
-                if(business.getAdded()) {
-                    btnAdd.setText(R.string.add);
-                    btnAdd.setBackgroundColor(Color.WHITE);
-                    btnAdd.setTextColor(Color.BLACK);
-                    business.setAdded(false);
-                } else {
-                    btnAdd.setText(R.string.remove);
-                    btnAdd.setBackgroundColor(Color.BLACK);
-                    btnAdd.setTextColor(Color.WHITE);
-                    business.setAdded(true);
-
-                }
+                business.setAdded(!business.getAdded());
+                Log.i(TAG, "Item changed: " + position);
+                notifyItemChanged(position);
             });
         }
     }
