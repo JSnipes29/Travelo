@@ -1,19 +1,24 @@
 package com.example.travelo.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.travelo.DetailsPostActivity;
 import com.example.travelo.R;
 import com.example.travelo.models.Post;
 import com.parse.ParseUser;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -45,12 +50,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         return posts.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder  {
 
         TextView tvName;
         ImageView ivProfileImage;
         TextView tvDescription;
         TextView tvTimestamp;
+        RelativeLayout rlPost;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -58,6 +64,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
             tvDescription = itemView.findViewById(R.id.tvDescription);
             tvTimestamp = itemView.findViewById(R.id.tvTimestamp);
+            rlPost = itemView.findViewById(R.id.rlPost);
         }
 
         public void bind(Post post) {
@@ -72,6 +79,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                         .circleCrop()
                         .into(ivProfileImage);
             }
+            // On click go to detail post
+            rlPost.setOnClickListener(v -> {
+                Intent intent = new Intent(context, DetailsPostActivity.class);
+                intent.putExtra("post", Parcels.wrap(post));
+                context.startActivity(intent);
+            });
         }
+
     }
 }

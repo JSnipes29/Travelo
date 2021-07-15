@@ -27,7 +27,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TestApplication">
-        <activity android:name=".PostMapActivity"></activity>
+        <activity android:name=".DetailsPostActivity"></activity>
+        <activity android:name=".PostMapActivity" />
         <activity android:name=".YelpLocationsActivity" />
         <activity android:name=".RoomActivity" />
         <activity android:name=".LoginActivity">
