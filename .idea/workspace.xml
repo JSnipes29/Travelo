@@ -30,8 +30,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="Non owner users in room can go back to main menu">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/models/Post.java" afterDir="false" />
+    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="User can post map to server">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/adapters/PostAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/ProfileFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_profile.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_post.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -43,9 +46,10 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/ParseApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/ParseApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/PostMapFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/PostMapFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/models/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/models/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/HomeFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -387,7 +391,14 @@
       <option name="project" value="LOCAL" />
       <updated>1626306098108</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="User can post map to server">
+      <created>1626365877654</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1626365877654</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -403,7 +414,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="User can login and sign up for account" />
     <MESSAGE value="Update" />
     <MESSAGE value="Added bottom navigation bar and toolbar as action bar" />
     <MESSAGE value="Created and implemented create and join room fragments" />
@@ -428,13 +438,14 @@
     <MESSAGE value="User can go to the final map after all users are finished" />
     <MESSAGE value="Map is populated with all markers" />
     <MESSAGE value="Non owner users in room can go back to main menu" />
-    <option name="LAST_COMMIT_MESSAGE" value="Non owner users in room can go back to main menu" />
+    <MESSAGE value="User can post map to server" />
+    <option name="LAST_COMMIT_MESSAGE" value="User can post map to server" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="780" y="224" key="#com.intellij.ide.util.MemberChooser" timestamp="1626303478532">
+    <state x="780" y="224" key="#com.intellij.ide.util.MemberChooser" timestamp="1626369397861">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state x="780" y="224" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626303478532" />
+    <state x="780" y="224" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626369397861" />
     <state x="706" y="264" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1626128639591">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
@@ -443,10 +454,10 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="472" y="270" key="AndroidCreateResourceDirectoryDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626120850049" />
-    <state x="472" y="270" key="AndroidCreateResourceFileDialog" timestamp="1626280935389">
+    <state x="472" y="270" key="AndroidCreateResourceFileDialog" timestamp="1626366124026">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state x="472" y="270" key="AndroidCreateResourceFileDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626280935389" />
+    <state x="472" y="270" key="AndroidCreateResourceFileDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626366124026" />
     <state x="741" y="273" key="AndroidProcessChooserDialog" timestamp="1626213836186">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
@@ -487,10 +498,10 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state width="1358" height="260" key="GridCell.Tab.1.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626220447923" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626306106261">
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626365902326">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626306106261" />
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626365902326" />
     <state x="634" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1626216331440">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>

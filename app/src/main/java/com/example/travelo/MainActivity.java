@@ -14,7 +14,11 @@ import android.view.View;
 import com.example.travelo.databinding.ActivityMainBinding;
 import com.example.travelo.fragments.AddTripFragment;
 import com.example.travelo.fragments.HomeFragment;
+import com.example.travelo.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.parse.ParseUser;
+
+import org.parceler.Parcels;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigation.setOnNavigationItemSelectedListener(
                 item -> {
                     Fragment fragment;
+                    Bundle bundle;
                     switch (item.getItemId()) {
                         case R.id.action_home:
                             fragment = new HomeFragment();
@@ -43,7 +48,10 @@ public class MainActivity extends AppCompatActivity {
                             fragment = new AddTripFragment();
                             break;
                         case R.id.action_profile:
-                            fragment = new HomeFragment();
+                            bundle = new Bundle();
+                            bundle.putParcelable("user", Parcels.wrap(ParseUser.getCurrentUser()));
+                            fragment = new ProfileFragment();
+                            fragment.setArguments(bundle);
                             break;
                         case R.id.action_settings:
                             fragment = new HomeFragment();
