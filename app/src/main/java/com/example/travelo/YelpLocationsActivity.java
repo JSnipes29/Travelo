@@ -36,14 +36,17 @@ public class YelpLocationsActivity extends AppCompatActivity {
     ActivityYelpLocationsBinding binding;
     List<YelpBusinesses> businesses;
     YelpAdapter adapter;
+    double lat;
+    double lon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityYelpLocationsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        double lat = getIntent().getDoubleExtra("lat", 0.0);
-        double lon = getIntent().getDoubleExtra("lon",0.0);
+        lat = getIntent().getDoubleExtra("lat", 0.0);
+        lon = getIntent().getDoubleExtra("lon",0.0);
         Log.i(TAG, "Lat: " + lat + " Lon: " + lon);
         businesses = new ArrayList<>();
         adapter = new YelpAdapter(this, businesses);
@@ -66,6 +69,9 @@ public class YelpLocationsActivity extends AppCompatActivity {
                 }
                 businesses.clear();
                 businesses.addAll(body.getBusinesses());
+                if (businesses.isEmpty()) {
+                    Toast.makeText(YelpLocationsActivity.this, "No landmarks in this area", Toast.LENGTH_SHORT).show();
+                }
                 YelpBusinesses.setAddedAll(businesses);
                 YelpBusinesses.setButtonAll(businesses, true);
                 adapter.notifyDataSetChanged();
@@ -76,31 +82,27 @@ public class YelpLocationsActivity extends AppCompatActivity {
                 Log.e(TAG, "onFailure", t);
             }
         });
+        binding.fabAddLocation.setOnClickListener( v -> goToEditMap());
 
-        // This callback will only be called when the activity is at least Started.
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
-            @Override
-            public void handleOnBackPressed() {
-                // Handle the back button event
-                List<YelpBusinesses> added = new ArrayList<>();
-                for (int i = 0; i < businesses.size(); i++) {
-                    YelpBusinesses business = businesses.get(i);
-                    if (business.getAdded()) {
-                        added.add(business);
-                    }
-                }
-                Intent intent = new Intent();
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("added", Parcels.wrap(added));
-                intent.putExtra("lat", lat);
-                intent.putExtra("lon", lon);
-                intent.putExtras(bundle);
-                setResult(RESULT_OK, intent);
-                finish();
+    }
 
+    public void goToEditMap() {
+        // Go back to the edit map fragment
+        // Bundle the added businesses
+        List<YelpBusinesses> added = new ArrayList<>();
+        for (int i = 0; i < businesses.size(); i++) {
+            YelpBusinesses business = businesses.get(i);
+            if (business.getAdded()) {
+                added.add(business);
             }
-        };
-        getOnBackPressedDispatcher().addCallback(this, callback);
-
+        }
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("added", Parcels.wrap(added));
+        intent.putExtra("lat", lat);
+        intent.putExtra("lon", lon);
+        intent.putExtras(bundle);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }
