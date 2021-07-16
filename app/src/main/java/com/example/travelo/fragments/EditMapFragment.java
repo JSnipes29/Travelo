@@ -236,8 +236,8 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                     String name = place.getString("name");
                     double rating = place.getDouble("rating");
                     int numRatings = place.getInt("num_ratings");
-                    //String imageUrl = place.getString("image_url");
-                    YelpBusinesses business = YelpBusinesses.makeBusiness(name, rating, numRatings, null);
+                    String imageUrl = place.getString("image_url");
+                    YelpBusinesses business = YelpBusinesses.makeBusiness(name, rating, numRatings, imageUrl);
                     businesses.add(business);
                 }
                 // Define color of marker icon

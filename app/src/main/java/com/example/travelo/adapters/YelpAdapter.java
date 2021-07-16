@@ -68,7 +68,6 @@ public class YelpAdapter extends RecyclerView.Adapter<YelpAdapter.ViewHolder> {
         private final ImageView ivImage;
         private final RatingBar ratingBar;
         private final TextView tvNumReviews;
-        private final TextView tvUrl;
         private final Button btnAdd;
 
         public ViewHolder(@NonNull View itemView) {
@@ -77,14 +76,12 @@ public class YelpAdapter extends RecyclerView.Adapter<YelpAdapter.ViewHolder> {
             ivImage = itemView.findViewById(R.id.ivBusinessImage);
             ratingBar = itemView.findViewById(R.id.rbRatings);
             tvNumReviews = itemView.findViewById(R.id.tvNumReviews);
-            tvUrl = itemView.findViewById(R.id.tvBusinessUrl);
             btnAdd = itemView.findViewById(R.id.btnAdd);
         }
 
         public void bind(final YelpBusinesses business, final int position) {
             tvName.setText(business.getName());
             tvNumReviews.setText(String.valueOf(business.getReviewCount()));
-            //tvUrl.setText(business.getUrl());
             ratingBar.setRating((float)business.getRating());
             String imageUrl = business.getImageUrl();
             if (imageUrl != null && !imageUrl.isEmpty()) {

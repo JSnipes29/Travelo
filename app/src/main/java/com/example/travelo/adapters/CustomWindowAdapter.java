@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.travelo.R;
+import com.example.travelo.models.MarkerTag;
 import com.example.travelo.models.YelpBusinesses;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
@@ -33,7 +34,12 @@ public class CustomWindowAdapter implements GoogleMap.InfoWindowAdapter {
         View v = mInflater.inflate(R.layout.custom_info_window, null);
         // Populate fields
         RecyclerView window = (RecyclerView) v.findViewById(R.id.rvInfoWindow);
-        businesses = (List<YelpBusinesses>) marker.getTag();
+        Object tag = marker.getTag();
+        if (tag instanceof MarkerTag) {
+            businesses = ((MarkerTag)tag).getLocations();
+        } else {
+            businesses = (List<YelpBusinesses>) tag;
+        }
         adapter = new YelpAdapter(context, businesses);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         window.setAdapter(adapter);
