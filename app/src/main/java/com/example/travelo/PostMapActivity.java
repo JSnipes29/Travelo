@@ -45,6 +45,8 @@ public class PostMapActivity extends AppCompatActivity {
             public void done(Room room, ParseException e) {
                 if (e == null) {
                     setFragment(room);
+                    room.setJoinable(false);
+                    room.saveInBackground();
                 } else {
                     Log.e(TAG, "Error joining room", e);
                 }
@@ -82,5 +84,10 @@ public class PostMapActivity extends AppCompatActivity {
         }
         fragment.setArguments(bundle);
         fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        return;
     }
 }

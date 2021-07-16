@@ -31,7 +31,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="Blocks the user out the room if the room is no longer joinable">
+    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="Fixed bug with uploading users to server in room">
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -39,15 +39,14 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/RoomActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/RoomActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/PostMapActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/PostMapActivity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[VirtualDevicePath@/Users/jsnipes/.android/avd/Pixel_4_API_29.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[SerialNumber@13201FDD40005U]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -107,8 +106,8 @@
     <property name="DEBUGGABLE_DEVICE" value="Pixel_4_XL_API_30 [emulator-5554]" />
     <property name="DEBUGGABLE_PROCESS" value="com.example.travelo" />
     <property name="DEBUGGER_ID" value="Auto" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="VirtualDevicePath@/Users/jsnipes/.android/avd/Pixel_4_API_29.avd" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-07-16T20:45:03.057983Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="SerialNumber@13201FDD40005U" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-07-16T20:52:16.442971Z" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
@@ -494,7 +493,14 @@
       <option name="project" value="LOCAL" />
       <updated>1626468054670</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="Fixed bug with uploading users to server in room">
+      <created>1626468893417</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1626468893417</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -510,7 +516,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Minor UI changes to map info window" />
     <MESSAGE value="Minor changes to Yelp Window UI" />
     <MESSAGE value="Markers coordinates are uploaded to server" />
     <MESSAGE value="Ready button takes user to waiting screen" />
@@ -535,7 +540,8 @@
     <MESSAGE value="Fixed bug with images not showing up on markers" />
     <MESSAGE value="Added more information from Yelp. Users can now view price, address, location, distance from marker, and category of places." />
     <MESSAGE value="Blocks the user out the room if the room is no longer joinable" />
-    <option name="LAST_COMMIT_MESSAGE" value="Blocks the user out the room if the room is no longer joinable" />
+    <MESSAGE value="Fixed bug with uploading users to server in room" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed bug with uploading users to server in room" />
   </component>
   <component name="WindowStateProjectService">
     <state x="780" y="224" key="#com.intellij.ide.util.MemberChooser" timestamp="1626465942864">
@@ -563,22 +569,22 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="759" y="412" key="Github.ShareDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1625865227316" />
-    <state width="1358" height="222" key="GridCell.Tab.0.bottom" timestamp="1626464980934">
+    <state width="679" height="222" key="GridCell.Tab.0.bottom" timestamp="1626468661206">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="222" key="GridCell.Tab.0.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626464980934" />
-    <state width="1358" height="222" key="GridCell.Tab.0.center" timestamp="1626464980933">
+    <state width="679" height="222" key="GridCell.Tab.0.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626468661206" />
+    <state width="679" height="222" key="GridCell.Tab.0.center" timestamp="1626468661205">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="222" key="GridCell.Tab.0.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626464980933" />
-    <state width="1358" height="222" key="GridCell.Tab.0.left" timestamp="1626464980933">
+    <state width="679" height="222" key="GridCell.Tab.0.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626468661205" />
+    <state width="679" height="222" key="GridCell.Tab.0.left" timestamp="1626468661205">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="222" key="GridCell.Tab.0.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626464980933" />
-    <state width="1358" height="222" key="GridCell.Tab.0.right" timestamp="1626464980934">
+    <state width="679" height="222" key="GridCell.Tab.0.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626468661205" />
+    <state width="679" height="222" key="GridCell.Tab.0.right" timestamp="1626468661206">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="222" key="GridCell.Tab.0.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626464980934" />
+    <state width="679" height="222" key="GridCell.Tab.0.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626468661206" />
     <state width="1358" height="259" key="GridCell.Tab.1.bottom" timestamp="1626464360399">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
@@ -595,11 +601,11 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state width="1358" height="259" key="GridCell.Tab.1.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626464360399" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626468062236">
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626468901055">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="-1402" y="222" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1626391118488" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626468062236" />
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626468901055" />
     <state x="483" y="267" key="Vcs.Push.Dialog.v2/0.25.1792.1095/-1920.-11.1920.1055@0.25.1792.1095" timestamp="1626375029876" />
     <state x="634" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1626451923955">
       <screen x="0" y="25" width="1792" height="1010" />
