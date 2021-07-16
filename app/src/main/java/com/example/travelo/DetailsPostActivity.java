@@ -25,7 +25,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -91,6 +93,40 @@ public class DetailsPostActivity extends AppCompatActivity {
         binding.rvComments.setAdapter(commentAdapter);
         LinearLayoutManager commentLayoutManager = new LinearLayoutManager(this);
         binding.rvComments.setLayoutManager(commentLayoutManager);
+
+        // Set up adding comments
+        binding.btnSend.setOnClickListener(v -> {
+            String comment = binding.etComment.getText().toString();
+            if (comment.isEmpty()) {
+                Toast.makeText(DetailsPostActivity.this, "Can't post empty comment", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            String username = ParseUser.getCurrentUser().getUsername();
+            JSONObject jsonComment = new JSONObject();
+            try {
+                jsonComment.put("comment", comment);
+                jsonComment.put("username", username);
+            } catch (JSONException e) {
+                Log.e(TAG, "Couldn't updated json object with comment", e);
+            }
+            JSONArray jsonComments = post.getComments();
+            jsonComments.put(jsonComment);
+            post.setComments(jsonComments);
+            post.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        Log.e(TAG, "Problem loading comment to server", e);
+                        return;
+                    }
+                    Toast.makeText(DetailsPostActivity.this, "Comment uploaded successfully", Toast.LENGTH_SHORT).show();
+                    JSONArray updated = post.getComments();
+                    comments = updated;
+                    commentAdapter.update(comments);
+                }
+            });
+            binding.etComment.setText("");
+        });
 
         // Set up the map from the server
         mapView = (MapView) view.findViewById(R.id.map);
