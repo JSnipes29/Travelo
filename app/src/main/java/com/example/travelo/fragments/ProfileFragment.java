@@ -43,7 +43,7 @@ public class ProfileFragment extends Fragment {
         binding = FragmentProfileBinding.inflate(getLayoutInflater(), container, false);
         View view = binding.getRoot();
         user = (ParseUser) Parcels.unwrap(getArguments().getParcelable("user"));
-
+        binding.tvName.setText(user.getUsername());
         Glide.with(getContext())
                 .load(user.getParseFile("profileImage").getUrl())
                 .circleCrop()
