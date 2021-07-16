@@ -19,6 +19,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.travelo.R;
 import com.example.travelo.models.YelpBusinesses;
+import com.example.travelo.models.YelpCategory;
+import com.example.travelo.models.YelpLocation;
 
 import java.util.List;
 
@@ -69,6 +71,11 @@ public class YelpAdapter extends RecyclerView.Adapter<YelpAdapter.ViewHolder> {
         private final RatingBar ratingBar;
         private final TextView tvNumReviews;
         private final Button btnAdd;
+        private final TextView tvPrice;
+        private final TextView tvDistance;
+        private final TextView tvAddress;
+        private final TextView tvCategory;
+        private final TextView tvLocation;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -77,12 +84,25 @@ public class YelpAdapter extends RecyclerView.Adapter<YelpAdapter.ViewHolder> {
             ratingBar = itemView.findViewById(R.id.rbRatings);
             tvNumReviews = itemView.findViewById(R.id.tvNumReviews);
             btnAdd = itemView.findViewById(R.id.btnAdd);
+            tvPrice = itemView.findViewById(R.id.tvPrice);
+            tvDistance = itemView.findViewById(R.id.tvDistance);
+            tvAddress = itemView.findViewById(R.id.tvAddress);
+            tvCategory = itemView.findViewById(R.id.tvCategory);
+            tvLocation = itemView.findViewById(R.id.tvLocation);
         }
 
         public void bind(final YelpBusinesses business, final int position) {
             tvName.setText(business.getName());
             tvNumReviews.setText(String.valueOf(business.getReviewCount()));
             ratingBar.setRating((float)business.getRating());
+            tvPrice.setText(business.getPrice());
+            String distance = String.valueOf(YelpBusinesses.metersToMiles(business.getDistanceMeters())) + " mi";
+            tvDistance.setText(distance);
+            YelpLocation location = business.getLocation();
+            tvAddress.setText(location.getAddress());
+            tvLocation.setText(YelpLocation.formatAddress(location.getCity(), location.getState(), location.getCountry()));
+            YelpCategory category = business.getCategories().get(0);
+            tvCategory.setText(category.getTitle());
             String imageUrl = business.getImageUrl();
             if (imageUrl != null && !imageUrl.isEmpty()) {
                 Glide.with(context).load(imageUrl)

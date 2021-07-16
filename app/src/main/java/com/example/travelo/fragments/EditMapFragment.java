@@ -23,6 +23,7 @@ import com.example.travelo.adapters.CustomWindowAdapter;
 import com.example.travelo.databinding.FragmentEditMapBinding;
 import com.example.travelo.models.Room;
 import com.example.travelo.models.YelpBusinesses;
+import com.example.travelo.models.YelpLocation;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -181,6 +182,8 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
             marker.setTag(businesses);
             marker.setSnippet(ParseUser.getCurrentUser().getUsername());
             dropPinEffect(marker);
+            // Populate the yelp data into a json object
+            // Upload the json data to the server
             JSONObject jsonMarker = new JSONObject();
             try {
                 jsonMarker.put("user", ParseUser.getCurrentUser().getUsername());
@@ -189,11 +192,19 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                 JSONArray places = new JSONArray();
                 for (int i = 0; i < businesses.size(); i++) {
                     YelpBusinesses business = businesses.get(i);
+                    YelpLocation location = business.getLocation();
                     JSONObject place = new JSONObject();
                     place.put("name", business.getName());
                     place.put("rating", business.getRating());
                     place.put("num_ratings", business.getReviewCount());
                     place.put("image_url", business.getImageUrl());
+                    place.put("price", business.getPrice());
+                    place.put("category", business.getCategories().get(0).getTitle());
+                    place.put("distance", business.getDistanceMeters());
+                    place.put("address", location.getAddress());
+                    place.put("city", location.getCity());
+                    place.put("state", location.getState());
+                    place.put("country", location.getCountry());
                     places.put(place);
                 }
                 jsonMarker.put("places", places);
@@ -237,7 +248,15 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                     double rating = place.getDouble("rating");
                     int numRatings = place.getInt("num_ratings");
                     String imageUrl = place.getString("image_url");
-                    YelpBusinesses business = YelpBusinesses.makeBusiness(name, rating, numRatings, imageUrl);
+                    String price = place.getString("price");
+                    double distanceMeters = place.getDouble("distance");
+                    String category = place.getString("category");
+                    String address = place.getString("address");
+                    String city = place.getString("city");
+                    String state = place.getString("state");
+                    String country = place.getString("country");
+                    YelpLocation location = YelpLocation.makeLocation(address, city, state, country);
+                    YelpBusinesses business = YelpBusinesses.makeBusiness(name, rating, numRatings, imageUrl, price, distanceMeters, location, category);
                     businesses.add(business);
                 }
                 // Define color of marker icon

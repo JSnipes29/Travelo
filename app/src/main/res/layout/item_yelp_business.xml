@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/ivBusinessImage"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="2dp"
@@ -18,13 +18,13 @@
 
     <TextView
         android:id="@+id/tvBusinessName"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
         android:layout_marginTop="2dp"
         android:layout_toEndOf="@+id/ivBusinessImage"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         tools:text="McDonalds" />
 
@@ -51,25 +51,67 @@
         android:textColor="@android:color/holo_blue_bright"
         tools:text="324" />
 
-    <TextView
-        android:id="@+id/tvBusinessUrl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rbRatings"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="40dp"
-        android:layout_toEndOf="@+id/ivBusinessImage"
-        tools:text="https://www.google.com" />
-
     <Button
         android:id="@+id/btnAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/tvPrice"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
         android:background="@color/white"
         android:text="@string/add"
         android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/tvCategory"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rbRatings"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/ivBusinessImage"
+        android:textStyle="italic"
+        tools:text="Software Business" />
+
+    <TextView
+        android:id="@+id/tvAddress"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvCategory"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="30dp"
+        android:layout_toEndOf="@+id/ivBusinessImage"
+        tools:text="1 Hacker Way" />
+
+    <TextView
+        android:id="@+id/tvLocation"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvAddress"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@+id/ivBusinessImage"
+        tools:text="Menlo Park, CA, US" />
+
+    <TextView
+        android:id="@+id/tvDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="10dp"
+        tools:text="2.4 mi" />
+
+    <TextView
+        android:id="@+id/tvPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvDistance"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        tools:text="$$$$$" />
+
 </RelativeLayout>

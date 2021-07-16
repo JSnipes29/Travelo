@@ -18,6 +18,7 @@ import com.example.travelo.databinding.FragmentPostMapBinding;
 import com.example.travelo.models.Post;
 import com.example.travelo.models.Room;
 import com.example.travelo.models.YelpBusinesses;
+import com.example.travelo.models.YelpLocation;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -126,7 +127,15 @@ public class PostMapFragment extends Fragment {
                     double rating = place.getDouble("rating");
                     int numRatings = place.getInt("num_ratings");
                     String imageUrl = place.getString("image_url");
-                    YelpBusinesses business = YelpBusinesses.makeBusiness(name, rating, numRatings, imageUrl);
+                    String price = place.getString("price");
+                    double distanceMeters = place.getDouble("distance");
+                    String category = place.getString("category");
+                    String address = place.getString("address");
+                    String city = place.getString("city");
+                    String state = place.getString("state");
+                    String country = place.getString("country");
+                    YelpLocation location = YelpLocation.makeLocation(address, city, state, country);
+                    YelpBusinesses business = YelpBusinesses.makeBusiness(name, rating, numRatings, imageUrl, price, distanceMeters, location, category);
                     businesses.add(business);
                 }
                 // Define color of marker icon
