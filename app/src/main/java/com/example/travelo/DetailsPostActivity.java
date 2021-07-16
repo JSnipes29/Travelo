@@ -210,7 +210,7 @@ public class DetailsPostActivity extends AppCompatActivity {
                 }
                 // Define color of marker icon
                 BitmapDescriptor defaultMarker =
-                        BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+                        BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET);
                 Marker marker = map.addMarker(new MarkerOptions()
                         .position(new LatLng(latitude, longitude))
                         .icon(defaultMarker));

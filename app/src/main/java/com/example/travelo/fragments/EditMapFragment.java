@@ -1,6 +1,8 @@
 package com.example.travelo.fragments;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,9 +23,11 @@ import com.example.travelo.R;
 import com.example.travelo.YelpLocationsActivity;
 import com.example.travelo.adapters.CustomWindowAdapter;
 import com.example.travelo.databinding.FragmentEditMapBinding;
+import com.example.travelo.models.MarkerTag;
 import com.example.travelo.models.Room;
 import com.example.travelo.models.YelpBusinesses;
 import com.example.travelo.models.YelpLocation;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -42,6 +46,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcels;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,6 +99,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
         } else {
             Toast.makeText(getContext(), "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
         }
+        // When ready go to the post map activity
         binding.btnReady.setOnClickListener(v -> {
             JSONObject users = room.getUsers();
             try {
@@ -108,6 +114,30 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
             intent.putExtra("id", id);
             startActivity(intent);
         });
+
+        // Search for a location when the button is pressed
+        binding.ibSearch.setOnClickListener(v -> {
+            String address = binding.etSearch.getText().toString();
+            if (address.isEmpty()) {
+                return;
+            }
+            Geocoder geocoder = new Geocoder(getContext());
+            List<Address> addressList = null;
+            try {
+                addressList = geocoder.getFromLocationName(address, 1);
+            } catch (IOException e) {
+                Log.e(TAG, "Couldn't search for location" , e);
+            }
+            if (addressList == null) {
+                Toast.makeText(getContext(), "Place not found", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Address place = addressList.get(0);
+            LatLng latlng = new LatLng(place.getLatitude(), place.getLongitude());
+            map.moveCamera(CameraUpdateFactory.newLatLng(latlng));
+            map.animateCamera(CameraUpdateFactory.zoomTo(14f));
+        });
+
         return view;
     }
 
@@ -174,8 +204,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
             Log.i(TAG, "Added Size: " + businesses.size());
             YelpBusinesses.setButtonAll(businesses, false);
             // Define color of marker icon
-            BitmapDescriptor defaultMarker =
-                    BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+            BitmapDescriptor defaultMarker = MarkerTag.colorMarker("green");
             Marker marker = map.addMarker(new MarkerOptions()
                     .position(new LatLng(lat, lon))
                     .icon(defaultMarker));

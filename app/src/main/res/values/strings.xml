@@ -29,5 +29,6 @@
     <string name="done">Done</string>
     <string name="post">Post</string>
     <string name="comment">Comment</string>
+    <string name="search_location">Search Location</string>
 
 </resources>
