@@ -16,13 +16,17 @@ import com.example.travelo.R;
 import com.example.travelo.RoomActivity;
 import com.example.travelo.databinding.FragmentCreateRoomBinding;
 import com.example.travelo.models.Room;
+import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 public class CreateRoomFragment extends DialogFragment {
 
@@ -84,22 +88,43 @@ public class CreateRoomFragment extends DialogFragment {
         room.setMap(map);
         room.setUsers(users);
         room.setProfileImages(profileImages);
-        room.saveInBackground(new SaveCallback() {
+        // Specify which class to query
+        ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
+        // Get Room with id
+        query.whereEqualTo("roomId", roomId);
+        // Find the room asynchronously
+        query.findInBackground(new FindCallback<Room>() {
             @Override
-            public void done(ParseException e) {
+            public void done(List<Room> objects, ParseException e) {
                 if (e != null) {
-                    Log.e(TAG, "Error saving room");
+                    Log.e(TAG, "Error saving room", e);
+                }
+                if (!objects.isEmpty()) {
+                    Toast.makeText(v.getContext(), "Can't make a room with this id", Toast.LENGTH_SHORT).show();
                     dismiss();
                     return;
+                } else {
+                    room.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e != null) {
+                                Log.e(TAG, "Error saving room");
+                                dismiss();
+                                return;
+                            }
+                            Log.i(TAG, "Done Creating Room");
+                            Toast.makeText(v.getContext(), "Created Trip!", Toast.LENGTH_SHORT).show();
+                            dismiss();
+                            Intent intent = new Intent(v.getContext(), RoomActivity.class);
+                            intent.putExtra("room", room.getObjectId());
+                            startActivity(intent);
+                        }
+                    });
                 }
-                Log.i(TAG, "Done Creating Room");
-                Toast.makeText(v.getContext(), "Created Trip!", Toast.LENGTH_SHORT).show();
-                dismiss();
-                Intent intent = new Intent(v.getContext(), RoomActivity.class);
-                intent.putExtra("room", room.getObjectId());
-                startActivity(intent);
             }
         });
+
+
 
 
     }
