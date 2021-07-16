@@ -66,14 +66,24 @@ public class CreateRoomFragment extends DialogFragment {
         String id = room.getObjectId();
         room.setOwner(ParseUser.getCurrentUser());
         JSONObject users = new JSONObject();
+        JSONObject profileImages = new JSONObject();
         String profileUrl = ParseUser.getCurrentUser().getParseFile("profileImage").getUrl();
         try {
             users.put(ParseUser.getCurrentUser().getUsername(), false);
-            //users.put("profileImageUrl", profileUrl);
+            profileImages.put(ParseUser.getCurrentUser().getUsername(), profileUrl);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        JSONObject map = new JSONObject();
+        try {
+            map.put("owner", ParseUser.getCurrentUser().getUsername());
+            map.put("markers", new JSONArray());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        room.setMap(map);
         room.setUsers(users);
+        room.setProfileImages(profileImages);
         room.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -86,7 +96,7 @@ public class CreateRoomFragment extends DialogFragment {
                 Toast.makeText(v.getContext(), "Created Trip!", Toast.LENGTH_SHORT).show();
                 dismiss();
                 Intent intent = new Intent(v.getContext(), RoomActivity.class);
-                intent.putExtra("room", id);
+                intent.putExtra("room", room.getObjectId());
                 startActivity(intent);
             }
         });
