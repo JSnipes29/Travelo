@@ -61,6 +61,34 @@
         android:id="@+id/rvComments"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/etComment"
         android:layout_below="@+id/tvDescription"
-        android:layout_marginTop="2dp" />
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp" />
+
+    <EditText
+        android:id="@+id/etComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toStartOf="@+id/btnSend"
+        android:ems="10"
+        android:hint="@string/comment"
+        android:imeOptions="actionDone"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/btnSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="?colorPrimary"
+        android:text="@string/send"
+        android:textColor="?colorOnPrimary" />
+
 </RelativeLayout>

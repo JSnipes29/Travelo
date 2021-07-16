@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.travelo.adapters.CommentAdapter;
 import com.example.travelo.adapters.CustomWindowAdapter;
 import com.example.travelo.adapters.UsersAdapter;
 import com.example.travelo.databinding.ActivityDetailsPostBinding;
@@ -44,6 +45,8 @@ public class DetailsPostActivity extends AppCompatActivity {
     GoogleMap map;
     List<String[]> users;
     UsersAdapter userAdapter;
+    JSONArray comments;
+    CommentAdapter commentAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,10 +79,20 @@ public class DetailsPostActivity extends AppCompatActivity {
                 Log.e(TAG, "Error getting users", e);
             }
         }
+        // Bind the users who were in the room
         userAdapter = new UsersAdapter(this, users);
         binding.rvUsers.setAdapter(userAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         binding.rvUsers.setLayoutManager(linearLayoutManager);
+
+        // Bind the comments
+        comments = post.getComments();
+        commentAdapter = new CommentAdapter(this, comments);
+        binding.rvComments.setAdapter(commentAdapter);
+        LinearLayoutManager commentLayoutManager = new LinearLayoutManager(this);
+        binding.rvComments.setLayoutManager(commentLayoutManager);
+
+        // Set up the map from the server
         mapView = (MapView) view.findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
         mapView.onResume();

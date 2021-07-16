@@ -4,6 +4,7 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 @ParseClassName("Post")
@@ -41,11 +42,11 @@ public class Post extends ParseObject {
         put(KEY_OWNER, user);
     }
 
-    public JSONObject getComments() {
-        return getJSONObject(KEY_COMMENTS);
+    public JSONArray getComments() {
+        return getJSONArray(KEY_COMMENTS);
     }
 
-    public void setComments(JSONObject messages) {
+    public void setComments(JSONArray messages) {
         put(KEY_COMMENTS, messages);
     }
 
