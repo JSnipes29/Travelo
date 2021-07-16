@@ -20,7 +20,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.parceler.Parcel;
 import org.parceler.Parcels;
 
@@ -43,6 +47,28 @@ public class RoomActivity extends AppCompatActivity {
         query.getInBackground(id, new GetCallback<Room>() {
             public void done(Room room, ParseException e) {
                 if (e == null) {
+                    JSONObject users = room.getUsers();
+                    JSONObject profileImages = room.getProfileImages();
+                    String profileUrl = ParseUser.getCurrentUser().getParseFile("profileImage").getUrl();
+                    try {
+                        users.put(ParseUser.getCurrentUser().getUsername(), false);
+                        profileImages.put(ParseUser.getCurrentUser().getUsername(), profileUrl);
+                    } catch (JSONException error) {
+                        error.printStackTrace();
+                        Log.e(TAG, "Couldn't upload users to json object", error);
+                    }
+                    room.setUsers(users);
+                    room.setProfileImages(profileImages);
+                    room.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                Log.i(TAG, "Updated users to server");
+                            } else {
+                                Log.e(TAG, "Couldn't update users to server");
+                            }
+                        }
+                    });
                     setBottomNavigation(room);
                 } else {
                     Log.e(TAG, "Error joining room", e);

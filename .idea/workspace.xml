@@ -6,6 +6,7 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="Room" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="AutoImportSettings">
@@ -30,20 +31,16 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="Added more information from Yelp. Users can now view price, address, location, distance from marker, and category of places.">
+    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="Blocks the user out the room if the room is no longer joinable">
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/jarAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/JoinRoomFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/JoinRoomFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/models/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/models/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/RoomActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/RoomActivity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +108,7 @@
     <property name="DEBUGGABLE_PROCESS" value="com.example.travelo" />
     <property name="DEBUGGER_ID" value="Auto" />
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="VirtualDevicePath@/Users/jsnipes/.android/avd/Pixel_4_API_29.avd" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-07-16T20:32:50.639950Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-07-16T20:45:03.057983Z" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
@@ -490,7 +487,14 @@
       <option name="project" value="LOCAL" />
       <updated>1626466820211</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="Blocks the user out the room if the room is no longer joinable">
+      <created>1626468054670</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1626468054670</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -506,7 +510,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added username to window screen on map" />
     <MESSAGE value="Minor UI changes to map info window" />
     <MESSAGE value="Minor changes to Yelp Window UI" />
     <MESSAGE value="Markers coordinates are uploaded to server" />
@@ -531,7 +534,8 @@
     <MESSAGE value="Fixed bug that didn't allow user to create a room" />
     <MESSAGE value="Fixed bug with images not showing up on markers" />
     <MESSAGE value="Added more information from Yelp. Users can now view price, address, location, distance from marker, and category of places." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added more information from Yelp. Users can now view price, address, location, distance from marker, and category of places." />
+    <MESSAGE value="Blocks the user out the room if the room is no longer joinable" />
+    <option name="LAST_COMMIT_MESSAGE" value="Blocks the user out the room if the room is no longer joinable" />
   </component>
   <component name="WindowStateProjectService">
     <state x="780" y="224" key="#com.intellij.ide.util.MemberChooser" timestamp="1626465942864">
@@ -591,11 +595,11 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state width="1358" height="259" key="GridCell.Tab.1.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626464360399" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626466828137">
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626468062236">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="-1402" y="222" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1626391118488" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626466828137" />
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626468062236" />
     <state x="483" y="267" key="Vcs.Push.Dialog.v2/0.25.1792.1095/-1920.-11.1920.1055@0.25.1792.1095" timestamp="1626375029876" />
     <state x="634" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1626451923955">
       <screen x="0" y="25" width="1792" height="1010" />
