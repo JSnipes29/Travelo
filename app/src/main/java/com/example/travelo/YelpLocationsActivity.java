@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.travelo.adapters.YelpAdapter;
 import com.example.travelo.databinding.ActivityYelpLocationsBinding;
+import com.example.travelo.models.MarkerTag;
 import com.example.travelo.models.YelpBusinesses;
 import com.example.travelo.models.YelpSearchResult;
 
@@ -48,7 +49,8 @@ public class YelpLocationsActivity extends AppCompatActivity {
         Object obj = Parcels.unwrap(getIntent().getParcelableExtra("markerData"));
         if (obj != null) {
             Log.i(TAG, "Coming from long click");
-            List<YelpBusinesses> addedLocations = (List<YelpBusinesses>) obj;
+            MarkerTag tag = (MarkerTag) obj;
+            List<YelpBusinesses> addedLocations = tag.getLocations();
             adapter = new YelpAdapter(this, addedLocations);
             binding.rvBusinesses.setAdapter(adapter);
             binding.rvBusinesses.setLayoutManager(new LinearLayoutManager(this));

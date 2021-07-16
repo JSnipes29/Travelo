@@ -15,6 +15,7 @@ import com.example.travelo.adapters.CommentAdapter;
 import com.example.travelo.adapters.CustomWindowAdapter;
 import com.example.travelo.adapters.UsersAdapter;
 import com.example.travelo.databinding.ActivityDetailsPostBinding;
+import com.example.travelo.models.MarkerTag;
 import com.example.travelo.models.Post;
 import com.example.travelo.models.YelpBusinesses;
 import com.google.android.gms.maps.GoogleMap;
@@ -143,17 +144,18 @@ public class DetailsPostActivity extends AppCompatActivity {
                     map.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
                         @Override
                         public void onMarkerDragStart(@NonNull Marker marker) {
+                            MarkerTag tag = (MarkerTag) marker.getTag();
                             // Define color of marker icon
                             BitmapDescriptor defaultMarker =
                                     BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
                             Marker replace = map.addMarker(new MarkerOptions()
-                                    .position(marker.getPosition())
+                                    .position(new LatLng(tag.getLatitude(), tag.getLongitude()))
                                     .icon(defaultMarker));
-                            replace.setTag(marker.getTag());
+                            replace.setTag(tag);
                             replace.setSnippet(marker.getSnippet());
                             replace.setDraggable(true);
                             Intent intent = new Intent(DetailsPostActivity.this, YelpLocationsActivity.class);
-                            intent.putExtra("markerData", Parcels.wrap((List<YelpBusinesses>)marker.getTag()));
+                            intent.putExtra("markerData", Parcels.wrap((MarkerTag)marker.getTag()));
                             marker.remove();
                             startActivity(intent);
                         }
@@ -203,7 +205,7 @@ public class DetailsPostActivity extends AppCompatActivity {
                 Marker marker = map.addMarker(new MarkerOptions()
                         .position(new LatLng(latitude, longitude))
                         .icon(defaultMarker));
-                marker.setTag(businesses);
+                marker.setTag(new MarkerTag(businesses, latitude, longitude));
                 marker.setSnippet(user);
                 marker.setDraggable(true);
             }

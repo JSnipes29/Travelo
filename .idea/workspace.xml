@@ -30,7 +30,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="Minor UI fix in detailed post view">
+    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="User can send comments to post">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/models/MarkerTag.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -41,7 +42,7 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/DetailsPostActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/DetailsPostActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/adapters/CommentAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/adapters/CommentAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/YelpLocationsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/YelpLocationsActivity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,8 +88,8 @@
       <list>
         <option value="Interface" />
         <option value="resourceFile" />
-        <option value="Class" />
         <option value="layoutResourceFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -453,7 +454,14 @@
       <option name="project" value="LOCAL" />
       <updated>1626451313443</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="User can send comments to post">
+      <created>1626452461764</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1626452461764</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -469,7 +477,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="List of places pops up when user long holds on map" />
     <MESSAGE value="Updated to get the right location from long click" />
     <MESSAGE value="Button text changes from 'add' to 'remove' and changes color when adding on Yelp" />
     <MESSAGE value="User can add markers on map" />
@@ -494,14 +501,15 @@
     <MESSAGE value="Holding marker in detail post view brings up all added Yelp locations" />
     <MESSAGE value="User can view comments on post" />
     <MESSAGE value="Minor UI fix in detailed post view" />
-    <option name="LAST_COMMIT_MESSAGE" value="Minor UI fix in detailed post view" />
+    <MESSAGE value="User can send comments to post" />
+    <option name="LAST_COMMIT_MESSAGE" value="User can send comments to post" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="-1084" y="197" key="#com.intellij.ide.util.MemberChooser" timestamp="1626387609993">
-      <screen x="-1920" y="-11" width="1920" height="1055" />
+    <state x="780" y="224" key="#com.intellij.ide.util.MemberChooser" timestamp="1626453064279">
+      <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="-1084" y="197" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1010/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1626387609993" />
-    <state x="780" y="224" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626372968827" />
+    <state x="780" y="224" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626453064279" />
     <state x="706" y="264" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1626128639591">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
@@ -522,22 +530,22 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="759" y="412" key="Github.ShareDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1625865227316" />
-    <state width="1358" height="260" key="GridCell.Tab.0.bottom" timestamp="1626220447922">
+    <state width="1358" height="224" key="GridCell.Tab.0.bottom" timestamp="1626453835779">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="260" key="GridCell.Tab.0.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626220447922" />
-    <state width="1358" height="260" key="GridCell.Tab.0.center" timestamp="1626220447922">
+    <state width="1358" height="224" key="GridCell.Tab.0.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626453835779" />
+    <state width="1358" height="224" key="GridCell.Tab.0.center" timestamp="1626453835779">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="260" key="GridCell.Tab.0.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626220447922" />
-    <state width="1358" height="260" key="GridCell.Tab.0.left" timestamp="1626220447921">
+    <state width="1358" height="224" key="GridCell.Tab.0.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626453835779" />
+    <state width="1358" height="224" key="GridCell.Tab.0.left" timestamp="1626453835778">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="260" key="GridCell.Tab.0.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626220447921" />
-    <state width="1358" height="260" key="GridCell.Tab.0.right" timestamp="1626220447922">
+    <state width="1358" height="224" key="GridCell.Tab.0.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626453835778" />
+    <state width="1358" height="224" key="GridCell.Tab.0.right" timestamp="1626453835779">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="260" key="GridCell.Tab.0.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626220447922" />
+    <state width="1358" height="224" key="GridCell.Tab.0.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626453835779" />
     <state width="1358" height="260" key="GridCell.Tab.1.bottom" timestamp="1626220447923">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
@@ -554,11 +562,11 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state width="1358" height="260" key="GridCell.Tab.1.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626220447923" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626451318640">
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626452469924">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="-1402" y="222" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1626391118488" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626451318640" />
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626452469924" />
     <state x="483" y="267" key="Vcs.Push.Dialog.v2/0.25.1792.1095/-1920.-11.1920.1055@0.25.1792.1095" timestamp="1626375029876" />
     <state x="634" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1626451923955">
       <screen x="0" y="25" width="1792" height="1010" />
