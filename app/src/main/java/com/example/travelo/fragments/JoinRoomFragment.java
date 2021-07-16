@@ -90,6 +90,11 @@ public class JoinRoomFragment extends DialogFragment {
                 return;
             }
 
+            if (!rooms.get(0).getJoinable()) {
+                Toast.makeText(v.getContext(), "This is room is no longer joinable", Toast.LENGTH_SHORT).show();
+                dismiss();
+                return;
+            }
             dismiss();
             Log.i(TAG, String.valueOf(getContext()));
             Intent intent = new Intent(v.getContext(), RoomActivity.class);
