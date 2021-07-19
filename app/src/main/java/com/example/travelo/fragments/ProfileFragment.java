@@ -82,6 +82,7 @@ public class ProfileFragment extends Fragment {
     }
 
     public void follow() {
+        binding.tvFollowersCount.setText(String.valueOf(1 + Integer.parseInt(binding.tvFollowersCount.getText().toString())));
         // Button now unfollows on click
         binding.btnFollow.setText(R.string.following);
         binding.btnFollow.setOnClickListener(v -> unFollow());
@@ -126,6 +127,58 @@ public class ProfileFragment extends Fragment {
         // Button now follows on click
         binding.btnFollow.setText(R.string.follow);
         binding.btnFollow.setOnClickListener(v -> follow());
+        binding.tvFollowersCount.setText(String.valueOf(Integer.parseInt(binding.tvFollowersCount.getText().toString()) - 1));
+        binding.btnFollow.setClickable(false);
+        ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
+        query.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>() {
+            public void done(ParseUser currentUser, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Couldn't find current user", e);
+                }
+                // Add current user to users followers
+                ParseObject followersObject = user.getParseObject("followers");
+                JSONArray followers = followersObject.getJSONArray("followers");
+                followers = jsonDelete(followers, (currentUser.getObjectId()));
+                user.getParseObject("followers").put("followers", followers);
+                // Add user to current users following
+                JSONArray following = currentUser.getJSONArray("following");
+                following = jsonDelete(following, user.getObjectId());
+                currentUser.put("following", following);
+                // Save both to the Parse server
+                followersObject.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Couldn't update followers");
+                        } else {
+                            Log.i(TAG, "Updated followers");
+                        }
+                    }
+                });
+                currentUser.saveInBackground();
+
+                // Button is clickable again
+                binding.btnFollow.setClickable(true);
+
+            }
+        });
+
+    }
+
+    private JSONArray jsonDelete(JSONArray jsonArray, String query) {
+        JSONArray res = jsonArray;
+        for (int i = 0; i < res.length(); i++) {
+            try {
+                String q = res.getString(i);
+                if (q.equals(query)) {
+                    res.remove(i);
+                    return res;
+                }
+            } catch (JSONException e) {
+                Log.e(TAG,"Error deleting from json array" ,e);
+            }
+        }
+        return res;
     }
 
     public List<String> jsonToList(JSONArray array) {
