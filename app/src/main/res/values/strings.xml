@@ -32,5 +32,8 @@
     <string name="search_location">Search Location</string>
     <string name="logout">Logout</string>
     <string name="add_photo">Add Photo</string>
+    <string name="follow">Follow</string>
+    <string name="following">Following</string>
+    <string name="followers">Followers</string>
 
 </resources>

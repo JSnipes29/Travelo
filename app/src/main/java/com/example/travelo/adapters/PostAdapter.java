@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.travelo.DetailsPostActivity;
+import com.example.travelo.ProfileActivity;
 import com.example.travelo.R;
 import com.example.travelo.models.Post;
 import com.parse.ParseFile;
@@ -81,6 +82,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                         .load(url)
                         .circleCrop()
                         .into(ivProfileImage);
+                ivProfileImage.setClickable(true);
+                ivProfileImage.setOnClickListener(v -> ProfileActivity.goToProfile(context, user.getUsername()));
             }
             ParseFile image = post.getPhoto();
             if (image == null) {

@@ -68,6 +68,8 @@ public class DetailsPostActivity extends AppCompatActivity {
                     .load(url)
                     .circleCrop()
                     .into(binding.ivProfileImage);
+            binding.ivProfileImage.setClickable(true);
+            binding.ivProfileImage.setOnClickListener(v -> ProfileActivity.goToProfile(this, user.getUsername()));
         }
         users = new ArrayList<>();
         JSONObject jsonUsers = post.getUsers();

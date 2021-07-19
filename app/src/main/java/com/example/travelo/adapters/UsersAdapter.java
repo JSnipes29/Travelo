@@ -78,33 +78,10 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             }
             ivProfileImage.setClickable(true);
             tvName.setClickable(true);
-            ivProfileImage.setOnClickListener(v -> goToProfile(user[0]));
-            tvName.setOnClickListener(v -> goToProfile(user[0]));
+            ivProfileImage.setOnClickListener(v -> ProfileActivity.goToProfile(context, user[0]));
+            tvName.setOnClickListener(v -> ProfileActivity.goToProfile(context, user[0]));
         }
 
-        public void goToProfile(String userid) {
-            Intent intent = new Intent(context, ProfileActivity.class);
-            ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
-            query.whereEqualTo("username", userid);
-            query.setLimit(1);
-            query.findInBackground(new FindCallback<ParseUser>() {
-                @Override
-                public void done(List<ParseUser> objects, ParseException e) {
-                    if (e != null) {
-                        Log.e("UsersAdapter","Couldn't retrieve user",e);
-                        return;
-                    }
-                    if (objects.isEmpty()) {
-                        Log.i("UsersAdapter", "Couldn't find user");
-                        return;
-                    }
-                    ParseUser parseUser = objects.get(0);
-                    Log.i("UsersAdapter","Found user: " + parseUser.getObjectId());
-                    intent.putExtra("parseUser", Parcels.wrap(parseUser));
-                    context.startActivity(intent);
-                }
-            });
 
-        }
     }
 }
