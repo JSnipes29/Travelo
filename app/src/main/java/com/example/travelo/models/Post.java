@@ -1,11 +1,14 @@
 package com.example.travelo.models;
 
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.File;
 
 @ParseClassName("Post")
 public class Post extends ParseObject {
@@ -16,11 +19,12 @@ public class Post extends ParseObject {
     public static final String KEY_MAP = "map";
     public static final String KEY_DESCRIPTION = "description";
     public static final String DEFAULT_DESCRIPTION = "Map";
+    public static final String KEY_PHOTO = "photo";
 
 
     public Post() {}
 
-    public static Post createPost(JSONObject map, String description, JSONObject users) {
+    public static Post createPost(JSONObject map, String description, JSONObject users, File photo) {
         Post post = new Post();
         post.setMap(map);
         post.setOwner(ParseUser.getCurrentUser());
@@ -31,6 +35,10 @@ public class Post extends ParseObject {
             post.setDescription(description);
         }
         post.setUsers(users);
+        if (photo != null) {
+            ParseFile parseFilePhoto = new ParseFile(photo);
+            post.setPhoto(parseFilePhoto);
+        }
         return post;
     }
 
@@ -72,6 +80,14 @@ public class Post extends ParseObject {
 
     public String getDescription() {
         return getString(KEY_DESCRIPTION);
+    }
+
+    public void setPhoto(ParseFile photo) {
+        put(KEY_PHOTO, photo);
+    }
+
+    public ParseFile getPhoto() {
+        return getParseFile(KEY_PHOTO);
     }
 
 

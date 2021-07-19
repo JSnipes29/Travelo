@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.example.travelo.DetailsPostActivity;
 import com.example.travelo.R;
 import com.example.travelo.models.Post;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import org.parceler.Parcels;
@@ -57,6 +58,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         TextView tvDescription;
         TextView tvTimestamp;
         RelativeLayout rlPost;
+        ImageView ivImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,6 +67,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             tvDescription = itemView.findViewById(R.id.tvDescription);
             tvTimestamp = itemView.findViewById(R.id.tvTimestamp);
             rlPost = itemView.findViewById(R.id.rlPost);
+            ivImage = itemView.findViewById(R.id.ivImage);
         }
 
         public void bind(Post post) {
@@ -78,6 +81,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                         .load(url)
                         .circleCrop()
                         .into(ivProfileImage);
+            }
+            ParseFile image = post.getPhoto();
+            if (image == null) {
+                ivImage.setVisibility(View.GONE);
+            } else {
+                Glide.with(context)
+                        .load(image.getUrl())
+                        .into(ivImage);
             }
             // On click go to detail post
             rlPost.setOnClickListener(v -> {

@@ -46,4 +46,15 @@
         android:backgroundTint="?colorPrimary"
         android:text="@string/post"
         android:textColor="?colorOnPrimary" />
+
+    <Button
+        android:id="@+id/btnAddPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnProceed"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="?colorPrimary"
+        android:text="@string/add_photo"
+        android:textColor="?colorOnPrimary" />
 </RelativeLayout>

@@ -31,5 +31,6 @@
     <string name="comment">Comment</string>
     <string name="search_location">Search Location</string>
     <string name="logout">Logout</string>
+    <string name="add_photo">Add Photo</string>
 
 </resources>

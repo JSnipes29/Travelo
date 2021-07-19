@@ -9,6 +9,14 @@
         android:name="android.permission.ACCESS_COARSE_LOCATION"
         android:protectionLevel="dangerous" />
 
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.CAMERA_BUTTON" />
+        </intent>
+
+        <package android:name="com.android.camera" />
+    </queries>
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.example.mapdemo.permission.MAPS_RECEIVE" />
@@ -43,6 +51,17 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBHHg52-2NiJRQuB46F2tyteb4P8NpRZUI" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.codepath.fileprovider.Travelo"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/fileprovider" />
+        </provider>
+
     </application>
 
 </manifest>
