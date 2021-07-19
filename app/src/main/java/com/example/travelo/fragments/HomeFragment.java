@@ -4,12 +4,14 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.travelo.EndlessRecyclerViewScrollListener;
 import com.example.travelo.R;
 import com.example.travelo.adapters.PostAdapter;
 import com.example.travelo.adapters.UsersAdapter;
@@ -30,7 +32,7 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
 
-    public static final int LIMIT = 20;
+    public static final int LIMIT = 2;
     public static final String TAG = "HomeFragment";
 
     FragmentHomeBinding binding;
@@ -38,6 +40,7 @@ public class HomeFragment extends Fragment {
     PostAdapter postAdapter;
     UsersAdapter usersAdapter;
     List<String[]> following;
+    EndlessRecyclerViewScrollListener scrollListener;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -59,8 +62,16 @@ public class HomeFragment extends Fragment {
         binding.rvPosts.setAdapter(postAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         binding.rvPosts.setLayoutManager(linearLayoutManager);
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Log.i(TAG, "Load more");
+                queryPosts(1);
+            }
+        };
+        binding.rvPosts.addOnScrollListener(scrollListener);
         // Query posts to populate feed
-        queryPosts();
+        queryPosts(0);
 
         // Set up adapter for users following
         following = new ArrayList<>();
@@ -79,11 +90,18 @@ public class HomeFragment extends Fragment {
         binding = null;
     }
 
-    private void queryPosts() {
+    private void queryPosts(int parameter) {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_OWNER);
         query.setLimit(LIMIT);
         query.addDescendingOrder(Post.KEY_CREATED_AT);
+        final int start;
+        if (parameter == 1) {
+            start = posts.size();
+            query.whereLessThan(Post.KEY_CREATED_AT, posts.get(posts.size() - 1).getCreatedAt());
+        } else {
+            start = 0;
+        }
         query.findInBackground((posts, e) -> {
             if (e != null) {
                 Log.e(TAG, "Couldn't get post", e);
@@ -92,8 +110,16 @@ public class HomeFragment extends Fragment {
             for (Post post: posts) {
                 Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getOwner().getUsername());
             }
+            if (parameter == 1) {
+                Log.i(TAG, "Endless scrolling in effect");
+            }
             this.posts.addAll(posts);
-            postAdapter.notifyDataSetChanged();
+            if (parameter == 1) {
+                postAdapter.notifyItemRangeInserted(start, posts.size());
+            } else {
+                postAdapter.notifyDataSetChanged();
+            }
+            scrollListener.resetState();
         });
     }
 

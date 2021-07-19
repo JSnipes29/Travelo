@@ -6,6 +6,7 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="HomeFragment" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="AutoImportSettings">
@@ -30,20 +31,17 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="User can unfollow users">
+    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="Users can view other users who they follow in their home feed">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/EndlessRecyclerViewScrollListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/jarAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/HomeFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,8 +87,8 @@
       <list>
         <option value="Interface" />
         <option value="layoutResourceFile" />
-        <option value="Class" />
         <option value="resourceFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -202,13 +200,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1625865131177</updated>
-    </task>
-    <task id="LOCAL-00007" summary="User can join and create room and open up the room fragment">
-      <created>1626134785264</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1626134785264</updated>
     </task>
     <task id="LOCAL-00008" summary="User can send messages to server">
       <created>1626193669848</created>
@@ -546,7 +537,14 @@
       <option name="project" value="LOCAL" />
       <updated>1626735333829</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="Users can view other users who they follow in their home feed">
+      <created>1626736997538</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1626736997538</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -562,7 +560,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Yelp locations are now added through floating action button" />
     <MESSAGE value="Changed floating action button color" />
     <MESSAGE value="Holding marker in detail post view brings up all added Yelp locations" />
     <MESSAGE value="User can view comments on post" />
@@ -587,7 +584,8 @@
     <MESSAGE value="User can tap user profile image on detail post to view user profile" />
     <MESSAGE value="User can follow other users" />
     <MESSAGE value="User can unfollow users" />
-    <option name="LAST_COMMIT_MESSAGE" value="User can unfollow users" />
+    <MESSAGE value="Users can view other users who they follow in their home feed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Users can view other users who they follow in their home feed" />
   </component>
   <component name="WindowStateProjectService">
     <state x="780" y="224" key="#com.intellij.ide.util.MemberChooser" timestamp="1626465942864">
@@ -615,22 +613,22 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="759" y="412" key="Github.ShareDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1625865227316" />
-    <state width="1358" height="259" key="GridCell.Tab.0.bottom" timestamp="1626715869956">
+    <state width="1358" height="222" key="GridCell.Tab.0.bottom" timestamp="1626738405794">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.0.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626715869956" />
-    <state width="1358" height="259" key="GridCell.Tab.0.center" timestamp="1626715869956">
+    <state width="1358" height="222" key="GridCell.Tab.0.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626738405794" />
+    <state width="1358" height="222" key="GridCell.Tab.0.center" timestamp="1626738405793">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.0.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626715869956" />
-    <state width="1358" height="259" key="GridCell.Tab.0.left" timestamp="1626715869955">
+    <state width="1358" height="222" key="GridCell.Tab.0.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626738405793" />
+    <state width="1358" height="222" key="GridCell.Tab.0.left" timestamp="1626738405792">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.0.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626715869955" />
-    <state width="1358" height="259" key="GridCell.Tab.0.right" timestamp="1626715869956">
+    <state width="1358" height="222" key="GridCell.Tab.0.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626738405792" />
+    <state width="1358" height="222" key="GridCell.Tab.0.right" timestamp="1626738405793">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.0.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626715869956" />
+    <state width="1358" height="222" key="GridCell.Tab.0.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626738405793" />
     <state width="1358" height="259" key="GridCell.Tab.1.bottom" timestamp="1626464360399">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
