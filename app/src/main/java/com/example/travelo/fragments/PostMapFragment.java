@@ -34,6 +34,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -61,6 +62,7 @@ public class PostMapFragment extends Fragment {
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 24;
     private File photoFile;
     public String photoFileName = "map_photo.jpg";
+    public static final boolean DELETE_ROOM = true;
 
     public PostMapFragment() {
         // Required empty public constructor
@@ -117,6 +119,16 @@ public class PostMapFragment extends Fragment {
                         Log.e(TAG, "Error posting map", e);
                     }
                 });
+                // Delete the room after posting the map
+                if (DELETE_ROOM) {
+                    room.deleteInBackground(e -> {
+                        if (e != null) {
+                            Log.e(TAG, "Error deleting room", e);
+                            return;
+                        }
+                        Log.i(TAG, "Room has been deleted");
+                    });
+                }
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
             });
