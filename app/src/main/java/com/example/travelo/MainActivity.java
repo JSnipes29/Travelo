@@ -33,10 +33,8 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         final FragmentManager fragmentManager = getSupportFragmentManager();
-
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
         // handle navigation selection
         binding.bottomNavigation.setOnNavigationItemSelectedListener(
                 item -> {

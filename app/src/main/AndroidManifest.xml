@@ -35,7 +35,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TestApplication">
-        <activity android:name=".DetailsPostActivity"></activity>
+        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".DetailsPostActivity" />
         <activity android:name=".PostMapActivity" />
         <activity android:name=".YelpLocationsActivity" />
         <activity android:name=".RoomActivity" />
@@ -61,7 +62,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/fileprovider" />
         </provider>
-
     </application>
 
 </manifest>

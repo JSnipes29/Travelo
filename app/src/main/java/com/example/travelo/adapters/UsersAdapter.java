@@ -1,6 +1,9 @@
 package com.example.travelo.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +11,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.travelo.MainActivity;
+import com.example.travelo.ProfileActivity;
 import com.example.travelo.R;
+import com.example.travelo.fragments.ProfileFragment;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -63,6 +76,35 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
                         .circleCrop()
                         .into(ivProfileImage);
             }
+            ivProfileImage.setClickable(true);
+            tvName.setClickable(true);
+            ivProfileImage.setOnClickListener(v -> goToProfile(user[0]));
+            tvName.setOnClickListener(v -> goToProfile(user[0]));
+        }
+
+        public void goToProfile(String userid) {
+            Intent intent = new Intent(context, ProfileActivity.class);
+            ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
+            query.whereEqualTo("username", userid);
+            query.setLimit(1);
+            query.findInBackground(new FindCallback<ParseUser>() {
+                @Override
+                public void done(List<ParseUser> objects, ParseException e) {
+                    if (e != null) {
+                        Log.e("UsersAdapter","Couldn't retrieve user",e);
+                        return;
+                    }
+                    if (objects.isEmpty()) {
+                        Log.i("UsersAdapter", "Couldn't find user");
+                        return;
+                    }
+                    ParseUser parseUser = objects.get(0);
+                    Log.i("UsersAdapter","Found user: " + parseUser.getObjectId());
+                    intent.putExtra("parseUser", Parcels.wrap(parseUser));
+                    context.startActivity(intent);
+                }
+            });
+
         }
     }
 }
