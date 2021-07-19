@@ -48,13 +48,6 @@ public class RoomMessagesFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static RoomMessagesFragment newInstance(String param1, String param2) {
-        RoomMessagesFragment fragment = new RoomMessagesFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,10 +58,11 @@ public class RoomMessagesFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentRoomMessagesBinding.inflate(getLayoutInflater(), container, false);
         View view = binding.getRoot();
-
+        // Get the room from the room activity
         room = (Room) Parcels.unwrap(getArguments().getParcelable("room"));
         Log.i(TAG, "Room id: " + room.getRoomId());
         setupMessagePosting();
+        // Setup handler that refreshes messages every few seconds
         refreshMessagesRunnable = new Runnable() {
             @Override
             public void run() {
@@ -99,7 +93,9 @@ public class RoomMessagesFragment extends Fragment {
         binding.ibSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Get the message the user typed in
                 String data = binding.etMessage.getText().toString();
+                // Put the message into a JSON object to put to a server
                 JSONObject message = new JSONObject();
                 try {
                     message.put("username", ParseUser.getCurrentUser().getUsername());
@@ -108,9 +104,11 @@ public class RoomMessagesFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                // Put the messages in the room object
                 JSONArray messages = room.getMessages();
                 messages.put(message);
                 room.setMessages(messages);
+                // Upload the message object to the server
                 room.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -122,6 +120,7 @@ public class RoomMessagesFragment extends Fragment {
                         }
                     }
                 });
+                // Empty the message bar
                 binding.etMessage.setText(null);
             }
         });
