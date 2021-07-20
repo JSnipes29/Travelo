@@ -37,5 +37,6 @@
     <string name="followers">Followers</string>
     <string name="inbox">Inbox</string>
     <string name="room_id_semi">Room ID:</string>
+    <string name="join">Join</string>
 
 </resources>

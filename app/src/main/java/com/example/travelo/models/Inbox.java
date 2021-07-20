@@ -12,13 +12,14 @@ public class Inbox extends ParseObject {
     public Inbox() {}
     public static final String KEY_MESSAGES = "messages";
     public static final String KEY_ROOMS = "rooms";
+    public static final String KEY = "inbox";
 
-    public void setMessages(JSONObject jsonObject) {
+    public void setMessages(JSONArray jsonObject) {
         put(KEY_MESSAGES, jsonObject);
     }
 
-    public JSONObject getMessages() {
-        return getJSONObject(KEY_MESSAGES);
+    public JSONArray getMessages() {
+        return getJSONArray(KEY_MESSAGES);
     }
 
     public void setRooms(JSONArray jsonArray) {

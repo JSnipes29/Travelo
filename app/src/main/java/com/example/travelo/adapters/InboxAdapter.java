@@ -1,12 +1,16 @@
 package com.example.travelo.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,10 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.travelo.R;
+import com.example.travelo.RoomActivity;
 import com.example.travelo.models.Room;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -103,11 +109,15 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
     public class RoomMessageViewHolder extends MessageViewHolder {
         RecyclerView rvUsers;
         TextView tvRoomId;
+        Button btnJoin;
 
         public RoomMessageViewHolder(View itemView) {
             super(itemView);
             tvRoomId = (TextView) itemView.findViewById(R.id.tvRoomId);
             rvUsers = (RecyclerView) itemView.findViewById(R.id.rvUsers);
+            btnJoin = (Button) itemView.findViewById(R.id.btnJoin);
+
+
         }
 
         @Override
@@ -126,7 +136,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
                     List<String[]> users = new ArrayList<>();
                     JSONObject jsonUsers = room.getProfileImages();
                     Iterator<String> iter = jsonUsers.keys();
-                    while(iter.hasNext()) {
+                    while (iter.hasNext()) {
                         String key = iter.next();
                         try {
                             String imageUrl = jsonUsers.getString(key);
@@ -140,11 +150,44 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
                     rvUsers.setAdapter(userAdapter);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
                     rvUsers.setLayoutManager(linearLayoutManager);
+                    btnJoin.setOnClickListener(v -> goToRoom(roomObjectId));
+
                 }
             });
         }
-    }
 
+        public void goToRoom(String roomObjectId) {
+            Log.i(TAG, "Going to room");
+            // Specify which class to query
+            ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
+            // Find the room asynchronously
+            query.getInBackground(roomObjectId, new GetCallback<Room>() {
+                @Override
+                public void done(Room room, ParseException error) {
+                    if (error != null) {
+                        Log.e(TAG, "Error joining room", error);
+                        return;
+                    }
+
+                    if (room == null) {
+                        Toast.makeText(context, "This room is no longer available", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    if (room.getJoinable()) {
+                        if (room.getOwner().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+                            Toast.makeText(context, "This is room is no longer joinable", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                    Intent intent = new Intent(context, RoomActivity.class);
+                    intent.putExtra("room", roomObjectId);
+                    context.startActivity(intent);
+                }
+
+            });
+        }
+    }
         public class OutgoingMessageViewHolder extends MessageViewHolder {
             ImageView imageMe;
             TextView body;
@@ -171,5 +214,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
                         .into(imageMe);
                 body.setText(text);
             }
+
+
         }
     }
