@@ -18,6 +18,9 @@ import com.example.travelo.fragments.HomeFragment;
 import com.example.travelo.fragments.ProfileFragment;
 import com.example.travelo.fragments.SettingsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.parceler.Parcels;
@@ -49,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case R.id.action_profile:
                             bundle = new Bundle();
-                            bundle.putParcelable("user", Parcels.wrap(ParseUser.getCurrentUser()));
+                            bundle.putParcelable("user", null);
                             fragment = new ProfileFragment();
                             fragment.setArguments(bundle);
                             break;

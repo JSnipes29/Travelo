@@ -58,6 +58,24 @@ public class ProfileFragment extends Fragment {
         binding = FragmentProfileBinding.inflate(getLayoutInflater(), container, false);
         View view = binding.getRoot();
         user = (ParseUser) Parcels.unwrap(getArguments().getParcelable("user"));
+        if (user == null) {
+            ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
+            query.include("followers");
+            query.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>() {
+                @Override
+                public void done(ParseUser object, ParseException e) {
+                    user = object;
+                    setUpProfileFragment();
+                }
+            });
+        } else {
+            setUpProfileFragment();
+        }
+        return view;
+    }
+
+
+    public void setUpProfileFragment() {
         binding.tvName.setText(user.getUsername());
         Glide.with(getContext())
                 .load(user.getParseFile("profileImage").getUrl())
@@ -95,7 +113,6 @@ public class ProfileFragment extends Fragment {
         };
         binding.rvPosts.addOnScrollListener(scrollListener);
         queryPosts(0);
-        return view;
     }
 
     @Override
