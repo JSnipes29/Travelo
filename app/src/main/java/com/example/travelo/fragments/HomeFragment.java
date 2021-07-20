@@ -2,9 +2,11 @@ package com.example.travelo.fragments;
 
 import android.os.Bundle;
 
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.travelo.EndlessRecyclerViewScrollListener;
-import com.example.travelo.R;
 import com.example.travelo.adapters.PostAdapter;
 import com.example.travelo.adapters.UsersAdapter;
 import com.example.travelo.databinding.FragmentHomeBinding;
@@ -70,6 +71,7 @@ public class HomeFragment extends Fragment {
             }
         };
         binding.rvPosts.addOnScrollListener(scrollListener);
+        binding.rvPosts.setNestedScrollingEnabled(false);
         // Query posts to populate feed
         queryPosts(0);
 
@@ -81,6 +83,22 @@ public class HomeFragment extends Fragment {
         binding.rvFollowing.setLayoutManager(followingLayoutManger);
         // Query users to populate users following
         queryFollowing();
+
+        // Configure pull to refresh
+        binding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                queryPosts(2);
+            }
+        });
+        // Configure the refreshing colors
+        binding.swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
         return view;
     }
 
@@ -112,12 +130,19 @@ public class HomeFragment extends Fragment {
             }
             if (parameter == 1) {
                 Log.i(TAG, "Endless scrolling in effect");
+            } else if (parameter == 2) {
+                Log.i(TAG, "Pulling to refresh");
+                this.posts.clear();
+                postAdapter.notifyDataSetChanged();
             }
             this.posts.addAll(posts);
             if (parameter == 1) {
                 postAdapter.notifyItemRangeInserted(start, posts.size());
             } else {
                 postAdapter.notifyDataSetChanged();
+            }
+            if (parameter == 2) {
+                binding.swipeContainer.setRefreshing(false);
             }
             scrollListener.resetState();
         });
