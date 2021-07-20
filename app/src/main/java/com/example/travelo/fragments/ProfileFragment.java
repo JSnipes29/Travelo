@@ -3,6 +3,8 @@ package com.example.travelo.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,8 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.example.travelo.EndlessRecyclerViewScrollListener;
 import com.example.travelo.R;
+import com.example.travelo.adapters.PostAdapter;
 import com.example.travelo.databinding.FragmentProfileBinding;
+import com.example.travelo.models.Post;
 import com.example.travelo.models.Room;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -25,6 +30,7 @@ import org.json.JSONException;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ProfileFragment extends Fragment {
@@ -32,6 +38,10 @@ public class ProfileFragment extends Fragment {
     public static final String TAG = "ProfileFragment";
     FragmentProfileBinding binding;
     ParseUser user;
+    PostAdapter postAdapter;
+    List<Post> posts;
+    EndlessRecyclerViewScrollListener scrollListener;
+    public static final int LIMIT = 4;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -71,7 +81,20 @@ public class ProfileFragment extends Fragment {
                 binding.btnFollow.setOnClickListener(v -> follow());
             }
         }
-
+        // Bind posts to recycler view
+        posts = new ArrayList<>();
+        postAdapter = new PostAdapter(getContext(), posts);
+        binding.rvPosts.setAdapter(postAdapter);
+        LinearLayoutManager postLayoutManager = new LinearLayoutManager(getContext());
+        binding.rvPosts.setLayoutManager(postLayoutManager);
+        scrollListener = new EndlessRecyclerViewScrollListener(postLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                queryPosts(1);
+            }
+        };
+        binding.rvPosts.addOnScrollListener(scrollListener);
+        queryPosts(0);
         return view;
     }
 
@@ -163,6 +186,40 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+    }
+
+    private void queryPosts(int parameter) {
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.include(Post.KEY_OWNER);
+        query.setLimit(LIMIT);
+        query.whereEqualTo("userArray", user.getUsername());
+        query.addDescendingOrder(Post.KEY_CREATED_AT);
+        final int start;
+        if (parameter == 1) {
+            start = posts.size();
+            query.whereLessThan(Post.KEY_CREATED_AT, posts.get(posts.size() - 1).getCreatedAt());
+        } else {
+            start = 0;
+        }
+        query.findInBackground((posts, e) -> {
+            if (e != null) {
+                Log.e(TAG, "Couldn't get post", e);
+                return;
+            }
+            for (Post post: posts) {
+                Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getOwner().getUsername());
+            }
+            if (parameter == 1) {
+                Log.i(TAG, "Endless scrolling in effect");
+            }
+            this.posts.addAll(posts);
+            if (parameter == 1) {
+                postAdapter.notifyItemRangeInserted(start, posts.size());
+            } else {
+                postAdapter.notifyDataSetChanged();
+            }
+            scrollListener.resetState();
+        });
     }
 
     private JSONArray jsonDelete(JSONArray jsonArray, String query) {
