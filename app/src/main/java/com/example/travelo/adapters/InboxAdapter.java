@@ -41,7 +41,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
     public static final String TAG = "InboxAdapter";
     private static final int MESSAGE_DM = 629;
     private static final int MESSAGE_ROOM = 1229;
-    public static final int DM_LENGTH = 5;
+    public static final int DM_LENGTH = 4;
     public static final int ROOM_LENGTH = 1;
 
     public InboxAdapter(List<JSONObject> list, Context c) {
@@ -74,8 +74,8 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
             View contactView = inflater.inflate(R.layout.item_room_message, parent, false);
             return new RoomMessageViewHolder(contactView);
         } else if (viewType == MESSAGE_DM) {
-            View contactView = inflater.inflate(R.layout.message_incoming, parent, false);
-            return new OutgoingMessageViewHolder(contactView);
+            View contactView = inflater.inflate(R.layout.item_dm_message, parent, false);
+            return new DMViewHolder(contactView);
         } else {
             throw new IllegalArgumentException("Unknown view type");
         }
@@ -188,31 +188,38 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
             });
         }
     }
-        public class OutgoingMessageViewHolder extends MessageViewHolder {
-            ImageView imageMe;
-            TextView body;
+        public class DMViewHolder extends MessageViewHolder {
+            ImageView ivProfileImage;
+            TextView tvName;
+            TextView tvBody;
 
-            public OutgoingMessageViewHolder(View itemView) {
+            public DMViewHolder(View itemView) {
                 super(itemView);
-                imageMe = (ImageView) itemView.findViewById(R.id.ivProfile);
-                body = (TextView) itemView.findViewById(R.id.tvBody);
+                ivProfileImage = (ImageView) itemView.findViewById(R.id.ivProfileImage);
+                tvBody = (TextView) itemView.findViewById(R.id.tvBody);
+                tvName = (TextView) itemView.findViewById(R.id.tvName);
             }
 
             @Override
-            public void bindMessage(JSONObject message) {
+            public void bindMessage(JSONObject dm) {
                 String profileUrl = null;
                 String text = null;
+                String name = null;
                 try {
-                    profileUrl = message.getString("profileImageUrl");
-                    text = message.getString("body");
+                    profileUrl = dm.getString("profileImage");
+                    name = dm.getString("username");
+                    JSONObject message = dm.getJSONArray("messages").getJSONObject(dm.length() - 1);
+                    text = name + ": " + message.getString("body");
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Log.e(TAG, "Couldn't get json data", e);
                 }
                 Glide.with(context)
                         .load(profileUrl)
                         .circleCrop() // create an effect of a round profile picture
-                        .into(imageMe);
-                body.setText(text);
+                        .into(ivProfileImage);
+                tvBody.setText(text);
+                tvName.setText(name);
             }
 
 

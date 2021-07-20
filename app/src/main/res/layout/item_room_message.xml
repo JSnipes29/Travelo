@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rlRoomItem"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/tvRoomIdTitle"
@@ -23,7 +23,7 @@
         android:layout_height="1dp"
         android:layout_below="@+id/rvUsers"
         android:layout_marginTop="2dp"
-        android:background="@color/black" />
+        android:background="?colorOnSecondary" />
 
     <TextView
         android:id="@+id/tvRoomId"
