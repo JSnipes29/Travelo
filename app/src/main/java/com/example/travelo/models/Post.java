@@ -6,9 +6,11 @@ import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.Iterator;
 
 @ParseClassName("Post")
 public class Post extends ParseObject {
@@ -20,6 +22,7 @@ public class Post extends ParseObject {
     public static final String KEY_DESCRIPTION = "description";
     public static final String DEFAULT_DESCRIPTION = "Map";
     public static final String KEY_PHOTO = "photo";
+    public static final String KEY_USER_ARRAY = "userArray";
 
 
     public Post() {}
@@ -35,6 +38,13 @@ public class Post extends ParseObject {
             post.setDescription(description);
         }
         post.setUsers(users);
+        JSONArray usersArray = new JSONArray();
+        Iterator<String> iter = users.keys();
+        while (iter.hasNext()) {
+            String key = iter.next();
+            usersArray.put(key);
+        }
+        post.setUserArray(usersArray);
         if (photo != null) {
             ParseFile parseFilePhoto = new ParseFile(photo);
             post.setPhoto(parseFilePhoto);
@@ -88,6 +98,10 @@ public class Post extends ParseObject {
 
     public ParseFile getPhoto() {
         return getParseFile(KEY_PHOTO);
+    }
+
+    public void setUserArray(JSONArray array) {
+        put(KEY_USER_ARRAY, array);
     }
 
 
