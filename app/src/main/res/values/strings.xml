@@ -13,7 +13,7 @@
     <string name="add_trip">Add Trip</string>
     <string name="create_trip">Create Trip</string>
     <string name="join_trip">Join Trip</string>
-    <string name="room_id">Room Id</string>
+    <string name="room_id">Room ID</string>
     <string name="enter">Enter</string>
     <string name="message_hint">Type here</string>
     <string name="send">Send</string>
@@ -35,5 +35,7 @@
     <string name="follow">Follow</string>
     <string name="following">Following</string>
     <string name="followers">Followers</string>
+    <string name="inbox">Inbox</string>
+    <string name="room_id_semi">Room ID:</string>
 
 </resources>

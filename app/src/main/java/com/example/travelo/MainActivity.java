@@ -15,6 +15,7 @@ import android.view.View;
 import com.example.travelo.databinding.ActivityMainBinding;
 import com.example.travelo.fragments.AddTripFragment;
 import com.example.travelo.fragments.HomeFragment;
+import com.example.travelo.fragments.InboxFragment;
 import com.example.travelo.fragments.ProfileFragment;
 import com.example.travelo.fragments.SettingsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -56,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
                             fragment = new ProfileFragment();
                             fragment.setArguments(bundle);
                             break;
-                        case R.id.action_settings:
-                            fragment = new SettingsFragment();
+                        case R.id.action_inbox:
+                            fragment = new InboxFragment();
                             break;
                         default:
                             fragment = null;
