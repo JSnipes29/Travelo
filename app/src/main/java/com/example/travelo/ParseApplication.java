@@ -3,6 +3,7 @@ package com.example.travelo;
 import android.app.Application;
 
 import com.example.travelo.models.Inbox;
+import com.example.travelo.models.Messages;
 import com.example.travelo.models.Post;
 import com.example.travelo.models.Room;
 import com.parse.Parse;
@@ -18,6 +19,7 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Room.class);
         ParseObject.registerSubclass(Post.class);
         ParseObject.registerSubclass(Inbox.class);
+        ParseObject.registerSubclass(Messages.class);
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("56FOAmOXvVk5GqnDojmLIpmnZW8SzMXr8JkIy4Cn")
                 .clientKey("wsE9tdqbYL8gNd96TmlR791XKyOX5szd4ZruZpLZ")

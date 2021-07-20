@@ -96,6 +96,7 @@ public class RoomActivity extends AppCompatActivity {
                         break;
                     case R.id.action_message:
                         bundle = new Bundle();
+                        bundle.putInt("type", 0);
                         bundle.putParcelable("room", Parcels.wrap(room));
                         fragment = new RoomMessagesFragment();
                         fragment.setArguments(bundle);

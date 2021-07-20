@@ -17,8 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.travelo.MessagesActivity;
 import com.example.travelo.R;
 import com.example.travelo.RoomActivity;
+import com.example.travelo.models.Messages;
 import com.example.travelo.models.Room;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -192,36 +194,65 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
             ImageView ivProfileImage;
             TextView tvName;
             TextView tvBody;
+            RelativeLayout rlDmItem;
 
             public DMViewHolder(View itemView) {
                 super(itemView);
                 ivProfileImage = (ImageView) itemView.findViewById(R.id.ivProfileImage);
                 tvBody = (TextView) itemView.findViewById(R.id.tvBody);
                 tvName = (TextView) itemView.findViewById(R.id.tvName);
+                rlDmItem = (RelativeLayout) itemView.findViewById(R.id.rlDmItem);
             }
 
             @Override
             public void bindMessage(JSONObject dm) {
                 String profileUrl = null;
-                String text = null;
                 String name = null;
+                String messagesId = null;
                 try {
                     profileUrl = dm.getString("profileImage");
                     name = dm.getString("username");
-                    JSONObject message = dm.getJSONArray("messages").getJSONObject(dm.length() - 1);
-                    text = name + ": " + message.getString("body");
+                    messagesId = dm.getString("messages");
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e(TAG, "Couldn't get json data", e);
                 }
+                ParseQuery<Messages> query = ParseQuery.getQuery(Messages.class);
+                query.getInBackground(messagesId, new GetCallback<Messages>() {
+                    @Override
+                    public void done(Messages messages, ParseException e) {
+                        JSONArray jsonMessages = messages.getMessages();
+                        JSONObject message = null;
+                        String text = null;
+                        try {
+                            message = jsonMessages.getJSONObject(jsonMessages.length() - 1);
+                            text = message.getString("username") + ": " + message.getString("body");
+                        } catch (JSONException jsonException) {
+                            jsonException.printStackTrace();
+                            Log.e(TAG, "Trouble updating json data with dm", jsonException);
+                        }
+
+                        tvBody.setText(text);
+                    }
+                });
                 Glide.with(context)
                         .load(profileUrl)
                         .circleCrop() // create an effect of a round profile picture
                         .into(ivProfileImage);
-                tvBody.setText(text);
                 tvName.setText(name);
+                final String mId = messagesId;
+                rlDmItem.setOnClickListener(v -> goToMessages(mId));
             }
 
 
+            // Go to the messages view so user can type new messages
+            public void goToMessages(String messagesId) {
+                Log.i(TAG, "Clicked on dm");
+                Intent intent = new Intent(context, MessagesActivity.class);
+                intent.putExtra("type", 1);
+                intent.putExtra("messagesId", messagesId);
+                context.startActivity(intent);
+            }
         }
     }

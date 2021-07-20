@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.example.travelo.R;
 import com.example.travelo.adapters.ChatAdapter;
 import com.example.travelo.databinding.FragmentRoomMessagesBinding;
+import com.example.travelo.models.Messages;
 import com.example.travelo.models.Room;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -37,12 +38,13 @@ public class RoomMessagesFragment extends Fragment {
     static final long POLL_INTERVAL = TimeUnit.SECONDS.toMillis(3);
     Handler handler = new Handler();
     Room room;
-
+    Messages messagesObj;
     FragmentRoomMessagesBinding binding;
     ChatAdapter adapter;
     JSONArray messages;
     boolean firstLoad;
     Runnable refreshMessagesRunnable;
+    int type;
 
     public RoomMessagesFragment() {
         // Required empty public constructor
@@ -58,15 +60,20 @@ public class RoomMessagesFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentRoomMessagesBinding.inflate(getLayoutInflater(), container, false);
         View view = binding.getRoot();
-        // Get the room from the room activity
-        room = (Room) Parcels.unwrap(getArguments().getParcelable("room"));
-        Log.i(TAG, "Room id: " + room.getRoomId());
-        setupMessagePosting();
+        type = getArguments().getInt("type");
+        if (type == 0) {
+            // Get the room from the room activity
+            room = (Room) Parcels.unwrap(getArguments().getParcelable("room"));
+            Log.i(TAG, "Room id: " + room.getRoomId());
+        } else if (type == 1) {
+            messagesObj = (Messages) Parcels.unwrap(getArguments().getParcelable("messages"));
+        }
+        setupMessagePosting(type);
         // Setup handler that refreshes messages every few seconds
         refreshMessagesRunnable = new Runnable() {
             @Override
             public void run() {
-                refreshMessages();
+                refreshMessages(type);
                 handler.postDelayed(this, POLL_INTERVAL);
             }
         };
@@ -80,8 +87,12 @@ public class RoomMessagesFragment extends Fragment {
     }
 
     // Set up button event handler which posts the entered message to Parse
-    void setupMessagePosting() {
-        messages = room.getMessages();
+    void setupMessagePosting(int type) {
+        if (type == 1) {
+            messages = messagesObj.getMessages();
+        } else {
+            messages = room.getMessages();
+        }
         adapter = new ChatAdapter(messages, getContext(), ParseUser.getCurrentUser().getUsername());
         firstLoad = true;
         // Associate adapter with recycler view
@@ -104,57 +115,107 @@ public class RoomMessagesFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                // Put the messages in the room object
-                JSONArray messages = room.getMessages();
-                messages.put(message);
-                room.setMessages(messages);
-                // Upload the message object to the server
-                room.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e == null) {
-                            Log.i(TAG, "Message loaded to server");
-                            refreshMessages();
-                        } else {
-                            Log.e(TAG, "Failed to save message", e);
+                if (type == 0) {
+                    // Put the messages in the room object
+                    JSONArray messages = room.getMessages();
+                    messages.put(message);
+                    room.setMessages(messages);
+                    // Upload the message object to the server
+                    room.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                Log.i(TAG, "Message loaded to server");
+                                refreshMessages(type);
+                            } else {
+                                Log.e(TAG, "Failed to save message", e);
+                            }
                         }
-                    }
-                });
+                    });
+                } else {
+                    // Put the messages in the room object
+                    JSONArray messages = messagesObj.getMessages();
+                    messages.put(message);
+                    messagesObj.setMessages(messages);
+                    // Upload the message object to the server
+                    messagesObj.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                Log.i(TAG, "Message loaded to server");
+                                refreshMessages(type);
+                            } else {
+                                Log.e(TAG, "Failed to save message", e);
+                            }
+                        }
+                    });
+                }
                 // Empty the message bar
                 binding.etMessage.setText(null);
             }
         });
     }
 
-    void refreshMessages() {
-        // Specify which class to query
-        ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
-        // Specify the object id
-        query.getInBackground(room.getObjectId(), new GetCallback<Room>() {
-            public void done(Room r, ParseException e) {
-                room = r;
-                if (e == null) {
-                    while(messages.length() > 0) {
-                        messages.remove(0);
-                    }
-                    JSONArray updated = r.getMessages();
-                    for (int i = 0; i < updated.length(); i++) {
-                        try {
-                            messages.put(updated.getJSONObject(i));
-                        } catch (JSONException jsonException) {
-                            jsonException.printStackTrace();
+    void refreshMessages(int type) {
+        if (type == 0) {
+            // Specify which class to query
+            ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
+            // Specify the object id
+            query.getInBackground(room.getObjectId(), new GetCallback<Room>() {
+                public void done(Room r, ParseException e) {
+                    room = r;
+                    if (e == null) {
+                        while (messages.length() > 0) {
+                            messages.remove(0);
                         }
+                        JSONArray updated = r.getMessages();
+                        for (int i = 0; i < updated.length(); i++) {
+                            try {
+                                messages.put(updated.getJSONObject(i));
+                            } catch (JSONException jsonException) {
+                                jsonException.printStackTrace();
+                            }
+                        }
+                        adapter.notifyDataSetChanged();
+                        if (firstLoad) {
+                            binding.rvChat.scrollToPosition(0);
+                            firstLoad = false;
+                        }
+                    } else {
+                        Log.e(TAG, "Error loading messages", e);
                     }
-                    adapter.notifyDataSetChanged();
-                    if (firstLoad) {
-                        binding.rvChat.scrollToPosition(0);
-                        firstLoad = false;
-                    }
-                } else {
-                    Log.e(TAG, "Error loading messages", e);
                 }
-            }
-        });
+            });
+        } else {
+            // Specify which class to query
+            ParseQuery<Messages> query = ParseQuery.getQuery(Messages.class);
+            // Specify the object id
+            query.getInBackground(messagesObj.getObjectId(), new GetCallback<Messages>() {
+                public void done(Messages m, ParseException e) {
+                    messagesObj = m;
+                    if (e == null) {
+                        while (messages.length() > 0) {
+                            messages.remove(0);
+                        }
+                        JSONArray updated = m.getMessages();
+                        for (int i = 0; i < updated.length(); i++) {
+                            try {
+                                messages.put(updated.getJSONObject(i));
+                            } catch (JSONException jsonException) {
+                                jsonException.printStackTrace();
+                            }
+                        }
+                        adapter.notifyDataSetChanged();
+                        if (firstLoad) {
+                            binding.rvChat.scrollToPosition(0);
+                            firstLoad = false;
+                        }
+                    } else {
+                        Log.e(TAG, "Error loading messages", e);
+                    }
+                }
+            });
+        }
     }
 
 
