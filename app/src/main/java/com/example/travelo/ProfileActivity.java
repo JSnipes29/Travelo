@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.example.travelo.databinding.ActivityProfileBinding;
 import com.example.travelo.fragments.ProfileFragment;
+import com.example.travelo.models.Inbox;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -43,6 +44,7 @@ public class ProfileActivity extends AppCompatActivity {
         ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
         query.whereEqualTo("username", userid);
         query.setLimit(1);
+        query.include(Inbox.KEY);
         query.include("followers");
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override

@@ -100,4 +100,16 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="2dp"
         android:background="?colorPrimaryVariant" />
+
+    <Button
+        android:id="@+id/btnMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivProfileImage"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/btnFollow"
+        android:text="@string/message"
+        android:backgroundTint="?colorOnPrimary"
+        android:textColor="?colorPrimary"/>
 </RelativeLayout>
