@@ -41,7 +41,7 @@ public class ProfileFragment extends Fragment {
     PostAdapter postAdapter;
     List<Post> posts;
     EndlessRecyclerViewScrollListener scrollListener;
-    public static final int LIMIT = 4;
+    public static final int LIMIT = 10;
 
     public ProfileFragment() {
         // Required empty public constructor

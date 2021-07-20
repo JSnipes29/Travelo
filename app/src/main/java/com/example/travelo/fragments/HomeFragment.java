@@ -33,7 +33,7 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
 
-    public static final int LIMIT = 2;
+    public static final int LIMIT = 10;
     public static final String TAG = "HomeFragment";
 
     FragmentHomeBinding binding;

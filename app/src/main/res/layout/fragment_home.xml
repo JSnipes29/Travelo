@@ -10,7 +10,7 @@
         android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/rvFollowing">
+        android:layout_below="@+id/view">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPosts"
@@ -30,6 +30,15 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="2dp"
         />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/rvFollowing"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:background="?colorPrimary" />
 
 
 </RelativeLayout>
