@@ -30,7 +30,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="Inbox and followers object is created for new users when signing up">
+    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="Minor UI changes to inbox">
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -39,7 +39,7 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/ProfileFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/ProfileFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/JoinRoomFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/JoinRoomFragment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -198,20 +198,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1625865131177</updated>
-    </task>
-    <task id="LOCAL-00022" summary="Usernames appear on waiting list">
-      <created>1626297439889</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1626297439889</updated>
-    </task>
-    <task id="LOCAL-00023" summary="Pull to refresh for waiting list">
-      <created>1626298859330</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1626298859330</updated>
     </task>
     <task id="LOCAL-00024" summary="User can go to the final map after all users are finished">
       <created>1626302224264</created>
@@ -542,7 +528,21 @@
       <option name="project" value="LOCAL" />
       <updated>1626886626994</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="Users can DM other users">
+      <created>1626888418731</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1626888418731</updated>
+    </task>
+    <task id="LOCAL-00072" summary="Minor UI changes to inbox">
+      <created>1626888493224</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1626888493224</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -558,8 +558,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Created a settings fragment, updated profile fragment" />
-    <MESSAGE value="User can logout" />
     <MESSAGE value="Fixed minor bug for joining rooms" />
     <MESSAGE value="Added comments to room message fragment" />
     <MESSAGE value="User can add photos to post" />
@@ -583,7 +581,9 @@
     <MESSAGE value="Created message button and pass in inbox on profile click" />
     <MESSAGE value="User can dm user through profile view (only with user they previously messaged)" />
     <MESSAGE value="Inbox and followers object is created for new users when signing up" />
-    <option name="LAST_COMMIT_MESSAGE" value="Inbox and followers object is created for new users when signing up" />
+    <MESSAGE value="Users can DM other users" />
+    <MESSAGE value="Minor UI changes to inbox" />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor UI changes to inbox" />
   </component>
   <component name="WindowStateProjectService">
     <state x="780" y="224" key="#com.intellij.ide.util.MemberChooser" timestamp="1626822311760">
@@ -611,58 +611,47 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="759" y="412" key="Github.ShareDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1625865227316" />
-    <state width="1358" height="229" key="GridCell.Tab.0.bottom" timestamp="1626888123217">
+    <state width="1358" height="259" key="GridCell.Tab.0.bottom" timestamp="1626888354917">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="229" key="GridCell.Tab.0.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626888123217" />
-    <state width="1358" height="229" key="GridCell.Tab.0.center" timestamp="1626888123216">
+    <state width="1358" height="259" key="GridCell.Tab.0.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626888354917" />
+    <state width="1358" height="259" key="GridCell.Tab.0.center" timestamp="1626888354916">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="229" key="GridCell.Tab.0.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626888123216" />
-    <state width="1358" height="229" key="GridCell.Tab.0.left" timestamp="1626888123216">
+    <state width="1358" height="259" key="GridCell.Tab.0.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626888354916" />
+    <state width="1358" height="259" key="GridCell.Tab.0.left" timestamp="1626888354916">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="229" key="GridCell.Tab.0.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626888123216" />
-    <state width="1358" height="229" key="GridCell.Tab.0.right" timestamp="1626888123217">
+    <state width="1358" height="259" key="GridCell.Tab.0.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626888354916" />
+    <state width="1358" height="259" key="GridCell.Tab.0.right" timestamp="1626888354917">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="229" key="GridCell.Tab.0.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626888123217" />
-    <state width="1358" height="259" key="GridCell.Tab.1.bottom" timestamp="1626798630473">
+    <state width="1358" height="259" key="GridCell.Tab.0.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626888354917" />
+    <state width="1358" height="259" key="GridCell.Tab.1.bottom" timestamp="1626888354919">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.1.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626798630473" />
-    <state width="1358" height="259" key="GridCell.Tab.1.center" timestamp="1626798630472">
+    <state width="1358" height="259" key="GridCell.Tab.1.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626888354919" />
+    <state width="1358" height="259" key="GridCell.Tab.1.center" timestamp="1626888354918">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.1.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626798630472" />
-    <state width="1358" height="259" key="GridCell.Tab.1.left" timestamp="1626798630472">
+    <state width="1358" height="259" key="GridCell.Tab.1.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626888354918" />
+    <state width="1358" height="259" key="GridCell.Tab.1.left" timestamp="1626888354918">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.1.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626798630472" />
-    <state width="1358" height="259" key="GridCell.Tab.1.right" timestamp="1626798630472">
+    <state width="1358" height="259" key="GridCell.Tab.1.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626888354918" />
+    <state width="1358" height="259" key="GridCell.Tab.1.right" timestamp="1626888354918">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.1.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626798630472" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626886638896">
+    <state width="1358" height="259" key="GridCell.Tab.1.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626888354918" />
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626888500579">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="-1402" y="222" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1626391118488" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626886638896" />
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626888500579" />
     <state x="483" y="267" key="Vcs.Push.Dialog.v2/0.25.1792.1095/-1920.-11.1920.1055@0.25.1792.1095" timestamp="1626375029876" />
     <state x="634" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1626816239023">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="634" y="250" width="670" height="676" key="search.everywhere.popup/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626816239023" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/ProfileFragment.java</url>
-          <line>285</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

@@ -12,9 +12,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.travelo.RoomActivity;
+import com.example.travelo.adapters.InboxAdapter;
 import com.example.travelo.databinding.FragmentJoinRoomBinding;
+import com.example.travelo.models.Inbox;
 import com.example.travelo.models.Room;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -34,14 +37,6 @@ public class JoinRoomFragment extends DialogFragment {
 
     public JoinRoomFragment() {
         // Required empty public constructor
-    }
-
-
-    public static JoinRoomFragment newInstance() {
-        JoinRoomFragment fragment = new JoinRoomFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -103,6 +98,60 @@ public class JoinRoomFragment extends DialogFragment {
             String id = rooms.get(0).getObjectId();
             intent.putExtra("room", id);
             startActivity(intent);
+            Log.i(TAG, "Testing");
+            ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
+            userQuery.include(Inbox.KEY);
+            userQuery.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>() {
+                @Override
+                public void done(ParseUser currentUser, ParseException e) {
+                    if (e != null) {
+                        Log.e(TAG, "Problem loading user data from server", e);
+                        return;
+                    }
+                    Inbox inbox = (Inbox) currentUser.getParseObject(Inbox.KEY);
+                    JSONArray jsonInbox = inbox.getMessages();
+                    String roomObjectId = rooms.get(0).getObjectId();
+                    int index = indexOfRoomMessage(jsonInbox, roomObjectId);
+                    if (index != -1) {
+                        return;
+                    }
+                    JSONObject roomMessage = new JSONObject();
+                    try {
+                        roomMessage.put(roomObjectId, "");
+                    } catch (JSONException jsonException) {
+                        Log.e(TAG, "Couldn't edit json data", jsonException);
+                    }
+                    jsonInbox.put(roomMessage);
+                    inbox.setMessages(jsonInbox);
+                    inbox.saveInBackground(exception -> {
+                        if (exception != null) {
+                            Log.e(TAG, "Couldn't save room message in inbox", exception);
+                        } else {
+                            Log.i(TAG, "Room message saved in inbox");
+                        }
+                    });
+                }
+            });
         });
+    }
+
+    private static int indexOfRoomMessage(JSONArray array, String roomObjectId) {
+        for (int i = 0; i < array.length(); i++) {
+            try {
+                JSONObject message = array.getJSONObject(i);
+                // If the message isn't a dm (a room message), continue
+                if (message.length() != InboxAdapter.ROOM_LENGTH) {
+                    continue;
+                }
+                // If the message contains the user id return the index
+                String jsonUserId = message.keys().next();
+                if (jsonUserId.equals(roomObjectId)) {
+                    return i;
+                }
+            } catch (JSONException e) {
+                Log.e(TAG, "Error reading json data", e);
+            }
+        }
+        return -1;
     }
 }
