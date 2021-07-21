@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.travelo.R;
 import com.example.travelo.RoomActivity;
 import com.example.travelo.databinding.FragmentCreateRoomBinding;
 import com.example.travelo.models.Inbox;
@@ -132,7 +130,7 @@ public class CreateRoomFragment extends DialogFragment {
                                     Inbox inbox = (Inbox) currentUser.getParseObject(Inbox.KEY);
                                     JSONArray jsonInbox = inbox.getMessages();
                                     String roomObjectId = room.getObjectId();
-                                    int index = JoinRoomFragment.indexOfRoomMessage(jsonInbox, roomObjectId);
+                                    int index = Inbox.indexOfRoomMessage(jsonInbox, roomObjectId);
                                     if (index != -1) {
                                         return;
                                     }

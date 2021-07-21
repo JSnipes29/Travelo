@@ -12,12 +12,14 @@ import android.view.View;
 import com.example.travelo.databinding.ActivityPostMapBinding;
 import com.example.travelo.fragments.PostMapFragment;
 import com.example.travelo.fragments.WaitingPostFragment;
+import com.example.travelo.models.Inbox;
 import com.example.travelo.models.Room;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcels;
@@ -42,11 +44,42 @@ public class PostMapActivity extends AppCompatActivity {
         ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
         // Specify the object id
         query.getInBackground(id, new GetCallback<Room>() {
+            @Override
             public void done(Room room, ParseException e) {
                 if (e == null) {
+                    // Set the fragment
                     setFragment(room);
+                    // The room is no longer joinable
                     room.setJoinable(false);
+                    final String roomObjectId = room.getObjectId();
                     room.saveInBackground();
+                    // The room message is removed from the inbox
+                    ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
+                    userQuery.include(Inbox.KEY);
+                    userQuery.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>() {
+                        @Override
+                        public void done(ParseUser currentUser, ParseException e) {
+                            if (e != null) {
+                                Log.e(TAG, "Problem loading user data from server", e);
+                                return;
+                            }
+                            Inbox inbox = (Inbox) currentUser.getParseObject(Inbox.KEY);
+                            JSONArray jsonInbox = inbox.getMessages();
+                            int index = Inbox.indexOfRoomMessage(jsonInbox, roomObjectId);
+                            if (index == -1) {
+                                return;
+                            }
+                            jsonInbox.remove(index);
+                            inbox.setMessages(jsonInbox);
+                            inbox.saveInBackground(exception -> {
+                                if (exception != null) {
+                                    Log.e(TAG, "Couldn't remove room message from inbox", exception);
+                                } else {
+                                    Log.i(TAG, "Room message removed from inbox");
+                                }
+                            });
+                        }
+                    });
                 } else {
                     Log.e(TAG, "Error joining room", e);
                 }
@@ -54,6 +87,7 @@ public class PostMapActivity extends AppCompatActivity {
         });
     }
 
+    // Set the fragment to waiting or post, depending on if all users are ready
     private void setFragment(Room room) {
         final FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment;

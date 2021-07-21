@@ -110,7 +110,7 @@ public class JoinRoomFragment extends DialogFragment {
                     Inbox inbox = (Inbox) currentUser.getParseObject(Inbox.KEY);
                     JSONArray jsonInbox = inbox.getMessages();
                     String roomObjectId = rooms.get(0).getObjectId();
-                    int index = indexOfRoomMessage(jsonInbox, roomObjectId);
+                    int index = Inbox.indexOfRoomMessage(jsonInbox, roomObjectId);
                     if (index != -1) {
                         return;
                     }
@@ -134,23 +134,5 @@ public class JoinRoomFragment extends DialogFragment {
         });
     }
 
-    public static int indexOfRoomMessage(JSONArray array, String roomObjectId) {
-        for (int i = 0; i < array.length(); i++) {
-            try {
-                JSONObject message = array.getJSONObject(i);
-                // If the message isn't a dm (a room message), continue
-                if (message.length() != InboxAdapter.ROOM_LENGTH) {
-                    continue;
-                }
-                // If the message contains the user id return the index
-                String jsonUserId = message.keys().next();
-                if (jsonUserId.equals(roomObjectId)) {
-                    return i;
-                }
-            } catch (JSONException e) {
-                Log.e(TAG, "Error reading json data", e);
-            }
-        }
-        return -1;
-    }
+
 }
