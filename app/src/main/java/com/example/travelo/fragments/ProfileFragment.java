@@ -279,7 +279,28 @@ public class ProfileFragment extends Fragment {
                         // If they are both -1 create new message objects for both user
                         if (currentUserIndex == -1 && userIndex == -1) {
                             Log.i(TAG, "Both users message inbox not setup");
-                            //setupInbox();
+                            Messages messages = new Messages();
+                            messages.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    String messageId = messages.getObjectId();
+                                    setupInbox(currentUserInbox, inbox, currentUserMessages, userMessages,
+                                            currentUser, user, messages.getObjectId());
+                                    inbox.saveInBackground();
+                                    messages.saveInBackground(new SaveCallback() {
+                                        @Override
+                                        public void done(ParseException e) {
+                                            currentUserInbox.saveInBackground(new SaveCallback() {
+                                                @Override
+                                                public void done(ParseException e) {
+                                                    startMessagesActivity(getContext(), messages.getObjectId());
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+
 
                         } else if (currentUserIndex == -1) {
                             // userIndex != -1 (The current user has the message deleted)
@@ -291,6 +312,13 @@ public class ProfileFragment extends Fragment {
                             }
                             setupInbox(currentUserInbox, currentUserMessages,
                                     user.getObjectId(), user.getUsername(), user.getParseFile("profileImage").getUrl(), messageId);
+                            final String messageIdCopy = messageId;
+                            currentUserInbox.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    startMessagesActivity(getContext(), messageIdCopy);
+                                }
+                            });
                         } else if (userIndex == -1) {
                             // currenterUserIndex != -1 && userIndex == -1 (other user has message deleted)
                             Log.i(TAG, "Only current user inbox setup");
@@ -301,6 +329,8 @@ public class ProfileFragment extends Fragment {
                             }
                             setupInbox(inbox, userMessages,
                                     currentUser.getObjectId(), currentUser.getUsername(), currentUser.getParseFile("profileImage").getUrl(), messageId);
+                            inbox.saveInBackground();
+                            startMessagesActivity(getContext(),messageId);
                         } else {
                             // currentUserIndex != -1 && userIndex != -1 Both users have the messages saved
                             Log.i(TAG, "Both inboxes setup");
@@ -330,10 +360,6 @@ public class ProfileFragment extends Fragment {
     }
 
     private static void setupInbox(Inbox inbox, JSONArray jsonInbox, String userId, String username, String profileImage, String messageId) {
-        if (messageId == null) {
-            Messages messages = new Messages();
-            messageId = messages.getObjectId();
-        }
         JSONObject jsonMessage = new JSONObject();
         try {
             jsonMessage.put("userId", userId);
@@ -345,6 +371,28 @@ public class ProfileFragment extends Fragment {
         }
         jsonInbox.put(jsonMessage);
         inbox.setMessages(jsonInbox);
+    }
+
+    private static void setupInbox(Inbox currentUserInbox, Inbox userInbox, JSONArray jsonCurrentInbox, JSONArray jsonUserInbox, ParseUser currentUser, ParseUser user, String messageId) {
+        JSONObject jsonCurrentMessage = new JSONObject();
+        JSONObject jsonUserMessage = new JSONObject();
+        try {
+            jsonCurrentMessage.put("userId", user.getObjectId());
+            jsonCurrentMessage.put("username", user.getUsername());
+            jsonCurrentMessage.put("profileImage", user.getParseFile("profileImage").getUrl());
+            jsonCurrentMessage.put("messages", messageId);
+            jsonUserMessage.put("userId", currentUser.getObjectId());
+            jsonUserMessage.put("username", currentUser.getUsername());
+            jsonUserMessage.put("profileImage", currentUser.getParseFile("profileImage").getUrl());
+            jsonUserMessage.put("messages", messageId);
+        } catch (JSONException e) {
+            Log.e(TAG, "Trouble setting up inbox", e);
+        }
+        jsonUserInbox.put(jsonUserMessage);
+        userInbox.setMessages(jsonUserInbox);
+
+        jsonCurrentInbox.put(jsonCurrentMessage);
+        currentUserInbox.setMessages(jsonCurrentInbox);
     }
 
     private static int indexOfDm(JSONArray array, String userId) {

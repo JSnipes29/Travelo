@@ -30,7 +30,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="User can dm user through profile view (only with user they previously messaged)">
+    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="Inbox and followers object is created for new users when signing up">
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -39,7 +39,7 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/SignupFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/SignupFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/ProfileFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/ProfileFragment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -198,13 +198,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1625865131177</updated>
-    </task>
-    <task id="LOCAL-00021" summary="Ready button takes user to waiting screen">
-      <created>1626295550113</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1626295550113</updated>
     </task>
     <task id="LOCAL-00022" summary="Usernames appear on waiting list">
       <created>1626297439889</created>
@@ -542,7 +535,14 @@
       <option name="project" value="LOCAL" />
       <updated>1626885437466</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="Inbox and followers object is created for new users when signing up">
+      <created>1626886626993</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1626886626994</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -558,7 +558,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="While editing map, users can search for a location using the search bar" />
     <MESSAGE value="Created a settings fragment, updated profile fragment" />
     <MESSAGE value="User can logout" />
     <MESSAGE value="Fixed minor bug for joining rooms" />
@@ -583,7 +582,8 @@
     <MESSAGE value="Minor UI changes to profile view" />
     <MESSAGE value="Created message button and pass in inbox on profile click" />
     <MESSAGE value="User can dm user through profile view (only with user they previously messaged)" />
-    <option name="LAST_COMMIT_MESSAGE" value="User can dm user through profile view (only with user they previously messaged)" />
+    <MESSAGE value="Inbox and followers object is created for new users when signing up" />
+    <option name="LAST_COMMIT_MESSAGE" value="Inbox and followers object is created for new users when signing up" />
   </component>
   <component name="WindowStateProjectService">
     <state x="780" y="224" key="#com.intellij.ide.util.MemberChooser" timestamp="1626822311760">
@@ -611,22 +611,22 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="759" y="412" key="Github.ShareDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1625865227316" />
-    <state width="1358" height="229" key="GridCell.Tab.0.bottom" timestamp="1626817670028">
+    <state width="1358" height="229" key="GridCell.Tab.0.bottom" timestamp="1626888123217">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="229" key="GridCell.Tab.0.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626817670028" />
-    <state width="1358" height="229" key="GridCell.Tab.0.center" timestamp="1626817670028">
+    <state width="1358" height="229" key="GridCell.Tab.0.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626888123217" />
+    <state width="1358" height="229" key="GridCell.Tab.0.center" timestamp="1626888123216">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="229" key="GridCell.Tab.0.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626817670028" />
-    <state width="1358" height="229" key="GridCell.Tab.0.left" timestamp="1626817670028">
+    <state width="1358" height="229" key="GridCell.Tab.0.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626888123216" />
+    <state width="1358" height="229" key="GridCell.Tab.0.left" timestamp="1626888123216">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="229" key="GridCell.Tab.0.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626817670028" />
-    <state width="1358" height="229" key="GridCell.Tab.0.right" timestamp="1626817670028">
+    <state width="1358" height="229" key="GridCell.Tab.0.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626888123216" />
+    <state width="1358" height="229" key="GridCell.Tab.0.right" timestamp="1626888123217">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="229" key="GridCell.Tab.0.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626817670028" />
+    <state width="1358" height="229" key="GridCell.Tab.0.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626888123217" />
     <state width="1358" height="259" key="GridCell.Tab.1.bottom" timestamp="1626798630473">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
@@ -643,15 +643,26 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state width="1358" height="259" key="GridCell.Tab.1.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626798630472" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626885446824">
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626886638896">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="-1402" y="222" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1626391118488" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626885446824" />
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626886638896" />
     <state x="483" y="267" key="Vcs.Push.Dialog.v2/0.25.1792.1095/-1920.-11.1920.1055@0.25.1792.1095" timestamp="1626375029876" />
     <state x="634" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1626816239023">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="634" y="250" width="670" height="676" key="search.everywhere.popup/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626816239023" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/ProfileFragment.java</url>
+          <line>285</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
