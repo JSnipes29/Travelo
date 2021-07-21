@@ -15,7 +15,11 @@ import android.widget.Toast;
 
 import com.example.travelo.R;
 import com.example.travelo.databinding.FragmentSignupBinding;
+import com.example.travelo.models.Inbox;
+import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 
 public class SignupFragment extends DialogFragment {
@@ -26,8 +30,6 @@ public class SignupFragment extends DialogFragment {
     public static final String TAG = "SignupFragment";
     FragmentSignupBinding binding;
 
-    // TODO: Rename and change types of parameters
-    private String title;
 
     public SignupFragment() {
         // Required empty public constructor
@@ -45,9 +47,6 @@ public class SignupFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            title = getArguments().getString(ARG_PARAM1);
-        }
     }
 
     @Override
@@ -75,15 +74,31 @@ public class SignupFragment extends DialogFragment {
                 // Set core properties
                 user.setUsername(binding.etUsername.getText().toString());
                 user.setPassword(binding.etPassword.getText().toString());
-                // Invoke sign up in background
-                user.signUpInBackground(e -> {
-                    if (e == null) {
-                        Log.i(TAG, "User successfully signed up");
-                        Toast.makeText(view.getContext(), "You made a new account", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Log.e(TAG, "Error signing up", e);
+                Inbox inbox = new Inbox();
+                inbox.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        user.put(Inbox.KEY, inbox);
+                        ParseObject followers = ParseObject.create("Followers");
+                        followers.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                user.put("followers", followers);
+                                // Invoke sign up in background
+                                user.signUpInBackground(exception -> {
+                                    if (exception == null) {
+                                        Log.i(TAG, "User successfully signed up");
+                                        Toast.makeText(view.getContext(), "You made a new account", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Log.e(TAG, "Error signing up", exception);
+                                    }
+                                });
+                            }
+                        });
+
                     }
                 });
+
                 dismiss();
         });
         binding.etUsername.requestFocus();
