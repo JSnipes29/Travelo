@@ -98,7 +98,6 @@ public class JoinRoomFragment extends DialogFragment {
             String id = rooms.get(0).getObjectId();
             intent.putExtra("room", id);
             startActivity(intent);
-            Log.i(TAG, "Testing");
             ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
             userQuery.include(Inbox.KEY);
             userQuery.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>() {
@@ -135,7 +134,7 @@ public class JoinRoomFragment extends DialogFragment {
         });
     }
 
-    private static int indexOfRoomMessage(JSONArray array, String roomObjectId) {
+    public static int indexOfRoomMessage(JSONArray array, String roomObjectId) {
         for (int i = 0; i < array.length(); i++) {
             try {
                 JSONObject message = array.getJSONObject(i);

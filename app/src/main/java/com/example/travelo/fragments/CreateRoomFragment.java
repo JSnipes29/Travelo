@@ -15,8 +15,10 @@ import android.widget.Toast;
 import com.example.travelo.R;
 import com.example.travelo.RoomActivity;
 import com.example.travelo.databinding.FragmentCreateRoomBinding;
+import com.example.travelo.models.Inbox;
 import com.example.travelo.models.Room;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -118,6 +120,39 @@ public class CreateRoomFragment extends DialogFragment {
                             Intent intent = new Intent(v.getContext(), RoomActivity.class);
                             intent.putExtra("room", room.getObjectId());
                             startActivity(intent);
+                            ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
+                            userQuery.include(Inbox.KEY);
+                            userQuery.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>() {
+                                @Override
+                                public void done(ParseUser currentUser, ParseException e) {
+                                    if (e != null) {
+                                        Log.e(TAG, "Problem loading user data from server", e);
+                                        return;
+                                    }
+                                    Inbox inbox = (Inbox) currentUser.getParseObject(Inbox.KEY);
+                                    JSONArray jsonInbox = inbox.getMessages();
+                                    String roomObjectId = room.getObjectId();
+                                    int index = JoinRoomFragment.indexOfRoomMessage(jsonInbox, roomObjectId);
+                                    if (index != -1) {
+                                        return;
+                                    }
+                                    JSONObject roomMessage = new JSONObject();
+                                    try {
+                                        roomMessage.put(roomObjectId, "");
+                                    } catch (JSONException jsonException) {
+                                        Log.e(TAG, "Couldn't edit json data", jsonException);
+                                    }
+                                    jsonInbox.put(roomMessage);
+                                    inbox.setMessages(jsonInbox);
+                                    inbox.saveInBackground(exception -> {
+                                        if (exception != null) {
+                                            Log.e(TAG, "Couldn't save room message in inbox", exception);
+                                        } else {
+                                            Log.i(TAG, "Room message saved in inbox");
+                                        }
+                                    });
+                                }
+                            });
                         }
                     });
                 }
