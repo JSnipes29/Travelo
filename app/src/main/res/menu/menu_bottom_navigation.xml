@@ -10,17 +10,18 @@
         android:enabled="true"
         app:showAsAction="always" />
     <item
-        android:id="@+id/action_profile"
-        android:icon="@drawable/ic_baseline_person_24"
-        android:title="@string/profile"
-        android:enabled="true"
-        app:showAsAction="always" />
-    <item
         android:id="@+id/action_add_trip"
         android:icon="@drawable/ic_baseline_add_location_alt_24"
         android:title="@string/add_trip"
         android:enabled="true"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_profile"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="@string/profile"
+        android:enabled="true"
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/action_inbox"
         android:icon="@drawable/ic_baseline_inbox_24"

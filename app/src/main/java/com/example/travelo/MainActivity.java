@@ -37,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         final FragmentManager fragmentManager = getSupportFragmentManager();
-        setSupportActionBar(binding.toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
         // handle navigation selection
         binding.bottomNavigation.setOnNavigationItemSelectedListener(
                 item -> {
@@ -71,11 +69,6 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigation.setSelectedItemId(R.id.action_home);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
     @Override
     public void onBackPressed() {

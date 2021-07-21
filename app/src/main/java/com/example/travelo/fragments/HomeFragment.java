@@ -2,6 +2,9 @@ package com.example.travelo.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,10 +13,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.travelo.EndlessRecyclerViewScrollListener;
+import com.example.travelo.R;
 import com.example.travelo.adapters.PostAdapter;
 import com.example.travelo.adapters.UsersAdapter;
 import com.example.travelo.databinding.FragmentHomeBinding;
@@ -57,6 +63,9 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(getLayoutInflater(), container, false);
         View view = binding.getRoot();
+        // Setup toolbar
+        ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
         // Set up adapter for posts recycler view
         posts = new ArrayList<>();
         postAdapter = new PostAdapter(getContext(), posts);
@@ -181,5 +190,16 @@ public class HomeFragment extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
     }
 }
