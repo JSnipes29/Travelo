@@ -30,7 +30,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="Room message is put in inbox when user creates a room">
+    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="Fixed typo and bug with joining rooms from inbox">
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -39,10 +39,7 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/PostMapActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/PostMapActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/CreateRoomFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/CreateRoomFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/JoinRoomFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/JoinRoomFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/models/Inbox.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/models/Inbox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/ProfileFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/ProfileFragment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,20 +198,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1625865131177</updated>
-    </task>
-    <task id="LOCAL-00026" summary="Non owner users in room can go back to main menu">
-      <created>1626306098108</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1626306098108</updated>
-    </task>
-    <task id="LOCAL-00027" summary="User can post map to server">
-      <created>1626365877654</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1626365877654</updated>
     </task>
     <task id="LOCAL-00028" summary="User can see posts in home feed">
       <created>1626370667357</created>
@@ -545,7 +528,21 @@
       <option name="project" value="LOCAL" />
       <updated>1626894379084</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="Room message deleted when map is posted from room">
+      <created>1626895682656</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1626895682656</updated>
+    </task>
+    <task id="LOCAL-00076" summary="Fixed typo and bug with joining rooms from inbox">
+      <created>1626895882933</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1626895882933</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -561,8 +558,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="User can add photos to post" />
-    <MESSAGE value="Deletes the room from the server after posting map" />
     <MESSAGE value="User can tap icon on detail post to view user profile" />
     <MESSAGE value="User can tap user profile image on detail post to view user profile" />
     <MESSAGE value="User can follow other users" />
@@ -586,7 +581,9 @@
     <MESSAGE value="Minor UI changes to inbox" />
     <MESSAGE value="Room message is placed in inbox when user joins a new room" />
     <MESSAGE value="Room message is put in inbox when user creates a room" />
-    <option name="LAST_COMMIT_MESSAGE" value="Room message is put in inbox when user creates a room" />
+    <MESSAGE value="Room message deleted when map is posted from room" />
+    <MESSAGE value="Fixed typo and bug with joining rooms from inbox" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed typo and bug with joining rooms from inbox" />
   </component>
   <component name="WindowStateProjectService">
     <state x="780" y="224" key="#com.intellij.ide.util.MemberChooser" timestamp="1626822311760">
@@ -614,22 +611,22 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="759" y="412" key="Github.ShareDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1625865227316" />
-    <state width="1358" height="259" key="GridCell.Tab.0.bottom" timestamp="1626888354917">
+    <state width="1358" height="229" key="GridCell.Tab.0.bottom" timestamp="1626895877622">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.0.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626888354917" />
-    <state width="1358" height="259" key="GridCell.Tab.0.center" timestamp="1626888354916">
+    <state width="1358" height="229" key="GridCell.Tab.0.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626895877622" />
+    <state width="1358" height="229" key="GridCell.Tab.0.center" timestamp="1626895877621">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.0.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626888354916" />
-    <state width="1358" height="259" key="GridCell.Tab.0.left" timestamp="1626888354916">
+    <state width="1358" height="229" key="GridCell.Tab.0.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626895877621" />
+    <state width="1358" height="229" key="GridCell.Tab.0.left" timestamp="1626895877621">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.0.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626888354916" />
-    <state width="1358" height="259" key="GridCell.Tab.0.right" timestamp="1626888354917">
+    <state width="1358" height="229" key="GridCell.Tab.0.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626895877621" />
+    <state width="1358" height="229" key="GridCell.Tab.0.right" timestamp="1626895877622">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.0.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626888354917" />
+    <state width="1358" height="229" key="GridCell.Tab.0.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626895877622" />
     <state width="1358" height="259" key="GridCell.Tab.1.bottom" timestamp="1626888354919">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
@@ -646,11 +643,11 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state width="1358" height="259" key="GridCell.Tab.1.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626888354918" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626894387056">
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626895889728">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="-1402" y="222" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1626391118488" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626894387056" />
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626895889728" />
     <state x="483" y="267" key="Vcs.Push.Dialog.v2/0.25.1792.1095/-1920.-11.1920.1055@0.25.1792.1095" timestamp="1626375029876" />
     <state x="634" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1626816239023">
       <screen x="0" y="25" width="1792" height="1010" />

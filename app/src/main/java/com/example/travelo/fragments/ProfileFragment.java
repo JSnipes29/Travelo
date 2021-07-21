@@ -1,17 +1,23 @@
 package com.example.travelo.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.travelo.EndlessRecyclerViewScrollListener;
@@ -27,6 +33,7 @@ import com.example.travelo.models.Room;
 import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -37,6 +44,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcels;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -49,6 +58,7 @@ public class ProfileFragment extends Fragment {
     PostAdapter postAdapter;
     List<Post> posts;
     EndlessRecyclerViewScrollListener scrollListener;
+    public static final int GALLERY_REQUEST = 12;
     public static final int LIMIT = 10;
 
     public ProfileFragment() {
@@ -73,6 +83,7 @@ public class ProfileFragment extends Fragment {
                 @Override
                 public void done(ParseUser object, ParseException e) {
                     user = object;
+                    binding.ivProfileImage.setOnClickListener(v -> setProfileImage());
                     setUpProfileFragment();
                 }
             });
@@ -434,7 +445,7 @@ public class ProfileFragment extends Fragment {
     public List<String> jsonToList(JSONArray array) {
         List<String> res = new ArrayList<>();
         if (array != null) {
-            for (int i=0;i<array.length();i++){
+            for (int i = 0; i < array.length(); i++){
                 try {
                     res.add(array.getString(i));
                 } catch (JSONException e) {
@@ -444,5 +455,56 @@ public class ProfileFragment extends Fragment {
             }
         }
         return res;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case GALLERY_REQUEST:
+                    Uri selectedImage = data.getData();
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImage);
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        // Compress image to lower quality scale 1 - 100
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                        byte[] image = stream.toByteArray();
+                        ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
+                        query.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>() {
+                            @Override
+                            public void done(ParseUser user, ParseException e) {
+                                ParseFile parseFile = new ParseFile(user.getUsername() + "_pic.jpeg", image);
+                                user.put("profileImage", parseFile);
+                                user.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        if (e != null) {
+                                            Log.e(TAG, "Trouble updating profile pic");
+                                            return;
+                                        }
+                                        Toast.makeText(getContext(), "You have updated your profile image", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                            }
+                        });
+
+                    } catch (IOException e) {
+                        Log.e(TAG, "Problem with uploading profile image",e);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    // Start profile image setup by going to the phones built in image gallery
+    public void setProfileImage() {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
+        Log.i(TAG, "activity started");
     }
 }
