@@ -176,8 +176,8 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
                         return;
                     }
 
-                    if (room.getJoinable()) {
-                        if (room.getOwner().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+                    if (!room.getJoinable()) {
+                        if (!room.getOwner().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
                             Toast.makeText(context, "This is room is no longer joinable", Toast.LENGTH_SHORT).show();
                             return;
                         }

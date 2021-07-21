@@ -87,7 +87,7 @@ public class JoinRoomFragment extends DialogFragment {
 
             if (!rooms.get(0).getJoinable()) {
                 if (!rooms.get(0).getOwner().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
-                    Toast.makeText(v.getContext(), "This is room is no longer joinable", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "This room is no longer joinable", Toast.LENGTH_SHORT).show();
                     dismiss();
                     return;
                 }
