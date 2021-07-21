@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -12,13 +13,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.example.travelo.R;
 import com.example.travelo.adapters.InboxAdapter;
 import com.example.travelo.databinding.FragmentInboxBinding;
 import com.example.travelo.models.Inbox;
+import com.example.travelo.search.Corpus;
+import com.example.travelo.search.Document;
+import com.example.travelo.search.VectorSpaceModel;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -105,5 +111,31 @@ public class InboxFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.inbox_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchView.clearFocus();
+                ArrayList<Document> documents = new ArrayList<>();
+                Corpus corpus = new Corpus(documents);
+                VectorSpaceModel model = new VectorSpaceModel(corpus);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        searchView.setOnSearchClickListener(v -> binding.tvAppName.setVisibility(View.GONE));
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                binding.tvAppName.setVisibility(View.VISIBLE);
+                // TODO: Get refresh posts
+                return false;
+            }
+        });
     }
 }
