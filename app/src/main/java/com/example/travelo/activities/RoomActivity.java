@@ -1,4 +1,4 @@
-package com.example.travelo;
+package com.example.travelo.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.travelo.R;
 import com.example.travelo.databinding.ActivityRoomBinding;
 import com.example.travelo.fragments.EditMapFragment;
 import com.example.travelo.fragments.RoomMessagesFragment;

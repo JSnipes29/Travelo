@@ -1,6 +1,5 @@
-package com.example.travelo;
+package com.example.travelo.activities;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -10,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.travelo.YelpService;
 import com.example.travelo.adapters.YelpAdapter;
 import com.example.travelo.databinding.ActivityYelpLocationsBinding;
 import com.example.travelo.models.MarkerTag;
@@ -21,7 +21,6 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

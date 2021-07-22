@@ -1,9 +1,6 @@
 package com.example.travelo.adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,20 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.travelo.MainActivity;
-import com.example.travelo.ProfileActivity;
+import com.example.travelo.activities.ProfileActivity;
 import com.example.travelo.R;
-import com.example.travelo.fragments.ProfileFragment;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
-
-import org.parceler.Parcels;
 
 import java.util.List;
 

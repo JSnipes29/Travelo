@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,8 +19,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.travelo.EndlessRecyclerViewScrollListener;
-import com.example.travelo.MessagesActivity;
+import com.example.travelo.listeners.EndlessRecyclerViewScrollListener;
+import com.example.travelo.activities.MessagesActivity;
 import com.example.travelo.R;
 import com.example.travelo.adapters.InboxAdapter;
 import com.example.travelo.adapters.PostAdapter;
@@ -29,9 +28,7 @@ import com.example.travelo.databinding.FragmentProfileBinding;
 import com.example.travelo.models.Inbox;
 import com.example.travelo.models.Messages;
 import com.example.travelo.models.Post;
-import com.example.travelo.models.Room;
 import com.parse.GetCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -47,7 +44,6 @@ import org.parceler.Parcels;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ProfileFragment extends Fragment {

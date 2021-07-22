@@ -1,4 +1,4 @@
-package com.example.travelo;
+package com.example.travelo.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;

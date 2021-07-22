@@ -1,4 +1,4 @@
-package com.example.travelo;
+package com.example.travelo.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.travelo.R;
 import com.example.travelo.databinding.ActivityMessagesBinding;
 import com.example.travelo.fragments.RoomMessagesFragment;
 import com.example.travelo.models.Inbox;

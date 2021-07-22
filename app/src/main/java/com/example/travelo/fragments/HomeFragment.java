@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +17,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.travelo.EndlessRecyclerViewScrollListener;
+import com.example.travelo.listeners.EndlessRecyclerViewScrollListener;
 import com.example.travelo.R;
 import com.example.travelo.adapters.PostAdapter;
 import com.example.travelo.adapters.UsersAdapter;

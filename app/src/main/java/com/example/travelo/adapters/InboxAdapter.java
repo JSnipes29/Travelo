@@ -17,9 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.travelo.MessagesActivity;
+import com.example.travelo.activities.MessagesActivity;
 import com.example.travelo.R;
-import com.example.travelo.RoomActivity;
+import com.example.travelo.activities.RoomActivity;
 import com.example.travelo.models.Messages;
 import com.example.travelo.models.Room;
 import com.parse.GetCallback;

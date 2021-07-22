@@ -11,23 +11,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.travelo.RoomActivity;
-import com.example.travelo.adapters.InboxAdapter;
+import com.example.travelo.activities.RoomActivity;
 import com.example.travelo.databinding.FragmentJoinRoomBinding;
 import com.example.travelo.models.Inbox;
 import com.example.travelo.models.Room;
-import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.List;
 
 public class JoinRoomFragment extends DialogFragment {
 

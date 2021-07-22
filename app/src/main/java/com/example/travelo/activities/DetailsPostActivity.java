@@ -1,4 +1,4 @@
-package com.example.travelo;
+package com.example.travelo.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.travelo.R;
 import com.example.travelo.adapters.CommentAdapter;
 import com.example.travelo.adapters.CustomWindowAdapter;
 import com.example.travelo.adapters.UsersAdapter;

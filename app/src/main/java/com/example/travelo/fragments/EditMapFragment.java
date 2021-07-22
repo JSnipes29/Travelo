@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.os.SystemClock;
 import android.util.Log;
@@ -18,9 +17,9 @@ import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
 import android.widget.Toast;
 
-import com.example.travelo.PostMapActivity;
+import com.example.travelo.activities.PostMapActivity;
 import com.example.travelo.R;
-import com.example.travelo.YelpLocationsActivity;
+import com.example.travelo.activities.YelpLocationsActivity;
 import com.example.travelo.adapters.CustomWindowAdapter;
 import com.example.travelo.databinding.FragmentEditMapBinding;
 import com.example.travelo.models.MarkerTag;
@@ -31,7 +30,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;

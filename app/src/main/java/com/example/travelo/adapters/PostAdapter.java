@@ -13,8 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.travelo.DetailsPostActivity;
-import com.example.travelo.ProfileActivity;
+import com.example.travelo.activities.DetailsPostActivity;
+import com.example.travelo.activities.ProfileActivity;
 import com.example.travelo.R;
 import com.example.travelo.models.Post;
 import com.parse.ParseFile;

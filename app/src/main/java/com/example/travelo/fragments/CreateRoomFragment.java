@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.travelo.RoomActivity;
+import com.example.travelo.activities.RoomActivity;
 import com.example.travelo.databinding.FragmentCreateRoomBinding;
 import com.example.travelo.models.Inbox;
 import com.example.travelo.models.Room;

@@ -1,30 +1,21 @@
-package com.example.travelo;
+package com.example.travelo.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.travelo.R;
 import com.example.travelo.databinding.ActivityMainBinding;
 import com.example.travelo.fragments.AddTripFragment;
 import com.example.travelo.fragments.HomeFragment;
 import com.example.travelo.fragments.InboxFragment;
 import com.example.travelo.fragments.ProfileFragment;
-import com.example.travelo.fragments.SettingsFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
-import org.parceler.Parcels;
 
 public class MainActivity extends AppCompatActivity {
 
