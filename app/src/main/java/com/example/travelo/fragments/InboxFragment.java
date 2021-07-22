@@ -36,6 +36,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 
 public class InboxFragment extends Fragment {
@@ -66,11 +68,11 @@ public class InboxFragment extends Fragment {
         binding.rvInbox.setAdapter(inboxAdapter);
         LinearLayoutManager inboxLayoutManager = new LinearLayoutManager(getContext());
         binding.rvInbox.setLayoutManager(inboxLayoutManager);
-        queryInbox(0);
+        queryInbox(0, null);
         return view;
     }
 
-    public void queryInbox(int parameter) {
+    public void queryInbox(int parameter, String query) {
         ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
         userQuery.include(Inbox.KEY);
         userQuery.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>() {
@@ -78,19 +80,84 @@ public class InboxFragment extends Fragment {
             public void done(ParseUser user, ParseException e) {
                 Inbox inbox = (Inbox) user.getParseObject(Inbox.KEY);
                 JSONArray jsonInbox = inbox.getMessages();
-                jsonToList(jsonInbox);
+                jsonToList(jsonInbox, query, parameter);
             }
         });
 
     }
 
-    public void jsonToList(JSONArray array) {
-        for (int i = 0; i < array.length(); i++) {
-            try {
-                list.add(array.getJSONObject(i));
-            } catch (JSONException e) {
-                Log.e(TAG, "Error loading data to json", e);
+    public void jsonToList(JSONArray array, String query, int parameter) {
+        if (query == null) {
+            for (int i = 0; i < array.length(); i++) {
+                try {
+                    list.add(array.getJSONObject(i));
+                } catch (JSONException e) {
+                    Log.e(TAG, "Error loading data to json", e);
 
+                }
+            }
+        } else {
+            list.clear();
+            inboxAdapter.notifyDataSetChanged();
+            Map<Double, JSONObject> similarityText = new TreeMap<Double, JSONObject>();
+            ArrayList<Document> documents = new ArrayList<>();
+            for (int i = 0; i < array.length(); i++) {
+                try {
+                    JSONObject jsonMessage = array.getJSONObject(i);
+                    String text = null;
+                    if (jsonMessage.length() == InboxAdapter.ROOM_LENGTH) {
+                        text = jsonMessage.getString(jsonMessage.keys().next());
+                    } else {
+                        text = jsonMessage.getString("username");
+                    }
+                    Document doc = new Document(text);
+                    documents.add(doc);
+                } catch (JSONException e) {
+                    Log.e(TAG, "Error loading data to json", e);
+                }
+            }
+            Document queryDoc = new Document(query);
+            documents.add(queryDoc);
+            double [] cosineSimiliarityValues = new double[documents.size() - 1];
+            Corpus corpus = new Corpus(documents);
+            VectorSpaceModel vectorSpaceModel = new VectorSpaceModel(corpus);
+            for (int j = 0; j < cosineSimiliarityValues.length; j++) {
+                Document doc = documents.get(j);
+                double value = vectorSpaceModel.cosineSimilarity(doc, queryDoc);
+                cosineSimiliarityValues[j] = value;
+            }
+            try {
+                for (int i = 1; i < cosineSimiliarityValues.length; i++) {
+                    double current = cosineSimiliarityValues[i];
+                    JSONObject currentObj = array.getJSONObject(i);
+                    int j = i - 1;
+                    while (j >= 0 && current > cosineSimiliarityValues[j]) {
+                        cosineSimiliarityValues[j + 1] = cosineSimiliarityValues[j];
+                        array.put(j + 1, array.getJSONObject(j));
+                        j--;
+                    }
+                    // at this point we've exited, so j is either -1
+                    // or it's at the first element where current >= a[j]
+                    cosineSimiliarityValues[j + 1] = current;
+                    array.put(j + 1, currentObj);
+                }
+            } catch (JSONException jsonException) {
+                Log.e(TAG, "Couldn't read from json data", jsonException);
+            }
+
+            for (double x: cosineSimiliarityValues) {
+                Log.i(TAG, String.valueOf(x));
+            }
+            for (int i = 0; i < array.length(); i++) {
+                if (cosineSimiliarityValues[i] == 0) {
+                    break;
+                }
+                try {
+                    list.add(array.getJSONObject(i));
+                } catch (JSONException e) {
+                    Log.e(TAG, "Error loading data to json", e);
+
+                }
             }
         }
         inboxAdapter.notifyDataSetChanged();
@@ -120,6 +187,7 @@ public class InboxFragment extends Fragment {
                 ArrayList<Document> documents = new ArrayList<>();
                 Corpus corpus = new Corpus(documents);
                 VectorSpaceModel model = new VectorSpaceModel(corpus);
+                queryInbox(1, query);
                 return true;
             }
 

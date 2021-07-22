@@ -30,23 +30,18 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="Setup toolbars for fragments">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/search/Corpus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/search/Document.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/search/VectorSpaceModel.java" afterDir="false" />
+    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="Started implementing searching using cosine similarity">
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/jarAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/CreateRoomFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/CreateRoomFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/InboxFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/InboxFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/inbox_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/inbox_menu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/JoinRoomFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/JoinRoomFragment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,13 +200,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1625865131177</updated>
-    </task>
-    <task id="LOCAL-00030" summary="Fixed bug with Yelp businesses not adding / removing correctly">
-      <created>1626382298100</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1626382298100</updated>
     </task>
     <task id="LOCAL-00031" summary="Map is persisted in edit map fragment">
       <created>1626382650966</created>
@@ -549,7 +537,14 @@
       <option name="project" value="LOCAL" />
       <updated>1626902939174</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="Started implementing searching using cosine similarity">
+      <created>1626908675395</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1626908675395</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -565,7 +560,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="User can follow other users" />
     <MESSAGE value="User can unfollow users" />
     <MESSAGE value="Users can view other users who they follow in their home feed" />
     <MESSAGE value="Added endless scrolling on home feed" />
@@ -590,7 +584,8 @@
     <MESSAGE value="Fixed typo and bug with joining rooms from inbox" />
     <MESSAGE value="User can edit their profile picture" />
     <MESSAGE value="Setup toolbars for fragments" />
-    <option name="LAST_COMMIT_MESSAGE" value="Setup toolbars for fragments" />
+    <MESSAGE value="Started implementing searching using cosine similarity" />
+    <option name="LAST_COMMIT_MESSAGE" value="Started implementing searching using cosine similarity" />
   </component>
   <component name="WindowStateProjectService">
     <state x="780" y="224" key="#com.intellij.ide.util.MemberChooser" timestamp="1626822311760">
@@ -618,43 +613,43 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="759" y="412" key="Github.ShareDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1625865227316" />
-    <state width="1358" height="259" key="GridCell.Tab.0.bottom" timestamp="1626907337912">
+    <state width="1358" height="259" key="GridCell.Tab.0.bottom" timestamp="1626908567399">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.0.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626907337912" />
-    <state width="1358" height="259" key="GridCell.Tab.0.center" timestamp="1626907337910">
+    <state width="1358" height="259" key="GridCell.Tab.0.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626908567399" />
+    <state width="1358" height="259" key="GridCell.Tab.0.center" timestamp="1626908567398">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.0.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626907337910" />
-    <state width="1358" height="259" key="GridCell.Tab.0.left" timestamp="1626907337909">
+    <state width="1358" height="259" key="GridCell.Tab.0.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626908567398" />
+    <state width="1358" height="259" key="GridCell.Tab.0.left" timestamp="1626908567397">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.0.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626907337909" />
-    <state width="1358" height="259" key="GridCell.Tab.0.right" timestamp="1626907337911">
+    <state width="1358" height="259" key="GridCell.Tab.0.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626908567397" />
+    <state width="1358" height="259" key="GridCell.Tab.0.right" timestamp="1626908567398">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.0.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626907337911" />
-    <state width="1358" height="259" key="GridCell.Tab.1.bottom" timestamp="1626907346202">
+    <state width="1358" height="259" key="GridCell.Tab.0.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626908567398" />
+    <state width="1358" height="259" key="GridCell.Tab.1.bottom" timestamp="1626908567400">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.1.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626907346202" />
-    <state width="1358" height="259" key="GridCell.Tab.1.center" timestamp="1626907346201">
+    <state width="1358" height="259" key="GridCell.Tab.1.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626908567400" />
+    <state width="1358" height="259" key="GridCell.Tab.1.center" timestamp="1626908567399">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.1.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626907346201" />
-    <state width="1358" height="259" key="GridCell.Tab.1.left" timestamp="1626907346201">
+    <state width="1358" height="259" key="GridCell.Tab.1.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626908567399" />
+    <state width="1358" height="259" key="GridCell.Tab.1.left" timestamp="1626908567399">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.1.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626907346201" />
-    <state width="1358" height="259" key="GridCell.Tab.1.right" timestamp="1626907346201">
+    <state width="1358" height="259" key="GridCell.Tab.1.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626908567399" />
+    <state width="1358" height="259" key="GridCell.Tab.1.right" timestamp="1626908567399">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.1.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626907346201" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626902948061">
+    <state width="1358" height="259" key="GridCell.Tab.1.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626908567399" />
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626908682648">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="-1402" y="222" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1626391118488" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626902948061" />
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626908682648" />
     <state x="483" y="267" key="Vcs.Push.Dialog.v2/0.25.1792.1095/-1920.-11.1920.1055@0.25.1792.1095" timestamp="1626375029876" />
     <state x="634" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1626816239023">
       <screen x="0" y="25" width="1792" height="1010" />
