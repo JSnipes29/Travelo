@@ -36,8 +36,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 
 public class InboxFragment extends Fragment {
@@ -73,6 +71,7 @@ public class InboxFragment extends Fragment {
     }
 
     public void queryInbox(int parameter, String query) {
+        // Get the inbox of the current user
         ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
         userQuery.include(Inbox.KEY);
         userQuery.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>() {
@@ -86,6 +85,7 @@ public class InboxFragment extends Fragment {
 
     }
 
+    // Convert a json array to a list to use for the inbox adapter
     public void jsonToList(JSONArray array, String query, int parameter) {
         list.clear();
         inboxAdapter.notifyDataSetChanged();
@@ -99,7 +99,8 @@ public class InboxFragment extends Fragment {
                 }
             }
         } else {
-            Map<Double, JSONObject> similarityText = new TreeMap<Double, JSONObject>();
+            // Use vector space model to get the most relevant results from the query
+            // Create a list of documents
             ArrayList<Document> documents = new ArrayList<>();
             for (int i = 0; i < array.length(); i++) {
                 try {
@@ -121,12 +122,14 @@ public class InboxFragment extends Fragment {
             double [] cosineSimiliarityValues = new double[documents.size() - 1];
             Corpus corpus = new Corpus(documents);
             VectorSpaceModel vectorSpaceModel = new VectorSpaceModel(corpus);
+            // Get the cosine similarity value for each document against the query
             for (int j = 0; j < cosineSimiliarityValues.length; j++) {
                 Document doc = documents.get(j);
                 double value = vectorSpaceModel.cosineSimilarity(doc, queryDoc);
                 cosineSimiliarityValues[j] = value;
             }
             try {
+                // Sort the jsonArray and by the cosine similarity values
                 for (int i = 1; i < cosineSimiliarityValues.length; i++) {
                     double current = cosineSimiliarityValues[i];
                     JSONObject currentObj = array.getJSONObject(i);
@@ -148,6 +151,7 @@ public class InboxFragment extends Fragment {
             for (double x: cosineSimiliarityValues) {
                 Log.i(TAG, String.valueOf(x));
             }
+            // Convert json array to list, don't add if cosine similarity value is 0
             for (int i = 0; i < array.length(); i++) {
                 if (cosineSimiliarityValues[i] == 0) {
                     break;
@@ -183,10 +187,8 @@ public class InboxFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                // Search the inbox using the query and vector space model
                 searchView.clearFocus();
-                ArrayList<Document> documents = new ArrayList<>();
-                Corpus corpus = new Corpus(documents);
-                VectorSpaceModel model = new VectorSpaceModel(corpus);
                 queryInbox(1, query);
                 return true;
             }
@@ -200,6 +202,7 @@ public class InboxFragment extends Fragment {
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
+                // Reset the elements of the inbox
                 binding.tvAppName.setVisibility(View.VISIBLE);
                 queryInbox(0, null);
                 return false;
