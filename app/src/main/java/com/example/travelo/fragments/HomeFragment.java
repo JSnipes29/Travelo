@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -16,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.travelo.listeners.EndlessRecyclerViewScrollListener;
 import com.example.travelo.R;
@@ -33,6 +35,8 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 
 public class HomeFragment extends Fragment {
@@ -107,6 +111,8 @@ public class HomeFragment extends Fragment {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+
+
         return view;
     }
 
@@ -140,12 +146,16 @@ public class HomeFragment extends Fragment {
                 Log.i(TAG, "Endless scrolling in effect");
             } else if (parameter == 2) {
                 Log.i(TAG, "Pulling to refresh");
+                int size = posts.size();
                 this.posts.clear();
-                postAdapter.notifyDataSetChanged();
+                postAdapter.notifyItemRangeRemoved(start, size);
             }
             this.posts.addAll(posts);
             if (parameter == 1) {
                 postAdapter.notifyItemRangeInserted(start, posts.size());
+            } else if (parameter == 2) {
+                postAdapter.notifyDataSetChanged();
+                //postAdapter.notifyItemRangeInserted(start, posts.size());
             } else {
                 postAdapter.notifyDataSetChanged();
             }
