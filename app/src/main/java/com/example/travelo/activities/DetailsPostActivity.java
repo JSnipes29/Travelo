@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -182,6 +183,37 @@ public class DetailsPostActivity extends AppCompatActivity {
             Toasty.error(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT, true).show();
         }
 
+        // Set up the spinner to set map type
+        binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (map != null) {
+                    int type = 1;
+                    switch (position) {
+                        case 0:
+                            type = GoogleMap.MAP_TYPE_NORMAL;
+                            break;
+                        case 1:
+                            type = GoogleMap.MAP_TYPE_SATELLITE;
+                            break;
+                        case 2:
+                            type = GoogleMap.MAP_TYPE_TERRAIN;
+                            break;
+                        case 3:
+                            type = GoogleMap.MAP_TYPE_HYBRID;
+                            break;
+                        default:
+                            break;
+                    }
+                    map.setMapType(type);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     // Get the marker data from the Parse server and add it to the map
