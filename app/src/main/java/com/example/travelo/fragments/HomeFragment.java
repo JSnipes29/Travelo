@@ -71,7 +71,7 @@ public class HomeFragment extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
         // Set up adapter for posts recycler view
         posts = new ArrayList<>();
-        postAdapter = new PostAdapter(getContext(), posts);
+        postAdapter = new PostAdapter(getContext(), posts, (AppCompatActivity) getActivity());
         binding.rvPosts.setAdapter(postAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         binding.rvPosts.setLayoutManager(linearLayoutManager);

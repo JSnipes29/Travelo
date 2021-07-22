@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -119,7 +120,7 @@ public class ProfileFragment extends Fragment {
         }
         // Bind posts to recycler view
         posts = new ArrayList<>();
-        postAdapter = new PostAdapter(getContext(), posts);
+        postAdapter = new PostAdapter(getContext(), posts, (AppCompatActivity)getActivity());
         binding.rvPosts.setAdapter(postAdapter);
         LinearLayoutManager postLayoutManager = new LinearLayoutManager(getContext());
         binding.rvPosts.setLayoutManager(postLayoutManager);

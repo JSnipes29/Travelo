@@ -14,6 +14,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:transitionName="profileImage"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -26,7 +27,8 @@
         android:layout_toEndOf="@+id/ivProfileImage"
         tools:text="username302"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:transitionName="name" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvUsers"
@@ -43,7 +45,8 @@
         android:layout_height="350dp"
         android:layout_below="@+id/rvUsers"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="2dp" />
+        android:layout_marginTop="2dp"
+        android:transitionName="image"/>
 
     <TextView
         android:id="@+id/tvDescription"
@@ -55,6 +58,7 @@
         android:layout_marginTop="2dp"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:transitionName="description"
         tools:text="Description" />
 
     <androidx.recyclerview.widget.RecyclerView

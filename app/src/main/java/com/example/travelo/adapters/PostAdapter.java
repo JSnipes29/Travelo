@@ -11,6 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -29,10 +32,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     Context context;
     List<Post> posts;
+    AppCompatActivity activity;
 
-    public PostAdapter(Context context, List<Post> posts) {
+    public PostAdapter(Context context, List<Post> posts, AppCompatActivity activity) {
         this.context = context;
         this.posts = posts;
+        this.activity = activity;
     }
 
     @NonNull
@@ -99,7 +104,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             rlPost.setOnClickListener(v -> {
                 Intent intent = new Intent(context, DetailsPostActivity.class);
                 intent.putExtra("post", Parcels.wrap(post));
-                context.startActivity(intent);
+                // Shared content transition
+                Pair<View, String> profileImage = Pair.create((View)ivProfileImage, "profileImage");
+                Pair<View, String> name = Pair.create((View)tvName, "name");
+                Pair<View, String> description = Pair.create((View)tvDescription, "description");
+                Pair<View, String> imagePair = Pair.create((View)ivImage, "image");
+                ActivityOptionsCompat options =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(activity,
+                                profileImage, name, description, imagePair);
+                context.startActivity(intent, options.toBundle());
             });
         }
 
