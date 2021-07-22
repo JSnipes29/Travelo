@@ -83,7 +83,7 @@ public class InboxFragment extends Fragment {
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                Toasty.info(getContext(), "Removed post from feed", Toast.LENGTH_SHORT).show();
+                Toasty.info(getContext(), "Removed post from inbox", Toast.LENGTH_SHORT).show();
                 //Remove swiped item from list and notify the RecyclerView
                 int position = viewHolder.getAdapterPosition();
                 list.remove(position);
