@@ -87,6 +87,8 @@ public class InboxFragment extends Fragment {
     }
 
     public void jsonToList(JSONArray array, String query, int parameter) {
+        list.clear();
+        inboxAdapter.notifyDataSetChanged();
         if (query == null) {
             for (int i = 0; i < array.length(); i++) {
                 try {
@@ -97,8 +99,6 @@ public class InboxFragment extends Fragment {
                 }
             }
         } else {
-            list.clear();
-            inboxAdapter.notifyDataSetChanged();
             Map<Double, JSONObject> similarityText = new TreeMap<Double, JSONObject>();
             ArrayList<Document> documents = new ArrayList<>();
             for (int i = 0; i < array.length(); i++) {
@@ -201,7 +201,7 @@ public class InboxFragment extends Fragment {
             @Override
             public boolean onClose() {
                 binding.tvAppName.setVisibility(View.VISIBLE);
-                // TODO: Get refresh posts
+                queryInbox(0, null);
                 return false;
             }
         });
