@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.example.travelo.activities.PostMapActivity;
@@ -114,7 +115,6 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
             intent.putExtra("id", id);
             startActivity(intent);
         });
-
         // Search for a location when the button is pressed
         binding.ibSearch.setOnClickListener(v -> {
             String address = binding.etSearch.getText().toString();
@@ -138,6 +138,37 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
             map.animateCamera(CameraUpdateFactory.zoomTo(14f));
         });
 
+        // Set the spinner up to change the map type
+        binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (map != null) {
+                    int type = 1;
+                    switch (position) {
+                        case 0:
+                            type = GoogleMap.MAP_TYPE_NORMAL;
+                            break;
+                        case 1:
+                            type = GoogleMap.MAP_TYPE_SATELLITE;
+                            break;
+                        case 2:
+                            type = GoogleMap.MAP_TYPE_TERRAIN;
+                            break;
+                        case 3:
+                            type = GoogleMap.MAP_TYPE_HYBRID;
+                            break;
+                        default:
+                            break;
+                    }
+                    map.setMapType(type);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         return view;
     }
 
