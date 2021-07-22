@@ -30,21 +30,16 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="When posting a map if the user doesn't select a photo, then the photo will be a screen shot of the map">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/values/map_type_array.xml" afterDir="false" />
+    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="User can set map type when editing map">
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/jarAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/EditMapFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/EditMapFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_edit_map.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_edit_map.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/PostMapFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/PostMapFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_post_map.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_post_map.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,8 +86,8 @@
         <option value="Interface" />
         <option value="layoutResourceFile" />
         <option value="resourceFile" />
-        <option value="Class" />
         <option value="valueResourceFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -204,13 +199,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1625865131177</updated>
-    </task>
-    <task id="LOCAL-00041" summary="Added more information from Yelp. Users can now view price, address, location, distance from marker, and category of places.">
-      <created>1626466820211</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1626466820211</updated>
     </task>
     <task id="LOCAL-00042" summary="Blocks the user out the room if the room is no longer joinable">
       <created>1626468054670</created>
@@ -548,7 +536,14 @@
       <option name="project" value="LOCAL" />
       <updated>1626990489418</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="User can set map type when editing map">
+      <created>1626992501384</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1626992501384</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -564,7 +559,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="User can view messages in server in inbox view" />
     <MESSAGE value="Minor UI changes and changed limit of home and profile feed posts" />
     <MESSAGE value="Minor UI changes to profile view" />
     <MESSAGE value="Created message button and pass in inbox on profile click" />
@@ -589,7 +583,8 @@
     <MESSAGE value="Ordered inbox such that newest items appear at the top" />
     <MESSAGE value="Changed inbox fragment toast message while removing" />
     <MESSAGE value="When posting a map if the user doesn't select a photo, then the photo will be a screen shot of the map" />
-    <option name="LAST_COMMIT_MESSAGE" value="When posting a map if the user doesn't select a photo, then the photo will be a screen shot of the map" />
+    <MESSAGE value="User can set map type when editing map" />
+    <option name="LAST_COMMIT_MESSAGE" value="User can set map type when editing map" />
   </component>
   <component name="WindowStateProjectService">
     <state x="780" y="224" key="#com.intellij.ide.util.MemberChooser" timestamp="1626822311760">
@@ -597,10 +592,10 @@
     </state>
     <state x="-1084" y="197" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1010/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1626387609993" />
     <state x="780" y="224" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626822311760" />
-    <state x="706" y="264" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1626800723410">
+    <state x="706" y="264" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1626992901858">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state x="706" y="264" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626800723410" />
+    <state x="706" y="264" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626992901858" />
     <state x="472" y="270" key="AndroidCreateResourceDirectoryDialog" timestamp="1626905936464">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
@@ -649,11 +644,11 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state width="1358" height="259" key="GridCell.Tab.1.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626908567399" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626990495923">
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1626992519169">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="-1402" y="222" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1626391118488" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626990495923" />
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626992519169" />
     <state x="483" y="267" key="Vcs.Push.Dialog.v2/0.25.1792.1095/-1920.-11.1920.1055@0.25.1792.1095" timestamp="1626375029876" />
     <state x="634" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1626816239023">
       <screen x="0" y="25" width="1792" height="1010" />
