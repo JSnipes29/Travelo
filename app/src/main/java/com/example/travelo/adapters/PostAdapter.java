@@ -60,7 +60,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         TextView tvDescription;
         TextView tvTimestamp;
         RelativeLayout rlPost;
-        ImageView ivImage;
+        final ImageView ivImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -87,6 +87,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 ivProfileImage.setOnClickListener(v -> ProfileActivity.goToProfile(context, user.getUsername()));
             }
             ParseFile image = post.getPhoto();
+            // If the image is null, don't show the image
             if (image == null) {
                 ivImage.setVisibility(View.GONE);
             } else {

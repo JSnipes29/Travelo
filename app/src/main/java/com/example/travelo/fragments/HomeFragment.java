@@ -122,6 +122,7 @@ public class HomeFragment extends Fragment {
         binding = null;
     }
 
+    // Query posts from the server, parameter 0 == onStart, 1 == endless scrolling, 2 == pull to refresh
     private void queryPosts(int parameter) {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_OWNER);
@@ -146,23 +147,24 @@ public class HomeFragment extends Fragment {
                 Log.i(TAG, "Endless scrolling in effect");
             } else if (parameter == 2) {
                 Log.i(TAG, "Pulling to refresh");
-                int size = posts.size();
+                int size = this.posts.size();
                 this.posts.clear();
                 postAdapter.notifyItemRangeRemoved(start, size);
+                scrollListener.resetState();
             }
             this.posts.addAll(posts);
             if (parameter == 1) {
                 postAdapter.notifyItemRangeInserted(start, posts.size());
+                Log.i(TAG, "Size: " + this.posts.size());
             } else if (parameter == 2) {
                 postAdapter.notifyDataSetChanged();
-                //postAdapter.notifyItemRangeInserted(start, posts.size());
             } else {
                 postAdapter.notifyDataSetChanged();
             }
             if (parameter == 2) {
                 binding.swipeContainer.setRefreshing(false);
             }
-            scrollListener.resetState();
+            //scrollListener.resetState();
         });
     }
 

@@ -52,6 +52,30 @@ public class Post extends ParseObject {
         return post;
     }
 
+
+    public static Post createPost(JSONObject map, String description, JSONObject users, ParseFile photo) {
+        Post post = new Post();
+        post.setMap(map);
+        post.setOwner(ParseUser.getCurrentUser());
+        if (description.isEmpty()) {
+            String d = ParseUser.getCurrentUser().getUsername() + "'s " + DEFAULT_DESCRIPTION;
+            post.setDescription(d);
+        } else {
+            post.setDescription(description);
+        }
+        post.setUsers(users);
+        JSONArray usersArray = new JSONArray();
+        Iterator<String> iter = users.keys();
+        while (iter.hasNext()) {
+            String key = iter.next();
+            usersArray.put(key);
+        }
+        post.setUserArray(usersArray);
+        if (photo != null) {
+            post.setPhoto(photo);
+        }
+        return post;
+    }
     public ParseUser getOwner() {
         return getParseUser(KEY_OWNER);
     }

@@ -34,6 +34,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
@@ -41,7 +42,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcels;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +62,9 @@ public class PostMapFragment extends Fragment {
     GoogleMap map;
     Room room;
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 24;
+    private ParseFile parsePhotoFile;
     private File photoFile;
+    public static final String FILE_MAP_NAME = "map_screenshot.png";
     public String photoFileName = "map_photo.jpg";
     public static final boolean DELETE_ROOM = true;
 
@@ -109,32 +114,52 @@ public class PostMapFragment extends Fragment {
             // Else the user can add a description and post to server
             binding.btnAddPhoto.setOnClickListener(v -> launchCamera());
             binding.btnProceed.setOnClickListener(v -> {
-                String description = binding.etDescription.getText().toString();
-                Post post = Post.createPost(room.getMap(), description, room.getProfileImages(), photoFile);
-                post.saveInBackground(e -> {
-                    if (e == null) {
-                        Toasty.info(getContext(), "Successfully posted map", Toast.LENGTH_SHORT, true).show();
-                    } else {
-                        Log.e(TAG, "Error posting map", e);
-                    }
-                });
-                // Delete the room after posting the map
-                if (DELETE_ROOM) {
-                    room.deleteInBackground(e -> {
-                        if (e != null) {
-                            Log.e(TAG, "Error deleting room", e);
-                            return;
+                // If there is no photo, take a screenshot of the map and post it as the photo
+                if (photoFile == null) {
+                    map.snapshot(new GoogleMap.SnapshotReadyCallback() {
+                        @Override
+                        public void onSnapshotReady(@Nullable Bitmap bitmap) {
+                            parsePhotoFile = bitmapToFile(bitmap);
+                            postMap();
                         }
-                        Log.i(TAG, "Room has been deleted");
                     });
+                } else {
+                    postMap();
                 }
-                Intent intent = new Intent(getContext(), MainActivity.class);
-                startActivity(intent);
             });
         }
         return view;
     }
 
+    public void postMap() {
+        String description = binding.etDescription.getText().toString();
+        Post post;
+        if (parsePhotoFile != null) {
+            post = Post.createPost(room.getMap(), description, room.getProfileImages(), parsePhotoFile);
+        } else {
+            post = Post.createPost(room.getMap(), description, room.getProfileImages(), photoFile);
+        }
+
+        post.saveInBackground(e -> {
+            if (e == null) {
+                Toasty.info(getContext(), "Successfully posted map", Toast.LENGTH_SHORT, true).show();
+            } else {
+                Log.e(TAG, "Error posting map", e);
+            }
+        });
+        // Delete the room after posting the map
+        if (DELETE_ROOM) {
+            room.deleteInBackground(e -> {
+                if (e != null) {
+                    Log.e(TAG, "Error deleting room", e);
+                    return;
+                }
+                Log.i(TAG, "Room has been deleted");
+            });
+        }
+        Intent intent = new Intent(getContext(), MainActivity.class);
+        startActivity(intent);
+    }
     // Get the marker data from the Parse server and add it to the map
     public void populateMap() {
         JSONObject jsonMap = room.getMap();
@@ -265,5 +290,14 @@ public class PostMapFragment extends Fragment {
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public static ParseFile bitmapToFile(Bitmap bitmap) {
+        //create a file to write bitmap data
+        ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
+        byte[] imageByte = byteArrayOutputStream.toByteArray();
+        ParseFile parseFile = new ParseFile(FILE_MAP_NAME,imageByte);
+        return parseFile;
     }
 }

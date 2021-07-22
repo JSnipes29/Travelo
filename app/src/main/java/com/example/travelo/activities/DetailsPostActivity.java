@@ -226,6 +226,7 @@ public class DetailsPostActivity extends AppCompatActivity {
         } catch (JSONException e) {
             Log.e(TAG,"Error getting markers from server", e);
         }
+
     }
 
     protected void loadMap(GoogleMap googleMap) {
