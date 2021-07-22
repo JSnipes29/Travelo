@@ -72,6 +72,8 @@ public class ProfileFragment extends Fragment {
         binding = FragmentProfileBinding.inflate(getLayoutInflater(), container, false);
         View view = binding.getRoot();
         user = (ParseUser) Parcels.unwrap(getArguments().getParcelable("user"));
+        binding.btnMessage.setVisibility(View.GONE);
+        binding.btnFollow.setVisibility(View.GONE);
         if (user == null) {
             ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
             query.include("followers");
@@ -102,10 +104,9 @@ public class ProfileFragment extends Fragment {
         binding.tvFollowingCount.setText(String.valueOf(following.size()));
         // Don't show the following button and message button if the user is the current user
         String currentUserId = ParseUser.getCurrentUser().getObjectId();
-        if (user.getObjectId().equals(currentUserId)) {
-            binding.btnFollow.setVisibility(View.GONE);
-            binding.btnMessage.setVisibility(View.GONE);
-        } else {
+        if (!user.getObjectId().equals(currentUserId)) {
+            binding.btnFollow.setVisibility(View.VISIBLE);
+            binding.btnMessage.setVisibility(View.VISIBLE);
             binding.btnMessage.setOnClickListener(v -> goToMessages());
             if (followers.contains(currentUserId)) {
                 Log.i(TAG, "Following");
