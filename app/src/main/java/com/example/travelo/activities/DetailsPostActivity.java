@@ -41,6 +41,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 public class DetailsPostActivity extends AppCompatActivity {
 
     ActivityDetailsPostBinding binding;
@@ -124,7 +126,7 @@ public class DetailsPostActivity extends AppCompatActivity {
                         Log.e(TAG, "Problem loading comment to server", e);
                         return;
                     }
-                    Toast.makeText(DetailsPostActivity.this, "Comment uploaded successfully", Toast.LENGTH_SHORT).show();
+                    Toasty.success(DetailsPostActivity.this, "Comment uploaded successfully", Toast.LENGTH_SHORT, true).show();
                     JSONArray updated = post.getComments();
                     comments = updated;
                     commentAdapter.update(comments);
@@ -177,7 +179,7 @@ public class DetailsPostActivity extends AppCompatActivity {
                 }
             });
         } else {
-            Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
+            Toasty.error(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT, true).show();
         }
 
     }
@@ -230,9 +232,9 @@ public class DetailsPostActivity extends AppCompatActivity {
         map = googleMap;
         if (map != null) {
             // Map is ready
-            Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
+            Toasty.success(this, "Map was loaded properly!", Toast.LENGTH_SHORT, true).show();
         } else {
-            Toast.makeText(this, "Error - Map was null!!", Toast.LENGTH_SHORT).show();
+            Toasty.error(this, "Error - Map was null!!", Toast.LENGTH_SHORT, true).show();
         }
     }
 

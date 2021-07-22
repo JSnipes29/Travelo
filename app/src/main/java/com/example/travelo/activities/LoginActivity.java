@@ -15,6 +15,8 @@ import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+import es.dmoral.toasty.Toasty;
+
 public class LoginActivity extends AppCompatActivity {
 
     public static final String TAG = "LoginActivity";
@@ -56,12 +58,12 @@ public class LoginActivity extends AppCompatActivity {
             public void done(ParseUser user, ParseException e) {
                 if (e != null) {
                     Log.e(TAG, "Issue with login", e);
-                    Toast.makeText(LoginActivity.this, "Issue with login", Toast.LENGTH_SHORT).show();
+                    Toasty.error(LoginActivity.this, "Issue with login", Toast.LENGTH_SHORT, true).show();
                     return;
                 }
                 Log.i(TAG, "User logged in");
                 goMainActivity();
-                Toast.makeText(LoginActivity.this, "You have logged in!", Toast.LENGTH_SHORT).show();
+                Toasty.success(LoginActivity.this, "You have logged in!", Toast.LENGTH_SHORT, true).show();
             }
         });
     }

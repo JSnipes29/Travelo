@@ -21,6 +21,7 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -82,7 +83,7 @@ public class YelpLocationsActivity extends AppCompatActivity {
                 businesses.clear();
                 businesses.addAll(body.getBusinesses());
                 if (businesses.isEmpty()) {
-                    Toast.makeText(YelpLocationsActivity.this, "No landmarks in this area", Toast.LENGTH_SHORT).show();
+                    Toasty.info(YelpLocationsActivity.this, "No landmarks in this area", Toast.LENGTH_SHORT, true).show();
                 }
                 YelpBusinesses.setAddedAll(businesses);
                 YelpBusinesses.setButtonAll(businesses, true);

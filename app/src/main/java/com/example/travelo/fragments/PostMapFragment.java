@@ -45,6 +45,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 import static android.app.Activity.RESULT_OK;
 
 
@@ -111,7 +113,7 @@ public class PostMapFragment extends Fragment {
                 Post post = Post.createPost(room.getMap(), description, room.getProfileImages(), photoFile);
                 post.saveInBackground(e -> {
                     if (e == null) {
-                        Toast.makeText(getContext(), "Successfully posted map", Toast.LENGTH_SHORT).show();
+                        Toasty.info(getContext(), "Successfully posted map", Toast.LENGTH_SHORT, true).show();
                     } else {
                         Log.e(TAG, "Error posting map", e);
                     }

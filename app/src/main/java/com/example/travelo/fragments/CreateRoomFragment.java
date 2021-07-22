@@ -28,6 +28,8 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 public class CreateRoomFragment extends DialogFragment {
 
     FragmentCreateRoomBinding binding;
@@ -100,7 +102,7 @@ public class CreateRoomFragment extends DialogFragment {
                     Log.e(TAG, "Error saving room", e);
                 }
                 if (!objects.isEmpty()) {
-                    Toast.makeText(v.getContext(), "Can't make a room with this id", Toast.LENGTH_SHORT).show();
+                    Toasty.error(v.getContext(), "Can't make a room with this id", Toast.LENGTH_SHORT, true).show();
                     dismiss();
                     return;
                 } else {
@@ -113,7 +115,7 @@ public class CreateRoomFragment extends DialogFragment {
                                 return;
                             }
                             Log.i(TAG, "Done Creating Room");
-                            Toast.makeText(v.getContext(), "Created Trip!", Toast.LENGTH_SHORT).show();
+                            Toasty.success(v.getContext(), "Created Trip!", Toast.LENGTH_SHORT, true).show();
                             dismiss();
                             Intent intent = new Intent(v.getContext(), RoomActivity.class);
                             intent.putExtra("room", room.getObjectId());

@@ -48,6 +48,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 import static android.app.Activity.RESULT_OK;
 
 public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClickListener{
@@ -95,7 +97,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                 }
             });
         } else {
-            Toast.makeText(getContext(), "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
+            Toasty.error(getContext(), "Error - Map Fragment was null!!", Toast.LENGTH_SHORT, true).show();
         }
         // When ready go to the post map activity
         binding.btnReady.setOnClickListener(v -> {
@@ -127,7 +129,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                 Log.e(TAG, "Couldn't search for location" , e);
             }
             if (addressList == null) {
-                Toast.makeText(getContext(), "Place not found", Toast.LENGTH_SHORT).show();
+                Toasty.error(getContext(), "Place not found", Toast.LENGTH_SHORT, true).show();
                 return;
             }
             Address place = addressList.get(0);
@@ -149,10 +151,10 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
         map = googleMap;
         if (map != null) {
             // Map is ready
-            Toast.makeText(getContext(), "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
+            Toasty.success(getContext(), "Map was loaded properly!", Toast.LENGTH_SHORT).show();
             map.setOnMapLongClickListener(this);
         } else {
-            Toast.makeText(getContext(), "Error - Map was null!!", Toast.LENGTH_SHORT).show();
+            Toasty.error(getContext(), "Error - Map was null!!", Toast.LENGTH_SHORT, true).show();
         }
     }
 

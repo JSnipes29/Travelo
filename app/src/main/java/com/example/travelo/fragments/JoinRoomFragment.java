@@ -24,6 +24,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import es.dmoral.toasty.Toasty;
+
 public class JoinRoomFragment extends DialogFragment {
 
 
@@ -58,7 +60,7 @@ public class JoinRoomFragment extends DialogFragment {
     public void join(View v) {
         String roomId = binding.etRoomId.getText().toString();
         if (roomId.isEmpty()) {
-            Toast.makeText(getContext(), "Must enter a room id", Toast.LENGTH_SHORT).show();
+            Toasty.error(getContext(), "Must enter a room id", Toast.LENGTH_SHORT, true).show();
             dismiss();
             return;
         }
@@ -75,14 +77,14 @@ public class JoinRoomFragment extends DialogFragment {
             }
             // Check if it exists
             if (rooms.isEmpty()) {
-                Toast.makeText(v.getContext(), "No room with id: " + roomId, Toast.LENGTH_SHORT).show();
+                Toasty.error(v.getContext(), "No room with id: " + roomId, Toast.LENGTH_SHORT, true).show();
                 dismiss();
                 return;
             }
 
             if (!rooms.get(0).getJoinable()) {
                 if (!rooms.get(0).getOwner().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
-                    Toast.makeText(v.getContext(), "This room is no longer joinable", Toast.LENGTH_SHORT).show();
+                    Toasty.error(v.getContext(), "This room is no longer joinable", Toast.LENGTH_SHORT, true).show();
                     dismiss();
                     return;
                 }
