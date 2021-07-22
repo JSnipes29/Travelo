@@ -74,7 +74,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         public void bind(Post post) {
             tvDescription.setText(post.getDescription());
-            tvTimestamp.setText(post.getCreatedAt().toString());
+            tvTimestamp.setText(Post.getRelativeTimeAgo(post.getCreatedAt().toString()));
             ParseUser user = post.getOwner();
             tvName.setText(user.getUsername());
             String url = user.getParseFile("profileImage").getUrl();
