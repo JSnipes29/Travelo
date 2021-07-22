@@ -116,7 +116,7 @@ public class InboxFragment extends Fragment {
         list.clear();
         inboxAdapter.notifyDataSetChanged();
         if (query == null) {
-            for (int i = 0; i < array.length(); i++) {
+            for (int i = array.length() - 1; i >= 0; i--) {
                 try {
                     list.add(array.getJSONObject(i));
                 } catch (JSONException e) {
