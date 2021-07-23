@@ -172,8 +172,11 @@ public class HomeFragment extends Fragment {
             }
             // If on start, remove the shimmer and set the recycler view to visible
             if (parameter == 0) {
-                binding.shimmerLayout.setVisibility(View.GONE);
-                binding.rvPosts.setVisibility(View.VISIBLE);
+                if (binding != null) {
+                    binding.shimmerLayout.setVisibility(View.GONE);
+                    binding.rvPosts.setVisibility(View.VISIBLE);
+                }
+
             }
         });
     }

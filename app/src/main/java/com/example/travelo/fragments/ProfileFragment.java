@@ -237,6 +237,9 @@ public class ProfileFragment extends Fragment {
         } else {
             start = 0;
         }
+        if (parameter == 0) {
+            binding.shimmerLayout.startShimmer();
+        }
         query.findInBackground((posts, e) -> {
             if (e != null) {
                 Log.e(TAG, "Couldn't get post", e);
@@ -253,6 +256,10 @@ public class ProfileFragment extends Fragment {
                 postAdapter.notifyItemRangeInserted(start, posts.size());
             } else {
                 postAdapter.notifyDataSetChanged();
+            }
+            if (parameter == 0) {
+                binding.shimmerLayout.setVisibility(View.GONE);
+                binding.rvPosts.setVisibility(View.VISIBLE);
             }
             scrollListener.resetState();
         });
