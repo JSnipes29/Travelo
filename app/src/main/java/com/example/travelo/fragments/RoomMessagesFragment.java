@@ -133,7 +133,7 @@ public class RoomMessagesFragment extends Fragment {
                         }
                     });
                 } else {
-                    // Put the messages in the room object
+                    // Put the messages in the messages object
                     JSONArray messages = messagesObj.getMessages();
                     messages.put(message);
                     messagesObj.setMessages(messages);

@@ -66,45 +66,47 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="2dp"
+        android:layout_toStartOf="@+id/spinner"
         android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/color_red"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/red"/>
+            android:buttonTint="@color/red" />
 
         <RadioButton
             android:id="@+id/color_orange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/hue_orange"/>
+            android:buttonTint="@color/hue_orange" />
 
         <RadioButton
             android:id="@+id/color_yellow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/yellow"/>
+            android:buttonTint="@color/yellow" />
 
         <RadioButton
             android:id="@+id/color_green"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:buttonTint="@color/green"/>
+            android:buttonTint="@color/green"
+            android:checked="true" />
 
         <RadioButton
             android:id="@+id/color_blue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/blue"/>
+            android:buttonTint="@color/blue" />
 
         <RadioButton
             android:id="@+id/color_purple"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/purple"/>
+            android:buttonTint="@color/purple" />
     </RadioGroup>
 
 </RelativeLayout>

@@ -84,8 +84,10 @@ public class ProfileFragment extends Fragment {
                 @Override
                 public void done(ParseUser object, ParseException e) {
                     user = object;
-                    binding.ivProfileImage.setOnClickListener(v -> setProfileImage());
-                    setUpProfileFragment();
+                    if (binding != null) {
+                        binding.ivProfileImage.setOnClickListener(v -> setProfileImage());
+                        setUpProfileFragment();
+                    }
                 }
             });
         } else {
