@@ -149,7 +149,7 @@ public class HomeFragment extends Fragment {
             start = 0;
         }
         // If starting, start the shimmer effect
-        if (parameter == 0) {
+        if (parameter == 0 && binding != null) {
             binding.shimmerLayout.startShimmer();
         }
         query.findInBackground((posts, e) -> {
@@ -180,7 +180,7 @@ public class HomeFragment extends Fragment {
                 postAdapter.notifyDataSetChanged();
             }
             // Set refreshing marker to false for pulling to refresh
-            if (parameter == 2) {
+            if (parameter == 2 && binding != null) {
                 binding.swipeContainer.setRefreshing(false);
             }
             // If on start, remove the shimmer and set the recycler view to visible
@@ -245,11 +245,13 @@ public class HomeFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 // Search the server using the query
                 searchView.clearFocus();
-                // Set the feed recycler view to gone
-                binding.rvPosts.setVisibility(View.GONE);
-                // Set the following recycler view and border to gone
-                binding.rvFollowing.setVisibility(View.GONE);
-                binding.border.setVisibility(View.GONE);
+                if (binding != null) {
+                    // Set the feed recycler view to gone
+                    binding.rvPosts.setVisibility(View.GONE);
+                    // Set the following recycler view and border to gone
+                    binding.rvFollowing.setVisibility(View.GONE);
+                    binding.border.setVisibility(View.GONE);
+                }
                 searchedUsers.clear();
                 searchUserAdapter.notifyDataSetChanged();
                 searchUsers(query);
@@ -280,7 +282,9 @@ public class HomeFragment extends Fragment {
     }
 
     public void searchUsers(String query) {
-        binding.rvSearchedUsers.setVisibility(View.VISIBLE);
+        if (binding != null) {
+            binding.rvSearchedUsers.setVisibility(View.VISIBLE);
+        }
         ParseQuery<ParseUser> usersQuery = ParseQuery.getQuery(ParseUser.class);
         usersQuery.whereContains("username", query);
         usersQuery.findInBackground(new FindCallback<ParseUser>() {
@@ -292,7 +296,9 @@ public class HomeFragment extends Fragment {
                 }
                 searchedUsers.addAll(users);
                 searchUserAdapter.notifyDataSetChanged();
-                binding.rvSearchedUsers.setVisibility(View.VISIBLE);
+                if (binding != null) {
+                    binding.rvSearchedUsers.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

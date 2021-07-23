@@ -237,7 +237,7 @@ public class ProfileFragment extends Fragment {
         } else {
             start = 0;
         }
-        if (parameter == 0) {
+        if (parameter == 0 && binding != null) {
             binding.shimmerLayout.startShimmer();
         }
         query.findInBackground((posts, e) -> {
@@ -257,7 +257,7 @@ public class ProfileFragment extends Fragment {
             } else {
                 postAdapter.notifyDataSetChanged();
             }
-            if (parameter == 0) {
+            if (parameter == 0 && binding != null) {
                 binding.shimmerLayout.setVisibility(View.GONE);
                 binding.rvPosts.setVisibility(View.VISIBLE);
             }
