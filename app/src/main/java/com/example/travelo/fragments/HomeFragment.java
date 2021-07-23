@@ -135,6 +135,9 @@ public class HomeFragment extends Fragment {
         } else {
             start = 0;
         }
+        if (parameter == 0) {
+            binding.shimmerLayout.startShimmer();
+        }
         query.findInBackground((posts, e) -> {
             if (e != null) {
                 Log.e(TAG, "Couldn't get post", e);
@@ -163,6 +166,10 @@ public class HomeFragment extends Fragment {
             }
             if (parameter == 2) {
                 binding.swipeContainer.setRefreshing(false);
+            }
+            if (parameter == 0) {
+                binding.shimmerLayout.setVisibility(View.GONE);
+                binding.rvPosts.setVisibility(View.VISIBLE);
             }
             //scrollListener.resetState();
         });

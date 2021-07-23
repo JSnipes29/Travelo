@@ -19,4 +19,5 @@
     <color name="green">#00FF00</color>
     <color name="blue">#0080FF</color>
     <color name="purple">#8000FF</color>
+    <color name="shimmer_placeholder">#dddddd</color>
 </resources>
