@@ -30,20 +30,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="Fixed bug where app crashed on slow connection">
-      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/jarAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="Users can click on searched users to go to their profile">
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/shimmer_item_details_user.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/adapters/SearchUserAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/adapters/SearchUserAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_details_user.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_details_user.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/HomeFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +103,7 @@
     <property name="DEBUGGABLE_PROCESS" value="com.example.travelo" />
     <property name="DEBUGGER_ID" value="Auto" />
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="VirtualDevicePath@/Users/jsnipes/.android/avd/Pixel_4_API_29.avd" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-07-23T18:33:27.781073Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-07-23T20:29:20.882561Z" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
@@ -203,13 +194,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1625865131177</updated>
-    </task>
-    <task id="LOCAL-00055" summary="User can unfollow users">
-      <created>1626735333829</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1626735333829</updated>
     </task>
     <task id="LOCAL-00056" summary="Users can view other users who they follow in their home feed">
       <created>1626736997538</created>
@@ -547,7 +531,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627070285741</updated>
     </task>
-    <option name="localTasksCounter" value="104" />
+    <task id="LOCAL-00104" summary="Users can click on searched users to go to their profile">
+      <created>1627071162003</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1627071162003</updated>
+    </task>
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -563,7 +554,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Started implementing searching using cosine similarity" />
     <MESSAGE value="Added search feature to inbox" />
     <MESSAGE value="Inbox refreshes after closing down inbox" />
     <MESSAGE value="Cleaned up code and added comments in InboxFragment" />
@@ -588,7 +578,8 @@
     <MESSAGE value="Implemented search item in home feed app bar. Feed disappears when something is searched, reappears after." />
     <MESSAGE value="User can search for other users in home feed" />
     <MESSAGE value="Fixed bug where app crashed on slow connection" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed bug where app crashed on slow connection" />
+    <MESSAGE value="Users can click on searched users to go to their profile" />
+    <option name="LAST_COMMIT_MESSAGE" value="Users can click on searched users to go to their profile" />
   </component>
   <component name="WindowStateProjectService">
     <state x="780" y="224" key="#com.intellij.ide.util.MemberChooser" timestamp="1627070550096">
@@ -600,18 +591,18 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="706" y="264" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626992901858" />
-    <state x="349" y="135" width="1200" height="770" key="AVDManager" timestamp="1627066783804">
+    <state x="349" y="135" width="1200" height="770" key="AVDManager" timestamp="1627072166403">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state x="349" y="135" width="1200" height="770" key="AVDManager/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627066783804" />
+    <state x="349" y="135" width="1200" height="770" key="AVDManager/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627072166403" />
     <state x="472" y="270" key="AndroidCreateResourceDirectoryDialog" timestamp="1626905936464">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="472" y="270" key="AndroidCreateResourceDirectoryDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626905936464" />
-    <state x="472" y="270" key="AndroidCreateResourceFileDialog" timestamp="1627067485773">
+    <state x="472" y="270" key="AndroidCreateResourceFileDialog" timestamp="1627071728822">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state x="472" y="270" key="AndroidCreateResourceFileDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627067485773" />
+    <state x="472" y="270" key="AndroidCreateResourceFileDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627071728822" />
     <state x="741" y="273" key="AndroidProcessChooserDialog" timestamp="1626213836186">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
@@ -652,11 +643,11 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state width="1358" height="259" key="GridCell.Tab.1.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627069825301" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1627070294333">
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1627071171199">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="-1402" y="222" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1626391118488" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627070294333" />
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627071171199" />
     <state x="483" y="267" key="Vcs.Push.Dialog.v2/0.25.1792.1095/-1920.-11.1920.1055@0.25.1792.1095" timestamp="1626375029876" />
     <state x="634" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1626816239023">
       <screen x="0" y="25" width="1792" height="1010" />

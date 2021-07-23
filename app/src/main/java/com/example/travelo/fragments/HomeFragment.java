@@ -187,6 +187,7 @@ public class HomeFragment extends Fragment {
             if (parameter == 0) {
                 if (binding != null) {
                     binding.shimmerLayout.setVisibility(View.GONE);
+                    binding.shimmerLayout.hideShimmer();
                     binding.rvPosts.setVisibility(View.VISIBLE);
                 }
 
@@ -270,6 +271,7 @@ public class HomeFragment extends Fragment {
                 // Clear the searched users view
                 searchedUsers.clear();
                 searchUserAdapter.notifyDataSetChanged();
+                binding.searchShimmerLayout.setVisibility(View.GONE);
                 binding.rvSearchedUsers.setVisibility(View.GONE);
                 // Make the feed and other elements visible again
                 binding.tvAppName.setVisibility(View.VISIBLE);
@@ -283,7 +285,8 @@ public class HomeFragment extends Fragment {
 
     public void searchUsers(String query) {
         if (binding != null) {
-            binding.rvSearchedUsers.setVisibility(View.VISIBLE);
+            binding.searchShimmerLayout.setVisibility(View.VISIBLE);
+            binding.searchShimmerLayout.startShimmer();
         }
         ParseQuery<ParseUser> usersQuery = ParseQuery.getQuery(ParseUser.class);
         usersQuery.whereContains("username", query);
@@ -297,6 +300,8 @@ public class HomeFragment extends Fragment {
                 searchedUsers.addAll(users);
                 searchUserAdapter.notifyDataSetChanged();
                 if (binding != null) {
+                    binding.searchShimmerLayout.hideShimmer();
+                    binding.searchShimmerLayout.setVisibility(View.GONE);
                     binding.rvSearchedUsers.setVisibility(View.VISIBLE);
                 }
             }
