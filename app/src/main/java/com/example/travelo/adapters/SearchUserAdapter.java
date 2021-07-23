@@ -1,10 +1,12 @@
 package com.example.travelo.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.travelo.R;
+import com.example.travelo.activities.ProfileActivity;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
@@ -49,11 +52,13 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
 
         ImageView ivProfileImage;
         TextView tvName;
+        RelativeLayout rlUser;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
             tvName = itemView.findViewById(R.id.tvName);
+            rlUser = itemView.findViewById(R.id.rlUser);
         }
 
         public void bind(ParseUser user) {
@@ -67,6 +72,12 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
                         .circleCrop()
                         .into(ivProfileImage);
             }
+            rlUser.setOnClickListener(v -> onClick(username));
+        }
+
+        public void onClick(String username) {
+            Log.i("SearchUserAdapter", "Clicked searched user");
+            ProfileActivity.goToProfile(context, username);
         }
     }
 }
