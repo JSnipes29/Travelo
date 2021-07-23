@@ -61,6 +61,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
     MapView mapFragment;
     GoogleMap map;
     Room room;
+    String color;
 
     public EditMapFragment() {
         // Required empty public constructor
@@ -169,6 +170,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
 
             }
         });
+        color = "green";
         return view;
     }
 
@@ -219,6 +221,8 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
         Intent intent = new Intent(getContext(), YelpLocationsActivity.class);
         intent.putExtra("lat",latLng.latitude);
         intent.putExtra("lon", latLng.longitude);
+        setColor();
+        intent.putExtra("color", color);
         startActivityForResult(intent, YELP_CODE);
     }
 
@@ -229,13 +233,14 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
             Log.i(TAG, "Back from YELP");
             double lat = data.getDoubleExtra("lat",0.0);
             double lon = data.getDoubleExtra("lon",0.0);
-            Log.i(TAG, "Lat: " + lat + " Long: " + lon);
+            String markerColor = data.getStringExtra("color");
+            Log.i(TAG, "Lat: " + lat + " Long: " + lon + " Color: " + markerColor);
             Bundle bundle = data.getExtras();
             List<YelpBusinesses> businesses = Parcels.unwrap(bundle.getParcelable("added"));
             Log.i(TAG, "Added Size: " + businesses.size());
             YelpBusinesses.setButtonAll(businesses, false);
             // Define color of marker icon
-            BitmapDescriptor defaultMarker = MarkerTag.colorMarker("green");
+            BitmapDescriptor defaultMarker = MarkerTag.colorMarker(markerColor);
             Marker marker = map.addMarker(new MarkerOptions()
                     .position(new LatLng(lat, lon))
                     .icon(defaultMarker));
@@ -249,6 +254,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                 jsonMarker.put("user", ParseUser.getCurrentUser().getUsername());
                 jsonMarker.put("latitude", lat);
                 jsonMarker.put("longitude", lon);
+                jsonMarker.put("color", markerColor);
                 JSONArray places = new JSONArray();
                 for (int i = 0; i < businesses.size(); i++) {
                     YelpBusinesses business = businesses.get(i);
@@ -300,6 +306,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                 List<YelpBusinesses> businesses = new ArrayList<>();
                 double latitude = jsonMarker.getDouble("latitude");
                 double longitude = jsonMarker.getDouble("longitude");
+                String markerColor = jsonMarker.getString("color");
                 String user = jsonMarker.getString("user");
                 JSONArray places = jsonMarker.getJSONArray("places");
                 for (int j = 0; j < places.length(); j++) {
@@ -320,8 +327,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                     businesses.add(business);
                 }
                 // Define color of marker icon
-                BitmapDescriptor defaultMarker =
-                        BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+                BitmapDescriptor defaultMarker = MarkerTag.colorMarker(markerColor);
                 Marker marker = map.addMarker(new MarkerOptions()
                         .position(new LatLng(latitude, longitude))
                         .icon(defaultMarker));
@@ -363,5 +369,35 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                 }
             }
         });
+    }
+
+    // Set the color from the radio button
+    public void setColor() {
+        int color_id = binding.colorGroup.getCheckedRadioButtonId();
+        switch (color_id) {
+            case R.id.color_red:
+                color = "red";
+                break;
+            case R.id.color_orange:
+                Log.i(TAG, "Orange");
+                color = "orange";
+                break;
+            case R.id.color_yellow:
+                color = "yellow";
+                break;
+            case R.id.color_green:
+                color = "green";
+                break;
+            case R.id.color_blue:
+                color = "blue";
+                break;
+            case R.id.color_purple:
+                color = "violet";
+                break;
+            default:
+                color = "green";
+                break;
+
+        }
     }
 }

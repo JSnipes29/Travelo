@@ -23,6 +23,7 @@ import com.example.travelo.activities.MainActivity;
 import com.example.travelo.R;
 import com.example.travelo.adapters.CustomWindowAdapter;
 import com.example.travelo.databinding.FragmentPostMapBinding;
+import com.example.travelo.models.MarkerTag;
 import com.example.travelo.models.Post;
 import com.example.travelo.models.Room;
 import com.example.travelo.models.YelpBusinesses;
@@ -203,6 +204,7 @@ public class PostMapFragment extends Fragment {
                 List<YelpBusinesses> businesses = new ArrayList<>();
                 double latitude = jsonMarker.getDouble("latitude");
                 double longitude = jsonMarker.getDouble("longitude");
+                String color = jsonMarker.getString("color");
                 String user = jsonMarker.getString("user");
                 JSONArray places = jsonMarker.getJSONArray("places");
                 for (int j = 0; j < places.length(); j++) {
@@ -223,8 +225,7 @@ public class PostMapFragment extends Fragment {
                     businesses.add(business);
                 }
                 // Define color of marker icon
-                BitmapDescriptor defaultMarker =
-                        BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+                BitmapDescriptor defaultMarker = MarkerTag.colorMarker(color);
                 Marker marker = map.addMarker(new MarkerOptions()
                         .position(new LatLng(latitude, longitude))
                         .icon(defaultMarker));

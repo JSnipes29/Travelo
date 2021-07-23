@@ -226,6 +226,7 @@ public class DetailsPostActivity extends AppCompatActivity {
                 List<YelpBusinesses> businesses = new ArrayList<>();
                 double latitude = jsonMarker.getDouble("latitude");
                 double longitude = jsonMarker.getDouble("longitude");
+                String color = jsonMarker.getString("color");
                 String user = jsonMarker.getString("user");
                 JSONArray places = jsonMarker.getJSONArray("places");
                 for (int j = 0; j < places.length(); j++) {
@@ -246,8 +247,7 @@ public class DetailsPostActivity extends AppCompatActivity {
                     businesses.add(business);
                 }
                 // Define color of marker icon
-                BitmapDescriptor defaultMarker =
-                        BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET);
+                BitmapDescriptor defaultMarker = MarkerTag.colorMarker(color);
                 Marker marker = map.addMarker(new MarkerOptions()
                         .position(new LatLng(latitude, longitude))
                         .icon(defaultMarker));

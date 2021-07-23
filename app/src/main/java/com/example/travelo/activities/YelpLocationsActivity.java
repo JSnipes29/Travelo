@@ -114,6 +114,7 @@ public class YelpLocationsActivity extends AppCompatActivity {
         bundle.putParcelable("added", Parcels.wrap(added));
         intent.putExtra("lat", lat);
         intent.putExtra("lon", lon);
+        intent.putExtra("color", getIntent().getStringExtra("color"));
         intent.putExtras(bundle);
         setResult(RESULT_OK, intent);
         finish();
