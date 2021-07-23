@@ -314,14 +314,14 @@ public class PostMapFragment extends Fragment {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 // by this point we have the camera photo on disk
-                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                 // RESIZE BITMAP, see section below
                 // Load the taken image into a preview
-                //binding.ivImage.setImageBitmap(takenImage);
                 // Show message
-                Toast.makeText(getContext(), "Picture was taken", Toast.LENGTH_SHORT).show();
+                Toasty.success(getContext(), "Picture was taken", Toast.LENGTH_SHORT, true).show();
             } else { // Result was a failure
-                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+                Toasty.info(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT, true).show();
+                photoFile = null;
             }
         }
     }
