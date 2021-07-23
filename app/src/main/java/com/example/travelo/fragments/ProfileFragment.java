@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -75,6 +76,7 @@ public class ProfileFragment extends Fragment {
         user = (ParseUser) Parcels.unwrap(getArguments().getParcelable("user"));
         binding.btnMessage.setVisibility(View.GONE);
         binding.btnFollow.setVisibility(View.GONE);
+        binding.btnInvite.setVisibility(View.GONE);
         if (user == null) {
             ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
             query.include("followers");
@@ -108,7 +110,9 @@ public class ProfileFragment extends Fragment {
         if (!user.getObjectId().equals(currentUserId)) {
             binding.btnFollow.setVisibility(View.VISIBLE);
             binding.btnMessage.setVisibility(View.VISIBLE);
+            binding.btnInvite.setVisibility(View.VISIBLE);
             binding.btnMessage.setOnClickListener(v -> goToMessages());
+            binding.btnInvite.setOnClickListener(v -> invite());
             if (followers.contains(currentUserId)) {
                 Log.i(TAG, "Following");
                 binding.btnFollow.setText(R.string.following);
@@ -511,5 +515,14 @@ public class ProfileFragment extends Fragment {
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
         Log.i(TAG, "activity started");
+    }
+
+    public void invite() {
+        FragmentManager fm = getParentFragmentManager();
+        InviteFragment inviteFragment = new InviteFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("userId", user.getObjectId());
+        inviteFragment.setArguments(bundle);
+        inviteFragment.show(fm, "Invite");
     }
 }

@@ -131,4 +131,16 @@
         android:text="@string/message"
         android:backgroundTint="?colorOnPrimary"
         android:textColor="?colorPrimary"/>
+
+    <Button
+        android:id="@+id/btnInvite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivProfileImage"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/btnMessage"
+        android:backgroundTint="?colorPrimary"
+        android:text="@string/invite"
+        android:textColor="?colorOnPrimary" />
 </RelativeLayout>

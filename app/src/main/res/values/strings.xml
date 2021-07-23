@@ -40,5 +40,6 @@
     <string name="join">Join</string>
     <string name="message">Message</string>
     <string name="search">Search</string>
+    <string name="invite">Invite</string>
 
 </resources>
