@@ -13,4 +13,10 @@
     <color name="gold">#FFD700</color>
     <color name="orange">#FFA500</color>
     <color name="dark_orange">#FF8C00</color>
+    <color name="red">#FF0000</color>
+    <color name="hue_orange">#FF8000</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="green">#00FF00</color>
+    <color name="blue">#0080FF</color>
+    <color name="purple">#8000FF</color>
 </resources>
