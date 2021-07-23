@@ -32,7 +32,7 @@
         android:id="@+id/shimmerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/view">
+        android:layout_below="@+id/border">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
         android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/view">
+        android:layout_below="@+id/border">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPosts"
@@ -74,13 +74,24 @@
         />
 
     <View
-        android:id="@+id/view"
+        android:id="@+id/border"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_below="@+id/rvFollowing"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
         android:background="?colorPrimary" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSearchedUsers"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:layout_marginTop="0dp"
+        />
 
 
 </RelativeLayout>

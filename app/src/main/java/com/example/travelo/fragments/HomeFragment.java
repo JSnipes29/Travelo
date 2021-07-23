@@ -22,12 +22,14 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.example.travelo.adapters.SearchUserAdapter;
 import com.example.travelo.listeners.EndlessRecyclerViewScrollListener;
 import com.example.travelo.R;
 import com.example.travelo.adapters.PostAdapter;
 import com.example.travelo.adapters.UsersAdapter;
 import com.example.travelo.databinding.FragmentHomeBinding;
 import com.example.travelo.models.Post;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -54,6 +56,8 @@ public class HomeFragment extends Fragment {
     UsersAdapter usersAdapter;
     List<String[]> following;
     EndlessRecyclerViewScrollListener scrollListener;
+    List<ParseUser> searchedUsers;
+    SearchUserAdapter searchUserAdapter;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -72,6 +76,12 @@ public class HomeFragment extends Fragment {
         // Setup toolbar
         ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+        // Set up empty searched users
+        searchedUsers = new ArrayList<>();
+        searchUserAdapter = new SearchUserAdapter(getContext(), searchedUsers);
+        binding.rvSearchedUsers.setAdapter(searchUserAdapter);
+        LinearLayoutManager searchedUsersLayoutManager = new LinearLayoutManager(getContext());
+        binding.rvSearchedUsers.setLayoutManager(searchedUsersLayoutManager);
         // Set up adapter for posts recycler view
         posts = new ArrayList<>();
         postAdapter = new PostAdapter(getContext(), posts, (AppCompatActivity) getActivity());
@@ -237,6 +247,11 @@ public class HomeFragment extends Fragment {
                 searchView.clearFocus();
                 // Set the feed recycler view to gone
                 binding.rvPosts.setVisibility(View.GONE);
+                // Set the following recycler view and border to gone
+                binding.rvFollowing.setVisibility(View.GONE);
+                binding.border.setVisibility(View.GONE);
+                searchedUsers.clear();
+                searchUserAdapter.notifyDataSetChanged();
                 searchUsers(query);
                 return true;
             }
@@ -250,15 +265,35 @@ public class HomeFragment extends Fragment {
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
-                // Make the feed and app title visible again
+                // Clear the searched users view
+                searchedUsers.clear();
+                searchUserAdapter.notifyDataSetChanged();
+                binding.rvSearchedUsers.setVisibility(View.GONE);
+                // Make the feed and other elements visible again
                 binding.tvAppName.setVisibility(View.VISIBLE);
                 binding.rvPosts.setVisibility(View.VISIBLE);
+                binding.rvFollowing.setVisibility(View.VISIBLE);
+                binding.border.setVisibility(View.VISIBLE);
                 return false;
             }
         });
     }
 
     public void searchUsers(String query) {
-
+        binding.rvSearchedUsers.setVisibility(View.VISIBLE);
+        ParseQuery<ParseUser> usersQuery = ParseQuery.getQuery(ParseUser.class);
+        usersQuery.whereContains("username", query);
+        usersQuery.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> users, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error getting data from server");
+                    return;
+                }
+                searchedUsers.addAll(users);
+                searchUserAdapter.notifyDataSetChanged();
+                binding.rvSearchedUsers.setVisibility(View.VISIBLE);
+            }
+        });
     }
 }
