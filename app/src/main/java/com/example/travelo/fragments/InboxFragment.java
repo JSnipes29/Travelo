@@ -96,7 +96,15 @@ public class InboxFragment extends Fragment {
         return view;
     }
 
+    // parameter 0 == starting
     public void queryInbox(int parameter, String query) {
+        // Start shimmer effect
+        if (parameter == 0) {
+            binding.shimmerLayout.startShimmer();
+        } else if (parameter == 1) {
+            binding.rvInbox.setVisibility(View.GONE);
+            binding.shimmerLayout.startShimmer();
+        }
         // Get the inbox of the current user
         ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
         userQuery.include(Inbox.KEY);
@@ -106,6 +114,8 @@ public class InboxFragment extends Fragment {
                 Inbox inbox = (Inbox) user.getParseObject(Inbox.KEY);
                 JSONArray jsonInbox = inbox.getMessages();
                 jsonToList(jsonInbox, query, parameter);
+                binding.shimmerLayout.setVisibility(View.GONE);
+                binding.rvInbox.setVisibility(View.VISIBLE);
             }
         });
 

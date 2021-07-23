@@ -30,15 +30,18 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="Added shimmer loading effect for while loading posts">
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/HomeFragment.java" afterDir="false" />
+    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/shimmer_item_inbox.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/InboxFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/InboxFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_inbox.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_inbox.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[VirtualDevicePath@/Users/jsnipes/.android/avd/Pixel_4_API_29.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[SerialNumber@13201FDD40005U]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -191,13 +194,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1625865131177</updated>
-    </task>
-    <task id="LOCAL-00049" summary="Fixed minor bug for joining rooms">
-      <created>1626711866072</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1626711866072</updated>
     </task>
     <task id="LOCAL-00050" summary="Added comments to room message fragment">
       <created>1626713111508</created>
@@ -535,7 +531,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627059090224</updated>
     </task>
-    <option name="localTasksCounter" value="98" />
+    <task id="LOCAL-00098" summary="Added comments and cleaned up code">
+      <created>1627059542906</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1627059542906</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -551,7 +554,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Room message is placed in inbox when user joins a new room" />
     <MESSAGE value="Room message is put in inbox when user creates a room" />
     <MESSAGE value="Room message deleted when map is posted from room" />
     <MESSAGE value="Fixed typo and bug with joining rooms from inbox" />
@@ -576,7 +578,8 @@
     <MESSAGE value="Added color radio group to edit map fragment layout" />
     <MESSAGE value="Users can now select the color for markers that they want to place down" />
     <MESSAGE value="Added shimmer loading effect for while loading posts" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added shimmer loading effect for while loading posts" />
+    <MESSAGE value="Added comments and cleaned up code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added comments and cleaned up code" />
   </component>
   <component name="WindowStateProjectService">
     <state x="780" y="224" key="#com.intellij.ide.util.MemberChooser" timestamp="1626822311760">
@@ -588,14 +591,18 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="706" y="264" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626992901858" />
+    <state x="349" y="135" width="1200" height="770" key="AVDManager" timestamp="1627059721410">
+      <screen x="0" y="25" width="1792" height="1010" />
+    </state>
+    <state x="349" y="135" width="1200" height="770" key="AVDManager/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627059721410" />
     <state x="472" y="270" key="AndroidCreateResourceDirectoryDialog" timestamp="1626905936464">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="472" y="270" key="AndroidCreateResourceDirectoryDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626905936464" />
-    <state x="472" y="270" key="AndroidCreateResourceFileDialog" timestamp="1627057186256">
+    <state x="472" y="270" key="AndroidCreateResourceFileDialog" timestamp="1627060141002">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state x="472" y="270" key="AndroidCreateResourceFileDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627057186256" />
+    <state x="472" y="270" key="AndroidCreateResourceFileDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627060141002" />
     <state x="741" y="273" key="AndroidProcessChooserDialog" timestamp="1626213836186">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
@@ -604,43 +611,43 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="759" y="412" key="Github.ShareDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1625865227316" />
-    <state width="1358" height="229" key="GridCell.Tab.0.bottom" timestamp="1626996127527">
+    <state width="1358" height="259" key="GridCell.Tab.0.bottom" timestamp="1627059721348">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="229" key="GridCell.Tab.0.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626996127527" />
-    <state width="1358" height="229" key="GridCell.Tab.0.center" timestamp="1626996127526">
+    <state width="1358" height="259" key="GridCell.Tab.0.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627059721348" />
+    <state width="1358" height="259" key="GridCell.Tab.0.center" timestamp="1627059721347">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="229" key="GridCell.Tab.0.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626996127526" />
-    <state width="1358" height="229" key="GridCell.Tab.0.left" timestamp="1626996127526">
+    <state width="1358" height="259" key="GridCell.Tab.0.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627059721347" />
+    <state width="1358" height="259" key="GridCell.Tab.0.left" timestamp="1627059721346">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="229" key="GridCell.Tab.0.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626996127526" />
-    <state width="1358" height="229" key="GridCell.Tab.0.right" timestamp="1626996127526">
+    <state width="1358" height="259" key="GridCell.Tab.0.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627059721346" />
+    <state width="1358" height="259" key="GridCell.Tab.0.right" timestamp="1627059721348">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="229" key="GridCell.Tab.0.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626996127526" />
-    <state width="1358" height="259" key="GridCell.Tab.1.bottom" timestamp="1626908567400">
+    <state width="1358" height="259" key="GridCell.Tab.0.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627059721348" />
+    <state width="1358" height="259" key="GridCell.Tab.1.bottom" timestamp="1627059721349">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.1.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626908567400" />
-    <state width="1358" height="259" key="GridCell.Tab.1.center" timestamp="1626908567399">
+    <state width="1358" height="259" key="GridCell.Tab.1.bottom/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627059721349" />
+    <state width="1358" height="259" key="GridCell.Tab.1.center" timestamp="1627059721349">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.1.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626908567399" />
-    <state width="1358" height="259" key="GridCell.Tab.1.left" timestamp="1626908567399">
+    <state width="1358" height="259" key="GridCell.Tab.1.center/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627059721349" />
+    <state width="1358" height="259" key="GridCell.Tab.1.left" timestamp="1627059721349">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.1.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626908567399" />
-    <state width="1358" height="259" key="GridCell.Tab.1.right" timestamp="1626908567399">
+    <state width="1358" height="259" key="GridCell.Tab.1.left/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627059721349" />
+    <state width="1358" height="259" key="GridCell.Tab.1.right" timestamp="1627059721349">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
-    <state width="1358" height="259" key="GridCell.Tab.1.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626908567399" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1627059098913">
+    <state width="1358" height="259" key="GridCell.Tab.1.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627059721349" />
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2" timestamp="1627059550027">
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="-1402" y="222" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1626391118488" />
-    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627059098913" />
+    <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627059550027" />
     <state x="483" y="267" key="Vcs.Push.Dialog.v2/0.25.1792.1095/-1920.-11.1920.1055@0.25.1792.1095" timestamp="1626375029876" />
     <state x="634" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1626816239023">
       <screen x="0" y="25" width="1792" height="1010" />
