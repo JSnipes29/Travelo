@@ -135,6 +135,7 @@ public class HomeFragment extends Fragment {
         } else {
             start = 0;
         }
+        // If starting, start the shimmer effect
         if (parameter == 0) {
             binding.shimmerLayout.startShimmer();
         }
@@ -149,29 +150,31 @@ public class HomeFragment extends Fragment {
             if (parameter == 1) {
                 Log.i(TAG, "Endless scrolling in effect");
             } else if (parameter == 2) {
+                // If pulling to refresh notify the adapter that items have been removed
                 Log.i(TAG, "Pulling to refresh");
                 int size = this.posts.size();
                 this.posts.clear();
                 postAdapter.notifyItemRangeRemoved(start, size);
                 scrollListener.resetState();
             }
+            // Add the new posts to the posts list
             this.posts.addAll(posts);
+            // If endless scrolling, notify adapter that items have been inserted
             if (parameter == 1) {
                 postAdapter.notifyItemRangeInserted(start, posts.size());
                 Log.i(TAG, "Size: " + this.posts.size());
-            } else if (parameter == 2) {
-                postAdapter.notifyDataSetChanged();
             } else {
                 postAdapter.notifyDataSetChanged();
             }
+            // Set refreshing marker to false for pulling to refresh
             if (parameter == 2) {
                 binding.swipeContainer.setRefreshing(false);
             }
+            // If on start, remove the shimmer and set the recycler view to visible
             if (parameter == 0) {
                 binding.shimmerLayout.setVisibility(View.GONE);
                 binding.rvPosts.setVisibility(View.VISIBLE);
             }
-            //scrollListener.resetState();
         });
     }
 
