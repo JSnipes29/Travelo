@@ -20,6 +20,7 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -114,8 +115,14 @@ public class WaitingPostFragment extends Fragment {
                 binding.swipeContainer.setRefreshing(false);
                 if (e == null) {
                     room = r;
-                    room.saveInBackground();
                     JSONObject jsonUsers = r.getUsers();
+                    try {
+                        jsonUsers.put(ParseUser.getCurrentUser().getUsername(), true);
+                    } catch (JSONException jsonException) {
+                        jsonException.printStackTrace();
+                    }
+                    room.setUsers(jsonUsers);
+                    room.saveInBackground();
                     users.clear();
                     Iterator<String> iterator = jsonUsers.keys();
                     // Get a list of unready users

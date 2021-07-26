@@ -36,7 +36,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -103,18 +105,29 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
         }
         // When ready go to the post map activity
         binding.btnReady.setOnClickListener(v -> {
-            JSONObject users = room.getUsers();
-            try {
-                users.put(ParseUser.getCurrentUser().getUsername(), true);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            room.setUsers(users);
-            room.saveInBackground();
-            Intent intent = new Intent(getContext(), PostMapActivity.class);
-            String id = room.getObjectId();
-            intent.putExtra("id", id);
-            startActivity(intent);
+            ParseQuery<Room> roomQuery = ParseQuery.getQuery(Room.class);
+            roomQuery.getInBackground(room.getObjectId(), new GetCallback<Room>() {
+                @Override
+                public void done(Room object, ParseException e) {
+                    if (e != null) {
+                        Log.e(TAG, "Error readying up", e);
+                        Toasty.error(getContext(), "", Toasty.LENGTH_SHORT, true).show();
+                    }
+                    JSONObject users = room.getUsers();
+                    try {
+                        users.put(ParseUser.getCurrentUser().getUsername(), true);
+                    } catch (JSONException jsonException) {
+                        jsonException.printStackTrace();
+                    }
+                    room.setUsers(users);
+                    room.saveInBackground();
+                    Intent intent = new Intent(getContext(), PostMapActivity.class);
+                    String id = room.getObjectId();
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                }
+            });
+
         });
         // Search for a location when the button is pressed
         binding.ibSearch.setOnClickListener(v -> {
