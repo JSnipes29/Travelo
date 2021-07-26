@@ -2,12 +2,14 @@ package com.example.travelo.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -41,7 +43,14 @@ public class RoomActivity extends AppCompatActivity {
         setContentView(view);
         Intent intent = getIntent();
         String id = intent.getStringExtra("room");
-
+        // Set up the app bar
+        binding.bar.setOnMenuClickedListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open the draw when menu is clicked
+                binding.drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
         // Specify which class to query
         ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
         // Specify the object id
