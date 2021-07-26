@@ -77,6 +77,7 @@ public class ProfileFragment extends Fragment {
         binding.btnMessage.setVisibility(View.GONE);
         binding.btnFollow.setVisibility(View.GONE);
         binding.btnInvite.setVisibility(View.GONE);
+        binding.btnFriend.setVisibility(View.GONE);
         if (user == null) {
             ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
             query.include("followers");
@@ -107,12 +108,13 @@ public class ProfileFragment extends Fragment {
         List<String> followers = jsonToList(user.getParseObject("followers").getJSONArray("followers"));
         binding.tvFollowersCount.setText(String.valueOf(followers.size()));
         binding.tvFollowingCount.setText(String.valueOf(following.size()));
-        // Don't show the following button and message button if the user is the current user
+        // Show the following, message, etc button if the user is not the current user
         String currentUserId = ParseUser.getCurrentUser().getObjectId();
         if (!user.getObjectId().equals(currentUserId)) {
             binding.btnFollow.setVisibility(View.VISIBLE);
             binding.btnMessage.setVisibility(View.VISIBLE);
             binding.btnInvite.setVisibility(View.VISIBLE);
+            binding.btnFriend.setVisibility(View.VISIBLE);
             binding.btnMessage.setOnClickListener(v -> goToMessages());
             binding.btnInvite.setOnClickListener(v -> invite());
             if (followers.contains(currentUserId)) {
