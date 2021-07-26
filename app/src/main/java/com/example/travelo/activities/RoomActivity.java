@@ -20,6 +20,7 @@ import com.example.travelo.fragments.EditMapFragment;
 import com.example.travelo.fragments.RoomMessagesFragment;
 import com.example.travelo.models.Room;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -48,9 +49,13 @@ public class RoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Open the draw when menu is clicked
-                binding.drawerLayout.openDrawer(GravityCompat.START);
+                if (binding != null) {
+                    binding.drawerLayout.openDrawer(GravityCompat.START);
+                }
             }
         });
+        // Setup drawer view
+        setupDrawerContent(binding.nvView);
         // Specify which class to query
         ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
         // Specify the object id
@@ -121,5 +126,26 @@ public class RoomActivity extends AppCompatActivity {
         });
         // Set default fragment
         binding.bottomNavigationRoom.setSelectedItemId(R.id.action_map);
+    }
+
+    // Setup the contents of the menu drawer
+    public void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                selectDrawerItem(item);
+                return true;
+            }
+        });
+    }
+    // Choose what happens when item on menu drawer is selected
+    public void selectDrawerItem(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.nav_invite:
+                Log.i(TAG, "Clicked on invite");
+                break;
+            default:
+                break;
+        }
     }
 }
