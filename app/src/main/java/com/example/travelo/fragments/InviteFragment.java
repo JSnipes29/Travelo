@@ -23,6 +23,8 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 public class InviteFragment extends DialogFragment {
 
     FragmentInviteBinding binding;
@@ -77,6 +79,9 @@ public class InviteFragment extends DialogFragment {
                 }
                 rooms.addAll(queriedRooms);
                 inviteAdapter.notifyDataSetChanged();
+                if (rooms.isEmpty()) {
+                    Toasty.info(getContext(), "You have no rooms open", Toasty.LENGTH_SHORT, true).show();
+                }
             }
         });
     }

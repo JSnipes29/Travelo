@@ -117,7 +117,9 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
                     String roomObjectId = room.getObjectId();
                     String roomId = room.getRoomId();
                     int index = Inbox.indexOfRoomMessage(jsonInbox, roomObjectId);
+                    // If the user already has an invite, return
                     if (index != -1) {
+                        Toasty.info(context, "Invite already sent", Toast.LENGTH_SHORT, true).show();
                         return;
                     }
                     JSONObject roomMessage = new JSONObject();
