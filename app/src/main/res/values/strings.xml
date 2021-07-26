@@ -42,5 +42,6 @@
     <string name="search">Search</string>
     <string name="invite">Invite</string>
     <string name="friend">Friend</string>
+    <string name="unfriend">Unfriend</string>
 
 </resources>

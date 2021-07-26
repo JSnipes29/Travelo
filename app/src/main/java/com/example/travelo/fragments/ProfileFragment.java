@@ -104,6 +104,7 @@ public class ProfileFragment extends Fragment {
                 .load(user.getParseFile("profileImage").getUrl())
                 .circleCrop()
                 .into(binding.ivProfileImage);
+        List<String> friends = jsonToList(user.getParseObject("followers").getJSONArray("friends"));
         List<String> following = jsonToList(user.getJSONArray("following"));
         List<String> followers = jsonToList(user.getParseObject("followers").getJSONArray("followers"));
         binding.tvFollowersCount.setText(String.valueOf(followers.size()));
@@ -124,6 +125,14 @@ public class ProfileFragment extends Fragment {
             } else {
                 binding.btnFollow.setText(R.string.follow);
                 binding.btnFollow.setOnClickListener(v -> follow());
+            }
+            if (friends.contains(currentUserId)) {
+                Log.i(TAG, "Friends");
+                binding.btnFriend.setText(R.string.unfriend);
+                binding.btnFriend.setOnClickListener(v -> unFriend());
+            } else {
+                binding.btnFriend.setText(R.string.friend);
+                binding.btnFriend.setOnClickListener(v -> friend());
             }
         }
         // Bind posts to recycler view
@@ -160,30 +169,41 @@ public class ProfileFragment extends Fragment {
                 if (e != null) {
                     Log.e(TAG, "Couldn't find current user", e);
                 }
-                // Add current user to users followers
-                ParseObject followersObject = user.getParseObject("followers");
-                JSONArray followers = followersObject.getJSONArray("followers");
-                followers.put(currentUser.getObjectId());
-                user.getParseObject("followers").put("followers", followers);
-                // Add user to current users following
-                JSONArray following = currentUser.getJSONArray("following");
-                following.put(user.getObjectId());
-                currentUser.put("following", following);
-                // Save both to the Parse server
-                followersObject.saveInBackground(new SaveCallback() {
+                ParseQuery<ParseUser> updateUser = ParseQuery.getQuery(ParseUser.class);
+                updateUser.getInBackground(user.getObjectId(), new GetCallback<ParseUser>() {
                     @Override
-                    public void done(ParseException e) {
-                        if (e != null) {
-                            Log.e(TAG, "Couldn't update followers");
-                        } else {
-                            Log.i(TAG, "Updated followers");
+                    public void done(ParseUser updatedUser, ParseException e) {
+                        // Update user
+                        user = updatedUser;
+                        // Add current user to users followers
+                        ParseObject followersObject = user.getParseObject("followers");
+                        JSONArray followers = followersObject.getJSONArray("followers");
+                        followers.put(currentUser.getObjectId());
+                        user.getParseObject("followers").put("followers", followers);
+                        // Add user to current users following
+                        JSONArray following = currentUser.getJSONArray("following");
+                        following.put(user.getObjectId());
+                        currentUser.put("following", following);
+                        // Save both to the Parse server
+                        followersObject.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e != null) {
+                                    Log.e(TAG, "Couldn't update followers");
+                                } else {
+                                    Log.i(TAG, "Updated followers");
+                                }
+                            }
+                        });
+                        currentUser.saveInBackground();
+
+                        // Button is clickable again
+                        if (binding != null) {
+                            binding.btnFollow.setClickable(true);
                         }
                     }
                 });
-                currentUser.saveInBackground();
 
-                // Button is clickable again
-                binding.btnFollow.setClickable(true);
 
             }
         });
@@ -202,34 +222,103 @@ public class ProfileFragment extends Fragment {
                 if (e != null) {
                     Log.e(TAG, "Couldn't find current user", e);
                 }
-                // Add current user to users followers
-                ParseObject followersObject = user.getParseObject("followers");
-                JSONArray followers = followersObject.getJSONArray("followers");
-                followers = jsonDelete(followers, (currentUser.getObjectId()));
-                user.getParseObject("followers").put("followers", followers);
-                // Add user to current users following
-                JSONArray following = currentUser.getJSONArray("following");
-                following = jsonDelete(following, user.getObjectId());
-                currentUser.put("following", following);
-                // Save both to the Parse server
-                followersObject.saveInBackground(new SaveCallback() {
+                ParseQuery<ParseUser> updateUser = ParseQuery.getQuery(ParseUser.class);
+                updateUser.getInBackground(user.getObjectId(), new GetCallback<ParseUser>() {
                     @Override
-                    public void done(ParseException e) {
-                        if (e != null) {
-                            Log.e(TAG, "Couldn't update followers");
-                        } else {
-                            Log.i(TAG, "Updated followers");
+                    public void done(ParseUser updatedUser, ParseException e) {
+                        // Update user
+                        user = updatedUser;
+                        // Delete current user from users followers
+                        ParseObject followersObject = user.getParseObject("followers");
+                        JSONArray followers = followersObject.getJSONArray("followers");
+                        followers = jsonDelete(followers, (currentUser.getObjectId()));
+                        user.getParseObject("followers").put("followers", followers);
+                        // Delete user from current users following
+                        JSONArray following = currentUser.getJSONArray("following");
+                        following = jsonDelete(following, user.getObjectId());
+                        currentUser.put("following", following);
+                        // Save both to the Parse server
+                        followersObject.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e != null) {
+                                    Log.e(TAG, "Couldn't update followers");
+                                } else {
+                                    Log.i(TAG, "Updated followers");
+                                }
+                            }
+                        });
+                        currentUser.saveInBackground();
+
+                        // Button is clickable again
+                        if (binding != null) {
+                            binding.btnFollow.setClickable(true);
                         }
                     }
                 });
-                currentUser.saveInBackground();
 
-                // Button is clickable again
-                binding.btnFollow.setClickable(true);
 
             }
         });
 
+    }
+
+    public void friend() {
+
+    }
+
+    public void unFriend() {
+        // Button now follows on click
+        binding.btnFriend.setText(R.string.friend);
+        binding.btnFriend.setOnClickListener(v -> friend());
+        binding.btnFriend.setClickable(false);
+        ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
+        query.include("followers");
+        query.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>() {
+            public void done(ParseUser currentUser, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Couldn't find current user", e);
+                }
+                ParseQuery<ParseUser> updateUser = ParseQuery.getQuery(ParseUser.class);
+                updateUser.include("followers");
+                updateUser.getInBackground(user.getObjectId(), new GetCallback<ParseUser>() {
+                    @Override
+                    public void done(ParseUser updatedUser, ParseException e) {
+                        // Update user
+                        user = updatedUser;
+                        // Remove current user from users friends
+                        ParseObject followersObject = user.getParseObject("followers");
+                        JSONArray friends = followersObject.getJSONArray("friends");
+                        friends = jsonDelete(friends, (currentUser.getObjectId()));
+                        user.getParseObject("followers").put("friends", friends);
+                        // Remove user from current users friends
+                        ParseObject currentFriendsObject = currentUser.getParseObject("followers");
+                        JSONArray currentFriends = currentFriendsObject.getJSONArray("friends");
+                        currentFriends = jsonDelete(currentFriends, user.getObjectId());
+                        currentFriendsObject.put("friends", currentFriends);
+                        // Save both to the Parse server
+                        followersObject.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e != null) {
+                                    Log.e(TAG, "Couldn't update followers");
+                                } else {
+                                    Log.i(TAG, "Updated followers");
+                                }
+                            }
+                        });
+                        currentFriendsObject.saveInBackground();
+
+                        // Button is clickable again
+                        if (binding != null) {
+                            binding.btnFollow.setClickable(true);
+                        }
+                    }
+                });
+
+
+            }
+        });
     }
 
     private void queryPosts(int parameter) {
@@ -529,4 +618,5 @@ public class ProfileFragment extends Fragment {
         inviteFragment.setArguments(bundle);
         inviteFragment.show(fm, "Invite");
     }
+
 }
