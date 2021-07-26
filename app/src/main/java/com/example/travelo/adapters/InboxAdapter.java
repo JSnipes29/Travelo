@@ -38,12 +38,13 @@ import java.util.List;
 public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewHolder> {
     private List<JSONObject> messages;
     private Context context;
-    private String username;
 
     public static final String TAG = "InboxAdapter";
     private static final int MESSAGE_DM = 629;
     private static final int MESSAGE_ROOM = 1229;
+    public static final int MESSAGE_FR = 2001;
     public static final int DM_LENGTH = 4;
+    public static final int FR_LENGTH = 2;
     public static final int ROOM_LENGTH = 1;
 
     public InboxAdapter(List<JSONObject> list, Context c) {
@@ -59,6 +60,8 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
                 return MESSAGE_DM;
             case ROOM_LENGTH:
                 return MESSAGE_ROOM;
+            case FR_LENGTH:
+                return MESSAGE_FR;
             default:
                 return 0;
         }
@@ -78,6 +81,9 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
         } else if (viewType == MESSAGE_DM) {
             View contactView = inflater.inflate(R.layout.item_dm_message, parent, false);
             return new DMViewHolder(contactView);
+        } else if (viewType == MESSAGE_FR) {
+            View contactView = inflater.inflate(R.layout.item_friend_request, parent, false);
+            return new FRViewHolder(contactView);
         } else {
             throw new IllegalArgumentException("Unknown view type");
         }
@@ -253,6 +259,45 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
                 intent.putExtra("type", 1);
                 intent.putExtra("messagesId", messagesId);
                 context.startActivity(intent);
+            }
+        }
+
+        public class FRViewHolder extends MessageViewHolder {
+            TextView tvName;
+            ImageView ivProfileImage;
+            public FRViewHolder(@NonNull View itemView) {
+                super(itemView);
+                tvName = itemView.findViewById(R.id.tvName);
+                ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
+            }
+
+            public void bindMessage(JSONObject message) {
+                String name = "";
+                String userId = null;
+                try {
+                    name = message.getString("name");
+                    userId = message.getString("userId");
+                } catch (JSONException e) {
+                    Log.e(TAG, "Error with json data", e);
+                }
+                tvName.setText(name);
+                ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
+                if (userId == null) {
+                    return;
+                }
+                userQuery.getInBackground(userId, new GetCallback<ParseUser>() {
+                    @Override
+                    public void done(ParseUser user, ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Error loading user data");
+                        }
+                        String profileUrl = user.getParseFile("profileImage").getUrl();
+                        Glide.with(context)
+                                .load(profileUrl)
+                                .circleCrop() // create an effect of a round profile picture
+                                .into(ivProfileImage);
+                    }
+                });
             }
         }
     }

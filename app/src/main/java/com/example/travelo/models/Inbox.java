@@ -34,6 +34,7 @@ public class Inbox extends ParseObject {
         return getJSONArray(KEY_ROOMS);
     }
 
+    // Find index of a room message
     public static int indexOfRoomMessage(JSONArray array, String roomObjectId) {
         for (int i = 0; i < array.length(); i++) {
             try {
@@ -45,6 +46,27 @@ public class Inbox extends ParseObject {
                 // If the message contains the user id return the index
                 String jsonUserId = message.keys().next();
                 if (jsonUserId.equals(roomObjectId)) {
+                    return i;
+                }
+            } catch (JSONException e) {
+                Log.e("Inbox", "Error reading json data", e);
+            }
+        }
+        return -1;
+    }
+
+    // Find index of friend request
+    public static int indexOfFriendRequest(JSONArray array, String userId) {
+        for (int i = 0; i < array.length(); i++) {
+            try {
+                JSONObject message = array.getJSONObject(i);
+                // If the message isn't a dm (a room message), continue
+                if (message.length() != InboxAdapter.FR_LENGTH) {
+                    continue;
+                }
+                // If the message contains the user id return the index
+                String jsonUserId = message.getString("userId");
+                if (jsonUserId.equals(userId)) {
                     return i;
                 }
             } catch (JSONException e) {

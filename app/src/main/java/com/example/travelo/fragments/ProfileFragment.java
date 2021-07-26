@@ -30,6 +30,7 @@ import com.example.travelo.databinding.FragmentProfileBinding;
 import com.example.travelo.models.Inbox;
 import com.example.travelo.models.Messages;
 import com.example.travelo.models.Post;
+import com.example.travelo.models.Room;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -47,6 +48,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 public class ProfileFragment extends Fragment {
 
@@ -221,6 +224,8 @@ public class ProfileFragment extends Fragment {
             public void done(ParseUser currentUser, ParseException e) {
                 if (e != null) {
                     Log.e(TAG, "Couldn't find current user", e);
+                    Toasty.error(getContext(), "Error finding user", Toasty.LENGTH_SHORT, true).show();
+                    return;
                 }
                 ParseQuery<ParseUser> updateUser = ParseQuery.getQuery(ParseUser.class);
                 updateUser.getInBackground(user.getObjectId(), new GetCallback<ParseUser>() {
@@ -264,7 +269,53 @@ public class ProfileFragment extends Fragment {
     }
 
     public void friend() {
-
+        binding.btnFriend.setClickable(false);
+        ParseQuery<ParseUser> userParseQuery = ParseQuery.getQuery(ParseUser.class);
+        userParseQuery.include(Inbox.KEY);
+        userParseQuery.getInBackground(user.getObjectId(), new GetCallback<ParseUser>() {
+            @Override
+            public void done(ParseUser user, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Problem loading user data from server", e);
+                    if (binding != null) {
+                        binding.btnFriend.setClickable(true);
+                    }
+                    return;
+                }
+                Inbox inbox = (Inbox) user.getParseObject(Inbox.KEY);
+                JSONArray jsonInbox = inbox.getMessages();
+                String currentUserId = ParseUser.getCurrentUser().getObjectId();
+                String currentUsername = ParseUser.getCurrentUser().getUsername();
+                int index = Inbox.indexOfFriendRequest(jsonInbox, currentUserId);
+                // If the user already has an invite, return
+                if (index != -1) {
+                    Toasty.info(getContext(), "Friend request already sent", Toast.LENGTH_SHORT, true).show();
+                    return;
+                }
+                JSONObject friendRequest = new JSONObject();
+                try {
+                    friendRequest.put("userId", currentUserId);
+                    friendRequest.put("name", currentUsername);
+                } catch (JSONException jsonException) {
+                    Log.e(TAG, "Couldn't edit json data", jsonException);
+                }
+                jsonInbox.put(friendRequest);
+                inbox.setMessages(jsonInbox);
+                inbox.saveInBackground(exception -> {
+                    if (exception != null) {
+                        Log.e(TAG, "Couldn't save friend request message in inbox", exception);
+                    } else {
+                        Log.i(TAG, "Friend request saved in inbox");
+                        if (getContext() != null) {
+                            Toasty.success(getContext(), "Friend Request Sent", Toast.LENGTH_SHORT, true).show();
+                        }
+                    }
+                });
+                if (binding != null) {
+                    binding.btnFriend.setClickable(true);
+                }
+            }
+        });
     }
 
     public void unFriend() {
