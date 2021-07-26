@@ -287,69 +287,97 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                     places.put(place);
                 }
                 jsonMarker.put("places", places);
-                JSONObject jsonMap = room.getMap();
-                JSONArray markers = jsonMap.getJSONArray("markers");
-                markers.put(jsonMarker);
-                jsonMap.put("markers", markers);
-                room.setMap(jsonMap);
+                ParseQuery<Room> roomQuery = ParseQuery.getQuery(Room.class);
+                roomQuery.getInBackground(room.getObjectId(), new GetCallback<Room>() {
+                    @Override
+                    public void done(Room updatedRoom, ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Error getting room data from server", e);
+                        }
+                        room = updatedRoom;
+                        JSONObject jsonMap = room.getMap();
+                        try {
+                            JSONArray markers = jsonMap.getJSONArray("markers");
+                            markers.put(jsonMarker);
+                            jsonMap.put("markers", markers);
+                        } catch (JSONException jsonException) {
+                            Log.e(TAG, "Couldn't edit json data", jsonException);
+                        }
+                        room.setMap(jsonMap);
+                        room.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e == null) {
+                                    Log.i(TAG, "Loaded marker to server");
+                                } else {
+                                    Log.e(TAG, "Couldn't save markers to server", e);
+                                }
+                            }
+                        });
+                    }
+                });
+
             } catch (JSONException e) {
                 e.printStackTrace();
-                Log.e(TAG, "Error loading marker to server", e);
+                Log.e(TAG, "Error loading marker to json object", e);
             }
-            room.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if (e == null) {
-                        Log.i(TAG, "Loaded marker to server");
-                    } else {
-                        Log.e(TAG, "Couldn't save markers to server", e);
-                    }
-                }
-            });
+
         }
     }
 
     // Get the marker data from the Parse server and add it to the map
     public void populateMap() {
-        JSONObject jsonMap = room.getMap();
-        try {
-            JSONArray markers = jsonMap.getJSONArray("markers");
-            for (int i = 0; i < markers.length(); i++) {
-                JSONObject jsonMarker = markers.getJSONObject(i);
-                List<YelpBusinesses> businesses = new ArrayList<>();
-                double latitude = jsonMarker.getDouble("latitude");
-                double longitude = jsonMarker.getDouble("longitude");
-                String markerColor = jsonMarker.getString("color");
-                String user = jsonMarker.getString("user");
-                JSONArray places = jsonMarker.getJSONArray("places");
-                for (int j = 0; j < places.length(); j++) {
-                    JSONObject place = places.getJSONObject(j);
-                    String name = place.getString("name");
-                    double rating = place.getDouble("rating");
-                    int numRatings = place.getInt("num_ratings");
-                    String imageUrl = place.getString("image_url");
-                    String price = place.getString("price");
-                    double distanceMeters = place.getDouble("distance");
-                    String category = place.getString("category");
-                    String address = place.getString("address");
-                    String city = place.getString("city");
-                    String state = place.getString("state");
-                    String country = place.getString("country");
-                    YelpLocation location = YelpLocation.makeLocation(address, city, state, country);
-                    YelpBusinesses business = YelpBusinesses.makeBusiness(name, rating, numRatings, imageUrl, price, distanceMeters, location, category);
-                    businesses.add(business);
+        ParseQuery<Room> roomQuery = ParseQuery.getQuery(Room.class);
+        roomQuery.getInBackground(room.getObjectId(), new GetCallback<Room>() {
+            @Override
+            public void done(Room updatedRoom, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Trouble getting room data from server to populate map", e);
+                    Toasty.error(getContext(), "Couldn't populate map", Toasty.LENGTH_SHORT, true).show();
                 }
-                // Define color of marker icon
-                BitmapDescriptor defaultMarker = MarkerTag.colorMarker(markerColor);
-                Marker marker = map.addMarker(new MarkerOptions()
-                        .position(new LatLng(latitude, longitude))
-                        .icon(defaultMarker));
-                marker.setTag(businesses);
-                marker.setSnippet(user);
+                room = updatedRoom;
+                JSONObject jsonMap = room.getMap();
+                try {
+                    JSONArray markers = jsonMap.getJSONArray("markers");
+                    for (int i = 0; i < markers.length(); i++) {
+                        JSONObject jsonMarker = markers.getJSONObject(i);
+                        List<YelpBusinesses> businesses = new ArrayList<>();
+                        double latitude = jsonMarker.getDouble("latitude");
+                        double longitude = jsonMarker.getDouble("longitude");
+                        String markerColor = jsonMarker.getString("color");
+                        String user = jsonMarker.getString("user");
+                        JSONArray places = jsonMarker.getJSONArray("places");
+                        for (int j = 0; j < places.length(); j++) {
+                            JSONObject place = places.getJSONObject(j);
+                            String name = place.getString("name");
+                            double rating = place.getDouble("rating");
+                            int numRatings = place.getInt("num_ratings");
+                            String imageUrl = place.getString("image_url");
+                            String price = place.getString("price");
+                            double distanceMeters = place.getDouble("distance");
+                            String category = place.getString("category");
+                            String address = place.getString("address");
+                            String city = place.getString("city");
+                            String state = place.getString("state");
+                            String country = place.getString("country");
+                            YelpLocation location = YelpLocation.makeLocation(address, city, state, country);
+                            YelpBusinesses business = YelpBusinesses.makeBusiness(name, rating, numRatings, imageUrl, price, distanceMeters, location, category);
+                            businesses.add(business);
+                        }
+                        // Define color of marker icon
+                        BitmapDescriptor defaultMarker = MarkerTag.colorMarker(markerColor);
+                        Marker marker = map.addMarker(new MarkerOptions()
+                                .position(new LatLng(latitude, longitude))
+                                .icon(defaultMarker));
+                        marker.setTag(businesses);
+                        marker.setSnippet(user);
+                    }
+                } catch (JSONException jsonException) {
+                    Log.e(TAG,"Error getting markers from server", jsonException);
+                }
             }
-        } catch (JSONException e) {
-            Log.e(TAG,"Error getting markers from server", e);
-        }
+        });
+
     }
 
     private void dropPinEffect(final Marker marker) {
