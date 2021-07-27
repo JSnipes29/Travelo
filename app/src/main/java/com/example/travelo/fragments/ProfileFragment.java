@@ -7,7 +7,9 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -31,6 +34,7 @@ import com.example.travelo.models.Inbox;
 import com.example.travelo.models.Messages;
 import com.example.travelo.models.Post;
 import com.example.travelo.models.Room;
+import com.google.android.material.navigation.NavigationView;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -81,6 +85,7 @@ public class ProfileFragment extends Fragment {
         binding.btnFollow.setVisibility(View.GONE);
         binding.btnInvite.setVisibility(View.GONE);
         binding.btnFriend.setVisibility(View.GONE);
+        binding.bar.setVisibility(View.GONE);
         if (user == null) {
             ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
             query.include("followers");
@@ -90,6 +95,7 @@ public class ProfileFragment extends Fragment {
                     user = object;
                     if (binding != null) {
                         binding.ivProfileImage.setOnClickListener(v -> setProfileImage());
+                        binding.bar.setVisibility(View.VISIBLE);
                         setUpProfileFragment();
                     }
                 }
@@ -152,6 +158,19 @@ public class ProfileFragment extends Fragment {
             }
         };
         binding.rvPosts.addOnScrollListener(scrollListener);
+        // Setup app bar
+        // Set up the app bar
+        binding.bar.setOnMenuClickedListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open the draw when menu is clicked
+                if (binding != null) {
+                    binding.drawerLayout.openDrawer(GravityCompat.START);
+                }
+            }
+        });
+        // Setup drawer view
+        setupDrawerContent(binding.nvView);
         queryPosts(0);
     }
 
@@ -729,6 +748,32 @@ public class ProfileFragment extends Fragment {
         bundle.putString("userId", user.getObjectId());
         inviteFragment.setArguments(bundle);
         inviteFragment.show(fm, "Invite");
+    }
+
+    // Setup the contents of the menu drawer
+    public void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                selectDrawerItem(item);
+                return true;
+            }
+        });
+    }
+    // Choose what happens when item on menu drawer is selected
+    public void selectDrawerItem(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.action_friends:
+                Log.i(TAG, "Clicked on invite");
+                goToUsers(0);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void goToUsers(int parameter) {
+
     }
 
 }

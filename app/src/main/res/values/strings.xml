@@ -49,5 +49,6 @@
     <string name="empty_inbox_message">Your Inbox is Empty</string>
     <string name="friend_request_sent">Friend Request Sent</string>
     <string name="delete">Delete</string>
+    <string name="friends">Friends</string>
 
 </resources>

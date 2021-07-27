@@ -31,16 +31,22 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="Owner of rooms can invite friends to rooms within room activity">
+    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="Removed invite button on profile view users aren't friends">
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/menu/drawer_view_profile.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/jarAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/ProfileFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/ProfileFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_profile.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,9 +92,9 @@
       <list>
         <option value="Interface" />
         <option value="valueResourceFile" />
-        <option value="resourceFile" />
         <option value="layoutResourceFile" />
         <option value="Class" />
+        <option value="resourceFile" />
       </list>
     </option>
   </component>
@@ -200,13 +206,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1625865131177</updated>
-    </task>
-    <task id="LOCAL-00077" summary="User can edit their profile picture">
-      <created>1626897073142</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1626897073143</updated>
     </task>
     <task id="LOCAL-00078" summary="Setup toolbars for fragments">
       <created>1626902939174</created>
@@ -544,7 +543,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627419240013</updated>
     </task>
-    <option name="localTasksCounter" value="126" />
+    <task id="LOCAL-00126" summary="Removed invite button on profile view users aren't friends">
+      <created>1627421227179</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1627421227179</updated>
+    </task>
+    <option name="localTasksCounter" value="127" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -560,7 +566,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="User can search for other users in home feed" />
     <MESSAGE value="Fixed bug where app crashed on slow connection" />
     <MESSAGE value="Users can click on searched users to go to their profile" />
     <MESSAGE value="Added shimmer effect for searched users" />
@@ -585,7 +590,8 @@
     <MESSAGE value="Added toast message when trying to create a room without room id and minor UI change to create room" />
     <MESSAGE value="Added toast message when trying to create a room without room id and minor UI changes" />
     <MESSAGE value="Owner of rooms can invite friends to rooms within room activity" />
-    <option name="LAST_COMMIT_MESSAGE" value="Owner of rooms can invite friends to rooms within room activity" />
+    <MESSAGE value="Removed invite button on profile view users aren't friends" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed invite button on profile view users aren't friends" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-1084" y="197" key="#com.intellij.ide.util.MemberChooser" timestamp="1627415065559">
@@ -611,11 +617,11 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="472" y="270" key="AndroidCreateResourceDirectoryDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626905936464" />
-    <state x="-1414" y="245" key="AndroidCreateResourceFileDialog" timestamp="1627415263846">
+    <state x="-1414" y="245" key="AndroidCreateResourceFileDialog" timestamp="1627422869115">
       <screen x="-1920" y="-11" width="1920" height="1055" />
     </state>
     <state x="472" y="270" key="AndroidCreateResourceFileDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627330204682" />
-    <state x="-1414" y="245" key="AndroidCreateResourceFileDialog/0.25.1792.1013/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1627415263846" />
+    <state x="-1414" y="245" key="AndroidCreateResourceFileDialog/0.25.1792.1013/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1627422869115" />
     <state x="472" y="271" key="AndroidCreateResourceFileDialog/0.25.1792.1013/-1920.-11.1920.1055@0.25.1792.1013" timestamp="1627400489491" />
     <state x="741" y="273" key="AndroidProcessChooserDialog" timestamp="1626213836186">
       <screen x="0" y="25" width="1792" height="1010" />
@@ -673,12 +679,12 @@
     </state>
     <state width="1358" height="259" key="GridCell.Tab.1.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627069825301" />
     <state width="1358" height="259" key="GridCell.Tab.1.right/0.25.1792.1013/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1627418855133" />
-    <state x="-1402" y="222" key="Vcs.Push.Dialog.v2" timestamp="1627413738333">
+    <state x="-1402" y="222" key="Vcs.Push.Dialog.v2" timestamp="1627421237945">
       <screen x="-1920" y="-11" width="1920" height="1055" />
     </state>
     <state x="-1402" y="222" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1627317260152" />
     <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627330697831" />
-    <state x="-1402" y="222" key="Vcs.Push.Dialog.v2/0.25.1792.1013/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1627413738333" />
+    <state x="-1402" y="222" key="Vcs.Push.Dialog.v2/0.25.1792.1013/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1627421237945" />
     <state x="483" y="249" key="Vcs.Push.Dialog.v2/0.25.1792.1013/-1920.-11.1920.1055@0.25.1792.1013" timestamp="1627406885701" />
     <state x="483" y="267" key="Vcs.Push.Dialog.v2/0.25.1792.1095/-1920.-11.1920.1055@0.25.1792.1095" timestamp="1626375029876" />
     <state x="-1402" y="203" key="Vcs.Push.Dialog.v2/0.25.1792.1095/-1920.-11.1920.970@-1920.-11.1920.970" timestamp="1627318414375" />
