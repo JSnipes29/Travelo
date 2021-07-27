@@ -35,7 +35,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TestApplication">
-        <activity android:name=".activities.MessagesActivity"></activity>
+        <activity android:name=".activities.UsersActivity"></activity>
+        <activity android:name=".activities.MessagesActivity" />
         <activity android:name=".activities.ProfileActivity" />
         <activity android:name=".activities.DetailsPostActivity" />
         <activity android:name=".activities.PostMapActivity" />

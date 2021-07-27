@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.travelo.activities.UsersActivity;
 import com.example.travelo.listeners.EndlessRecyclerViewScrollListener;
 import com.example.travelo.activities.MessagesActivity;
 import com.example.travelo.R;
@@ -764,7 +765,7 @@ public class ProfileFragment extends Fragment {
     public void selectDrawerItem(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.action_friends:
-                Log.i(TAG, "Clicked on invite");
+                Log.i(TAG, "Clicked on friends");
                 goToUsers(0);
                 break;
             default:
@@ -773,7 +774,9 @@ public class ProfileFragment extends Fragment {
     }
 
     public void goToUsers(int parameter) {
-
+        Intent intent = new Intent(getContext(), UsersActivity.class);
+        intent.putExtra("type", parameter);
+        startActivity(intent);
     }
 
 }
