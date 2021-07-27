@@ -10,6 +10,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Iterator;
+
 @ParseClassName("Inbox")
 public class Inbox extends ParseObject {
 
@@ -44,7 +46,11 @@ public class Inbox extends ParseObject {
                     continue;
                 }
                 // If the message contains the user id return the index
-                String jsonUserId = message.keys().next();
+                Iterator<String> iterator = message.keys();
+                String jsonUserId = iterator.next();
+                if (jsonUserId.equals("id")) {
+                    jsonUserId = iterator.next();
+                }
                 if (jsonUserId.equals(roomObjectId)) {
                     return i;
                 }

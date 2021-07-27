@@ -82,9 +82,9 @@ public class JoinRoomFragment extends DialogFragment {
                 dismiss();
                 return;
             }
-
+            String ownerId = rooms.get(0).getOwner().getObjectId();
             if (!rooms.get(0).getJoinable()) {
-                if (!rooms.get(0).getOwner().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+                if (!ownerId.equals(ParseUser.getCurrentUser().getObjectId())) {
                     Toasty.error(v.getContext(), "This room is no longer joinable", Toast.LENGTH_SHORT, true).show();
                     dismiss();
                     return;
@@ -95,6 +95,7 @@ public class JoinRoomFragment extends DialogFragment {
             Intent intent = new Intent(v.getContext(), RoomActivity.class);
             String id = rooms.get(0).getObjectId();
             intent.putExtra("room", id);
+            intent.putExtra("ownerId", ownerId);
             startActivity(intent);
             ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
             userQuery.include(Inbox.KEY);

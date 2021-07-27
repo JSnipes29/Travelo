@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.travelo.R;
+import com.example.travelo.constants.Constant;
 import com.example.travelo.models.Inbox;
 import com.example.travelo.models.Room;
 import com.parse.GetCallback;
@@ -99,51 +100,8 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
             rvUsers.setAdapter(userAdapter);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
             rvUsers.setLayoutManager(linearLayoutManager);
-            btnInvite.setOnClickListener(v -> invite(room, userId));
+            btnInvite.setOnClickListener(v -> Constant.invite(context, room, userId, TAG, fragment));
         }
 
-        public void invite(Room room, String userId) {
-            ParseQuery<ParseUser> userParseQuery = ParseQuery.getQuery(ParseUser.class);
-            userParseQuery.include(Inbox.KEY);
-            userParseQuery.getInBackground(userId, new GetCallback<ParseUser>() {
-                @Override
-                public void done(ParseUser user, ParseException e) {
-                    if (e != null) {
-                        Log.e(TAG, "Problem loading user data from server", e);
-                        return;
-                    }
-                    Inbox inbox = (Inbox) user.getParseObject(Inbox.KEY);
-                    JSONArray jsonInbox = inbox.getMessages();
-                    String roomObjectId = room.getObjectId();
-                    String roomId = room.getRoomId();
-                    int index = Inbox.indexOfRoomMessage(jsonInbox, roomObjectId);
-                    // If the user already has an invite, return
-                    if (index != -1) {
-                        Toasty.info(context, "Invite already sent", Toast.LENGTH_SHORT, true).show();
-                        return;
-                    }
-                    JSONObject roomMessage = new JSONObject();
-                    try {
-                        roomMessage.put(roomObjectId, roomId);
-                        roomMessage.put("id", InboxAdapter.ROOM_ID);
-                    } catch (JSONException jsonException) {
-                        Log.e(TAG, "Couldn't edit json data", jsonException);
-                    }
-                    jsonInbox.put(roomMessage);
-                    inbox.setMessages(jsonInbox);
-                    inbox.saveInBackground(exception -> {
-                        if (exception != null) {
-                            Log.e(TAG, "Couldn't save room message in inbox", exception);
-                        } else {
-                            Log.i(TAG, "Room message saved in inbox");
-                            if (context != null) {
-                                Toasty.success(context, "Invite Sent", Toast.LENGTH_SHORT, true).show();
-                            }
-                        }
-                    });
-                }
-            });
-            fragment.dismiss();
-        }
     }
 }

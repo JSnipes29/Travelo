@@ -194,6 +194,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
             Log.i(TAG, "Going to room");
             // Specify which class to query
             ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
+            query.include("owner");
             // Find the room asynchronously
             query.getInBackground(roomObjectId, new GetCallback<Room>() {
                 @Override
@@ -216,6 +217,8 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
                     }
                     Intent intent = new Intent(context, RoomActivity.class);
                     intent.putExtra("room", roomObjectId);
+                    String ownerId = room.getOwner().getObjectId();
+                    intent.putExtra("ownerId", ownerId);
                     context.startActivity(intent);
                 }
 

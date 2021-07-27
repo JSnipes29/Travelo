@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.travelo.R;
 import com.example.travelo.databinding.ActivityRoomBinding;
 import com.example.travelo.fragments.EditMapFragment;
+import com.example.travelo.fragments.InviteFriendsFragment;
 import com.example.travelo.fragments.RoomMessagesFragment;
 import com.example.travelo.models.Room;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -32,10 +33,15 @@ import org.json.JSONObject;
 import org.parceler.Parcel;
 import org.parceler.Parcels;
 
+import es.dmoral.toasty.Toasty;
+
 public class RoomActivity extends AppCompatActivity {
 
     public static final String TAG = "RoomActivity";
     ActivityRoomBinding binding;
+    String id;
+    String ownerId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +49,8 @@ public class RoomActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         Intent intent = getIntent();
-        String id = intent.getStringExtra("room");
+        id = intent.getStringExtra("room");
+        ownerId = intent.getStringExtra("ownerId");
         // Set up the app bar
         binding.bar.setOnMenuClickedListener(new View.OnClickListener() {
             @Override
@@ -143,9 +150,24 @@ public class RoomActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.nav_invite:
                 Log.i(TAG, "Clicked on invite");
+                inviteFriends();
                 break;
             default:
                 break;
         }
+    }
+
+    // Launch invite friends fragment
+    public void inviteFriends() {
+        if (!ParseUser.getCurrentUser().getObjectId().equals(ownerId)) {
+            Toasty.error(this, "You can't invite friends", Toast.LENGTH_SHORT, true).show();
+            return;
+        }
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        InviteFriendsFragment inviteFriendsFragment = new InviteFriendsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("roomObjectId", id);
+        inviteFriendsFragment.setArguments(bundle);
+        inviteFriendsFragment.show(fragmentManager, "InviteFriends");
     }
 }

@@ -113,6 +113,7 @@ public class CreateRoomFragment extends DialogFragment {
                             dismiss();
                             Intent intent = new Intent(v.getContext(), RoomActivity.class);
                             intent.putExtra("room", room.getObjectId());
+                            intent.putExtra("ownerId", ParseUser.getCurrentUser().getObjectId());
                             startActivity(intent);
 
                             // Add to inbox
