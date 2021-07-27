@@ -282,39 +282,84 @@ public class ProfileFragment extends Fragment {
                     }
                     return;
                 }
-                Inbox inbox = (Inbox) user.getParseObject(Inbox.KEY);
-                JSONArray jsonInbox = inbox.getMessages();
-                String currentUserId = ParseUser.getCurrentUser().getObjectId();
-                String currentUsername = ParseUser.getCurrentUser().getUsername();
-                int index = Inbox.indexOfFriendRequest(jsonInbox, currentUserId);
-                // If the user already has an invite, return
-                if (index != -1) {
-                    Toasty.info(getContext(), "Friend request already sent", Toast.LENGTH_SHORT, true).show();
-                    return;
-                }
-                JSONObject friendRequest = new JSONObject();
-                try {
-                    friendRequest.put("userId", currentUserId);
-                    friendRequest.put("name", currentUsername);
-                    friendRequest.put("id", InboxAdapter.FR_ID);
-                } catch (JSONException jsonException) {
-                    Log.e(TAG, "Couldn't edit json data", jsonException);
-                }
-                jsonInbox.put(friendRequest);
-                inbox.setMessages(jsonInbox);
-                inbox.saveInBackground(exception -> {
-                    if (exception != null) {
-                        Log.e(TAG, "Couldn't save friend request message in inbox", exception);
-                    } else {
-                        Log.i(TAG, "Friend request saved in inbox");
-                        if (getContext() != null) {
-                            Toasty.success(getContext(), "Friend Request Sent", Toast.LENGTH_SHORT, true).show();
+                ParseQuery<ParseUser> currentUserQuery = ParseQuery.getQuery(ParseUser.class);
+                currentUserQuery.include(Inbox.KEY);
+                currentUserQuery.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>() {
+                    @Override
+                    public void done(ParseUser currentUser, ParseException parseException) {
+                        if (parseException != null) {
+                            Log.e(TAG, "Problem loading user data from server", parseException);
+                            if (binding != null) {
+                                binding.btnFriend.setClickable(true);
+                            }
+                            return;
+                        }
+                        // Get the inbox of the user
+                        Inbox inbox = (Inbox) user.getParseObject(Inbox.KEY);
+                        JSONArray jsonInbox = inbox.getMessages();
+                        String currentUserId = ParseUser.getCurrentUser().getObjectId();
+                        String currentUsername = ParseUser.getCurrentUser().getUsername();
+                        // Check if the user already has a friend request
+                        int index = Inbox.indexOfFriendRequest(jsonInbox, currentUserId);
+                        // If the user already has an invite, return
+                        if (index != -1) {
+                            Toasty.info(getContext(), "Friend request already sent", Toast.LENGTH_SHORT, true).show();
+                            return;
+                        }
+                        // Make a new friend request
+                        JSONObject friendRequest = new JSONObject();
+                        try {
+                            friendRequest.put("userId", currentUserId);
+                            friendRequest.put("name", currentUsername);
+                            friendRequest.put("id", InboxAdapter.FR_ID);
+                        } catch (JSONException jsonException) {
+                            Log.e(TAG, "Couldn't edit json data", jsonException);
+                        }
+                        jsonInbox.put(friendRequest);
+                        // Put the friend request in the inbox
+                        inbox.setMessages(jsonInbox);
+                        // Save the inbox
+                        inbox.saveInBackground(exception -> {
+                            if (exception != null) {
+                                Log.e(TAG, "Couldn't save friend request message in inbox", exception);
+                            } else {
+                                Log.i(TAG, "Friend request saved in inbox");
+                                if (getContext() != null) {
+                                    Toasty.success(getContext(), "Friend Request Sent", Toast.LENGTH_SHORT, true).show();
+                                }
+                            }
+                        });
+                        // Get the inbox of the current user
+                        Inbox currentInbox = (Inbox) currentUser.getParseObject(Inbox.KEY);
+                        JSONArray currentJsonInbox = currentInbox.getMessages();
+                        String userId = user.getObjectId();
+                        String username = user.getUsername();
+                        // Check if the user already has a friend request sent
+                        index = Inbox.indexOfFriendRequest(currentJsonInbox, userId);
+                        // If the user already has an invite, return
+                        if (index != -1) {
+                            return;
+                        }
+                        // Make a new friend request sent message
+                        JSONObject friendRequestSent = new JSONObject();
+                        try {
+                            friendRequestSent.put("userId", userId);
+                            friendRequestSent.put("name", username);
+                            friendRequestSent.put("id", InboxAdapter.FR_SENT_ID);
+                        } catch (JSONException jsonException) {
+                            Log.e(TAG, "Couldn't edit json data", jsonException);
+                        }
+                        currentJsonInbox.put(friendRequestSent);
+                        // Put the friend request in the inbox
+                        currentInbox.setMessages(currentJsonInbox);
+                        // Save current inbox
+                        currentInbox.saveInBackground();
+                        if (binding != null) {
+                            binding.btnFriend.setClickable(true);
                         }
                     }
                 });
-                if (binding != null) {
-                    binding.btnFriend.setClickable(true);
-                }
+
             }
         });
     }

@@ -43,9 +43,11 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
     private static final int MESSAGE_DM = 629;
     private static final int MESSAGE_ROOM = 1229;
     public static final int MESSAGE_FR = 2001;
+    public static final int MESSAGE_FR_SENT = 2002;
     public static final int DM_ID = 4;
     public static final int FR_ID = 2;
     public static final int ROOM_ID = 1;
+    public static final int FR_SENT_ID = 3;
 
     public InboxAdapter(List<JSONObject> list, Context c) {
         messages = list;
@@ -62,6 +64,8 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
                 return MESSAGE_ROOM;
             case FR_ID:
                 return MESSAGE_FR;
+            case FR_SENT_ID:
+                return MESSAGE_FR_SENT;
             default:
                 return 0;
         }
@@ -84,6 +88,9 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
         } else if (viewType == MESSAGE_FR) {
             View contactView = inflater.inflate(R.layout.item_friend_request, parent, false);
             return new FRViewHolder(contactView);
+        } else if (viewType == MESSAGE_FR_SENT) {
+            View contactView = inflater.inflate(R.layout.item_friend_request_sent, parent, false);
+            return new FRSentViewHolder(contactView);
         } else {
             throw new IllegalArgumentException("Unknown view type");
         }
@@ -286,6 +293,47 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
             }
 
             public void bindMessage(JSONObject message) {
+                String name = "";
+                String userId = null;
+                try {
+                    name = message.getString("name");
+                    userId = message.getString("userId");
+                } catch (JSONException e) {
+                    Log.e(TAG, "Error with json data", e);
+                }
+                tvName.setText(name);
+                ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
+                if (userId == null) {
+                    return;
+                }
+                userQuery.getInBackground(userId, new GetCallback<ParseUser>() {
+                    @Override
+                    public void done(ParseUser user, ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Error loading user data");
+                        }
+                        String profileUrl = user.getParseFile("profileImage").getUrl();
+                        Glide.with(context)
+                                .load(profileUrl)
+                                .circleCrop() // create an effect of a round profile picture
+                                .into(ivProfileImage);
+                    }
+                });
+            }
+        }
+        public class FRSentViewHolder extends MessageViewHolder {
+
+            TextView tvName;
+            ImageView ivProfileImage;
+
+            public FRSentViewHolder(@NonNull View itemView) {
+                super(itemView);
+                tvName = itemView.findViewById(R.id.tvName);
+                ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
+            }
+
+            @Override
+            void bindMessage(JSONObject message) {
                 String name = "";
                 String userId = null;
                 try {
