@@ -10,9 +10,9 @@
     <string name="home">Home</string>
     <string name="settings">Settings</string>
     <string name="profile">Profile</string>
-    <string name="add_trip">Add Trip</string>
-    <string name="create_trip">Create Trip</string>
-    <string name="join_trip">Join Trip</string>
+    <string name="add_trip">Add Map</string>
+    <string name="create_trip">Create Map</string>
+    <string name="join_trip">Join Map</string>
     <string name="room_id">Room ID</string>
     <string name="enter">Enter</string>
     <string name="message_hint">Type here</string>

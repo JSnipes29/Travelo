@@ -41,13 +41,6 @@ public class CreateRoomFragment extends DialogFragment {
         // Required empty public constructor
     }
 
-    public static CreateRoomFragment newInstance() {
-        CreateRoomFragment fragment = new CreateRoomFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,11 +59,11 @@ public class CreateRoomFragment extends DialogFragment {
         String roomId = binding.etRoomId.getText().toString();
         // Don't create room if id is empty
         if (roomId.isEmpty()) {
-            Toast.makeText(getContext(), "Must enter a room id", Toast.LENGTH_SHORT).show();
+            // Show error message
+            Toasty.error(getContext(), "Must enter a room id", Toast.LENGTH_SHORT, true).show();
             return;
         }
         Room room = new Room(roomId);
-        String id = room.getObjectId();
         room.setOwner(ParseUser.getCurrentUser());
         JSONObject users = new JSONObject();
         JSONObject profileImages = new JSONObject();
@@ -121,6 +114,8 @@ public class CreateRoomFragment extends DialogFragment {
                             Intent intent = new Intent(v.getContext(), RoomActivity.class);
                             intent.putExtra("room", room.getObjectId());
                             startActivity(intent);
+
+                            // Add to inbox
                             ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
                             userQuery.include(Inbox.KEY);
                             userQuery.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>() {
