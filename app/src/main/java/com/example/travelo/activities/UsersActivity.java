@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.travelo.adapters.SearchUserAdapter;
 import com.example.travelo.databinding.ActivityUsersBinding;
@@ -20,6 +21,8 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 public class UsersActivity extends AppCompatActivity {
 
@@ -74,7 +77,11 @@ public class UsersActivity extends AppCompatActivity {
     }
 
     public void getUsers(JSONArray jsonUsers) throws JSONException {
-        for (int i = 0; i < jsonUsers.length(); i++) {
+        int numUsers = jsonUsers.length();
+        if (numUsers == 0) {
+            Toasty.info(this, "There are no users here", Toast.LENGTH_SHORT, true).show();
+        }
+        for (int i = 0; i < numUsers; i++) {
             String userId = jsonUsers.getString(i);
             ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
             userQuery.getInBackground(userId, new GetCallback<ParseUser>() {

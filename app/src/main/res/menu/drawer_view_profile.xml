@@ -7,4 +7,10 @@
         android:icon="@drawable/ic_baseline_people_alt_24"
         android:title="@string/friends"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_followers"
+        android:title="@string/followers" />
+    <item
+        android:id="@+id/action_following"
+        android:title="@string/following" />
 </menu>

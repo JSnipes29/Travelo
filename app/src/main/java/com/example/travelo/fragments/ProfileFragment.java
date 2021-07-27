@@ -768,6 +768,12 @@ public class ProfileFragment extends Fragment {
                 Log.i(TAG, "Clicked on friends");
                 goToUsers(0);
                 break;
+            case R.id.action_followers:
+                goToUsers(1);
+                break;
+            case R.id.action_following:
+                goToUsers(2);
+                break;
             default:
                 break;
         }
