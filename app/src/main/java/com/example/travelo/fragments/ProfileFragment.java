@@ -136,6 +136,7 @@ public class ProfileFragment extends Fragment {
             } else {
                 binding.btnFriend.setText(R.string.friend);
                 binding.btnFriend.setOnClickListener(v -> friend());
+                binding.btnInvite.setVisibility(View.GONE);
             }
         }
         // Bind posts to recycler view
