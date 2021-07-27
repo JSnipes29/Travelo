@@ -474,28 +474,31 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
 
             TextView tvName;
             ImageView ivProfileImage;
+            Button btnDelete;
 
             public FRSentViewHolder(@NonNull View itemView) {
                 super(itemView);
                 tvName = itemView.findViewById(R.id.tvName);
                 ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
+                btnDelete = itemView.findViewById(R.id.btnDelete);
             }
 
             @Override
             void bindMessage(JSONObject message, int position) {
                 String name = "";
-                String userId = null;
+                String tempUserId = null;
                 try {
                     name = message.getString("name");
-                    userId = message.getString("userId");
+                    tempUserId = message.getString("userId");
                 } catch (JSONException e) {
                     Log.e(TAG, "Error with json data", e);
                 }
                 tvName.setText(name);
                 ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
-                if (userId == null) {
+                if (tempUserId == null) {
                     return;
                 }
+                final String userId = tempUserId;
                 userQuery.getInBackground(userId, new GetCallback<ParseUser>() {
                     @Override
                     public void done(ParseUser user, ParseException e) {
@@ -508,6 +511,70 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
                                 .circleCrop() // create an effect of a round profile picture
                                 .into(ivProfileImage);
                     }
+                });
+                // Don't make friends when clicked on delete, remove items from inbox
+                btnDelete.setOnClickListener(v -> {
+                    ParseQuery<ParseUser> currentUserQuery = ParseQuery.getQuery(ParseUser.class);
+                    currentUserQuery.include(Inbox.KEY);
+                    currentUserQuery.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>() {
+                        @Override
+                        public void done(ParseUser currentUser, ParseException e) {
+                            if (e != null) {
+                                Log.e(TAG, "Couldn't get current user data", e);
+                            }
+                            ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
+                            userQuery.include(Inbox.KEY);
+                            userQuery.getInBackground(userId, new GetCallback<ParseUser>() {
+                                @Override
+                                public void done(ParseUser user, ParseException e1) {
+                                    if (e1 != null) {
+                                        Log.e(TAG, "Couldn't get current user data", e1);
+                                    }
+                                    String currentUserId = currentUser.getObjectId();
+                                    Inbox currentInbox = (Inbox) currentUser.getParseObject(Inbox.KEY);
+                                    JSONArray currentJsonInbox = currentInbox.getMessages();
+                                    // Get the index of the friend request
+                                    int index = Inbox.indexOfFriendRequestSent(currentJsonInbox, userId);
+                                    // If the friend request isn't there, display message and return
+                                    if (index == -1) {
+                                        Log.i(TAG, "Couldn't find friend request");
+                                        Toasty.error(context, "Friend request couldn't be found", Toast.LENGTH_SHORT, true).show();
+                                        return;
+                                    }
+                                    // Remove friend request from inbox
+                                    currentJsonInbox.remove(index);
+                                    currentInbox.setMessages(currentJsonInbox);
+                                    currentInbox.saveInBackground(new SaveCallback() {
+                                        @Override
+                                        public void done(ParseException e) {
+                                            if (e != null) {
+                                                Log.e(TAG, "Trouble deleting friend request", e);
+                                                Toasty.error(context, "Couldn't delete friend request", Toast.LENGTH_SHORT, true).show();
+                                            } else {
+                                                Log.i(TAG, "Removed friend request");
+                                                Toasty.info(context, "Friend request deleted", Toast.LENGTH_SHORT, true).show();
+                                            }
+                                        }
+                                    });
+
+                                    // Remove friend request sent from other users inbox
+                                    Inbox userInbox = (Inbox) user.getParseObject(Inbox.KEY);
+                                    JSONArray userJsonInbox = userInbox.getMessages();
+                                    int indexOfSent = Inbox.indexOfFriendRequest(userJsonInbox, currentUserId);
+                                    if (indexOfSent == -1) {
+                                        return;
+                                    }
+                                    userJsonInbox.remove(indexOfSent);
+                                    userInbox.setMessages(userJsonInbox);
+                                    userInbox.saveInBackground();
+                                }
+                            });
+
+
+                        }
+                    });
+                    messages.remove(position);
+                    notifyItemRemoved(position);
                 });
             }
         }
