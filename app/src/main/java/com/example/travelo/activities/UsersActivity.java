@@ -46,14 +46,15 @@ public class UsersActivity extends AppCompatActivity {
 
         // Get the type, 0 == friends, 1 == followers, 2 == following
         int type = getIntent().getIntExtra("type", 0);
-        queryCurrentUser(type);
+        String userId = getIntent().getStringExtra("userId");
+        queryUser(type, userId);
     }
 
-    public void queryCurrentUser(int parameter) {
+    public void queryUser(int parameter, String userId) {
         ParseQuery<ParseUser> currentUserQuery = ParseQuery.getQuery(ParseUser.class);
         currentUserQuery.include("followers");
         // Get the current user
-        currentUserQuery.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>() {
+        currentUserQuery.getInBackground(userId, new GetCallback<ParseUser>() {
             @Override
             public void done(ParseUser currentUser, ParseException e) {
                 ParseObject followers = currentUser.getParseObject("followers");

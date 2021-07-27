@@ -146,6 +146,11 @@ public class ProfileFragment extends Fragment {
                 binding.btnInvite.setVisibility(View.GONE);
             }
         }
+        // Set the following and followers click listeners
+        binding.tvFollowersCount.setOnClickListener(v -> goToUsers(1));
+        binding.tvFollowers.setOnClickListener(v -> goToUsers(1));
+        binding.tvFollowingCount.setOnClickListener(v -> goToUsers(2));
+        binding.tvFollowing.setOnClickListener(v -> goToUsers(2));
         // Bind posts to recycler view
         posts = new ArrayList<>();
         postAdapter = new PostAdapter(getContext(), posts, (AppCompatActivity)getActivity());
@@ -527,7 +532,7 @@ public class ProfileFragment extends Fragment {
                                 public void done(ParseException e) {
                                     String messageId = messages.getObjectId();
                                     setupInbox(currentUserInbox, inbox, currentUserMessages, userMessages,
-                                            currentUser, user, messages.getObjectId());
+                                            currentUser, user, messageId);
                                     inbox.saveInBackground();
                                     messages.saveInBackground(new SaveCallback() {
                                         @Override
@@ -782,6 +787,7 @@ public class ProfileFragment extends Fragment {
     public void goToUsers(int parameter) {
         Intent intent = new Intent(getContext(), UsersActivity.class);
         intent.putExtra("type", parameter);
+        intent.putExtra("userId", user.getObjectId());
         startActivity(intent);
     }
 
