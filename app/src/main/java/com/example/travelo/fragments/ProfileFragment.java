@@ -398,17 +398,28 @@ public class ProfileFragment extends Fragment {
                             @Override
                             public void done(ParseException e) {
                                 if (e != null) {
-                                    Log.e(TAG, "Couldn't update followers");
+                                    Log.e(TAG, "Couldn't update followers object");
                                 } else {
-                                    Log.i(TAG, "Updated followers");
+                                    Log.i(TAG, "Updated followers object");
                                 }
                             }
                         });
-                        currentFriendsObject.saveInBackground();
+                        currentFriendsObject.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e != null) {
+                                    Log.e(TAG, "Couldn't current update followers object");
+                                } else {
+                                    Log.i(TAG, "Updated current followers object");
+                                    String username = user.getUsername();
+                                    Toasty.info(getContext(), "Unfriended " + username, Toasty.LENGTH_SHORT, true).show();
+                                }
+                            }
+                        });
 
                         // Button is clickable again
                         if (binding != null) {
-                            binding.btnFollow.setClickable(true);
+                            binding.btnFriend.setClickable(true);
                         }
                     }
                 });
