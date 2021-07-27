@@ -296,6 +296,7 @@ public class ProfileFragment extends Fragment {
                 try {
                     friendRequest.put("userId", currentUserId);
                     friendRequest.put("name", currentUsername);
+                    friendRequest.put("id", InboxAdapter.FR_ID);
                 } catch (JSONException jsonException) {
                     Log.e(TAG, "Couldn't edit json data", jsonException);
                 }
@@ -530,6 +531,7 @@ public class ProfileFragment extends Fragment {
             jsonMessage.put("username", username);
             jsonMessage.put("profileImage", profileImage);
             jsonMessage.put("messages", messageId);
+            jsonMessage.put("id", InboxAdapter.DM_ID);
         } catch (JSONException e) {
             Log.e(TAG, "Trouble setting up inbox", e);
         }
@@ -545,10 +547,12 @@ public class ProfileFragment extends Fragment {
             jsonCurrentMessage.put("username", user.getUsername());
             jsonCurrentMessage.put("profileImage", user.getParseFile("profileImage").getUrl());
             jsonCurrentMessage.put("messages", messageId);
+            jsonCurrentMessage.put("id", InboxAdapter.DM_ID);
             jsonUserMessage.put("userId", currentUser.getObjectId());
             jsonUserMessage.put("username", currentUser.getUsername());
             jsonUserMessage.put("profileImage", currentUser.getParseFile("profileImage").getUrl());
             jsonUserMessage.put("messages", messageId);
+            jsonUserMessage.put("id", InboxAdapter.DM_ID);
         } catch (JSONException e) {
             Log.e(TAG, "Trouble setting up inbox", e);
         }
@@ -564,7 +568,7 @@ public class ProfileFragment extends Fragment {
             try {
                 JSONObject message = array.getJSONObject(i);
                 // If the message isn't a dm (a room message), continue
-                if (message.length() != InboxAdapter.DM_LENGTH) {
+                if (message.getInt("id") != InboxAdapter.DM_ID) {
                     continue;
                 }
                 // If the message contains the user id return the index

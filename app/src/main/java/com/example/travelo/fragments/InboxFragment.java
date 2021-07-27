@@ -117,6 +117,11 @@ public class InboxFragment extends Fragment {
                 if (binding != null) {
                     binding.shimmerLayout.setVisibility(View.GONE);
                     binding.rvInbox.setVisibility(View.VISIBLE);
+                    if (parameter == 0 && list.isEmpty()) {
+                        binding.tvEmpty.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.tvEmpty.setVisibility(View.GONE);
+                    }
                 }
             }
         });
@@ -144,7 +149,7 @@ public class InboxFragment extends Fragment {
                 try {
                     JSONObject jsonMessage = array.getJSONObject(i);
                     String text = null;
-                    if (jsonMessage.length() == InboxAdapter.ROOM_LENGTH) {
+                    if (jsonMessage.getInt("id") == InboxAdapter.ROOM_ID) {
                         text = jsonMessage.getString(jsonMessage.keys().next());
                     } else {
                         text = jsonMessage.getString("username");

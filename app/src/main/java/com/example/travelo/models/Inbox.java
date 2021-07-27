@@ -40,7 +40,7 @@ public class Inbox extends ParseObject {
             try {
                 JSONObject message = array.getJSONObject(i);
                 // If the message isn't a dm (a room message), continue
-                if (message.length() != InboxAdapter.ROOM_LENGTH) {
+                if (message.getInt("id") != InboxAdapter.ROOM_ID) {
                     continue;
                 }
                 // If the message contains the user id return the index
@@ -61,7 +61,7 @@ public class Inbox extends ParseObject {
             try {
                 JSONObject message = array.getJSONObject(i);
                 // If the message isn't a dm (a room message), continue
-                if (message.length() != InboxAdapter.FR_LENGTH) {
+                if (message.getInt("id") != InboxAdapter.FR_ID) {
                     continue;
                 }
                 // If the message contains the user id return the index

@@ -42,6 +42,7 @@
             <!--add  several shimmer placeholder layout -->
 
             <include layout="@layout/shimmer_item_inbox"></include>
+
             <include layout="@layout/shimmer_item_inbox"></include>
             <include layout="@layout/shimmer_item_inbox"></include>
             <include layout="@layout/shimmer_item_inbox"></include>
@@ -57,4 +58,17 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
         android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:text="@string/empty_inbox_message"
+        android:textColor="?colorOnSecondary"
+        android:visibility="gone"
+        android:textSize="34sp" />
+
 </RelativeLayout>

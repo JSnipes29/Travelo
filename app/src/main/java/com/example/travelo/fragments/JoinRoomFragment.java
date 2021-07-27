@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.travelo.activities.RoomActivity;
+import com.example.travelo.adapters.InboxAdapter;
 import com.example.travelo.databinding.FragmentJoinRoomBinding;
 import com.example.travelo.models.Inbox;
 import com.example.travelo.models.Room;
@@ -114,6 +115,7 @@ public class JoinRoomFragment extends DialogFragment {
                     JSONObject roomMessage = new JSONObject();
                     try {
                         roomMessage.put(roomObjectId, roomId);
+                        roomMessage.put("id", InboxAdapter.ROOM_ID);
                     } catch (JSONException jsonException) {
                         Log.e(TAG, "Couldn't edit json data", jsonException);
                     }

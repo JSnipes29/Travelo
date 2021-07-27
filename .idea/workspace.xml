@@ -31,8 +31,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="User can unfriend friends">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_friend_request.xml" afterDir="false" />
+    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="Users can send friend request">
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -45,8 +44,13 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/adapters/InboxAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/adapters/InboxAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/adapters/InviteAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/adapters/InviteAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/CreateRoomFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/CreateRoomFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/InboxFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/InboxFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/JoinRoomFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/JoinRoomFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/ProfileFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/ProfileFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/models/Inbox.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/models/Inbox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_inbox.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_inbox.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -54,7 +58,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[SerialNumber@13201FDD40005U]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[VirtualDevicePath@/Users/jsnipes/.android/avd/Pixel_4_XL_API_29.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -115,8 +119,8 @@
     <property name="DEBUGGABLE_DEVICE" value="Pixel_4_XL_API_30 [emulator-5554]" />
     <property name="DEBUGGABLE_PROCESS" value="com.example.travelo" />
     <property name="DEBUGGER_ID" value="Auto" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="SerialNumber@13201FDD40005U" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-07-26T23:33:08.400073Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="VirtualDevicePath@/Users/jsnipes/.android/avd/Pixel_4_XL_API_29.avd" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-07-27T15:29:41.670132Z" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
@@ -207,13 +211,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1625865131177</updated>
-    </task>
-    <task id="LOCAL-00068" summary="Created message button and pass in inbox on profile click">
-      <created>1626824782421</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
-      <option name="project" value="LOCAL" />
-      <updated>1626824782421</updated>
     </task>
     <task id="LOCAL-00069" summary="User can dm user through profile view (only with user they previously messaged)">
       <created>1626885437466</created>
@@ -551,7 +548,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627337106896</updated>
     </task>
-    <option name="localTasksCounter" value="117" />
+    <task id="LOCAL-00117" summary="Users can send friend request">
+      <created>1627342643825</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1627342643825</updated>
+    </task>
+    <option name="localTasksCounter" value="118" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -567,7 +571,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="User can change map type on detailed post" />
     <MESSAGE value="Posts show relative time stamp" />
     <MESSAGE value="Shared content transition animation when user taps on post. Animation to detailed post." />
     <MESSAGE value="Added color radio group to edit map fragment layout" />
@@ -592,7 +595,8 @@
     <MESSAGE value="Minor UI change to yelp locations activity" />
     <MESSAGE value="Added toast messages" />
     <MESSAGE value="User can unfriend friends" />
-    <option name="LAST_COMMIT_MESSAGE" value="User can unfriend friends" />
+    <MESSAGE value="Users can send friend request" />
+    <option name="LAST_COMMIT_MESSAGE" value="Users can send friend request" />
   </component>
   <component name="WindowStateProjectService">
     <state x="780" y="224" key="#com.intellij.ide.util.MemberChooser" timestamp="1627073799783">
@@ -604,12 +608,12 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state x="706" y="264" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626992901858" />
-    <state x="348" y="135" width="1200" height="770" key="AVDManager" timestamp="1627331795297">
+    <state x="348" y="135" width="1200" height="770" key="AVDManager" timestamp="1627398951808">
       <screen x="0" y="25" width="1792" height="1013" />
     </state>
     <state x="-1591" y="108" width="1286" height="805" key="AVDManager/0.25.1792.1010/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1627314233913" />
     <state x="348" y="135" width="1200" height="770" key="AVDManager/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627077738543" />
-    <state x="348" y="135" width="1200" height="770" key="AVDManager/0.25.1792.1013/-1920.-11.1920.1055@0.25.1792.1013" timestamp="1627331795297" />
+    <state x="348" y="135" width="1200" height="770" key="AVDManager/0.25.1792.1013/-1920.-11.1920.1055@0.25.1792.1013" timestamp="1627398951808" />
     <state x="-1591" y="98" width="1286" height="740" key="AVDManager/0.25.1792.1095/-1920.-11.1920.970@-1920.-11.1920.970" timestamp="1627079435808" />
     <state x="307" y="148" width="1200" height="835" key="AVDManager/0.25.1792.1095/-1920.-11.1920.970@0.25.1792.1095" timestamp="1627079006283" />
     <state x="472" y="270" key="AndroidCreateResourceDirectoryDialog" timestamp="1626905936464">
@@ -669,18 +673,19 @@
       <screen x="0" y="25" width="1792" height="1010" />
     </state>
     <state width="1358" height="259" key="GridCell.Tab.1.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627069825301" />
-    <state x="483" y="249" key="Vcs.Push.Dialog.v2" timestamp="1627337230307">
+    <state x="483" y="249" key="Vcs.Push.Dialog.v2" timestamp="1627342651516">
       <screen x="0" y="25" width="1792" height="1013" />
     </state>
     <state x="-1402" y="222" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1627317260152" />
     <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627330697831" />
-    <state x="483" y="249" key="Vcs.Push.Dialog.v2/0.25.1792.1013/-1920.-11.1920.1055@0.25.1792.1013" timestamp="1627337230307" />
+    <state x="483" y="249" key="Vcs.Push.Dialog.v2/0.25.1792.1013/-1920.-11.1920.1055@0.25.1792.1013" timestamp="1627342651516" />
     <state x="483" y="267" key="Vcs.Push.Dialog.v2/0.25.1792.1095/-1920.-11.1920.1055@0.25.1792.1095" timestamp="1626375029876" />
     <state x="-1402" y="203" key="Vcs.Push.Dialog.v2/0.25.1792.1095/-1920.-11.1920.970@-1920.-11.1920.970" timestamp="1627318414375" />
-    <state x="634" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1626816239023">
-      <screen x="0" y="25" width="1792" height="1010" />
+    <state x="634" y="251" width="670" height="679" key="search.everywhere.popup" timestamp="1627400103622">
+      <screen x="0" y="25" width="1792" height="1013" />
     </state>
     <state x="634" y="250" width="670" height="676" key="search.everywhere.popup/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1626816239023" />
+    <state x="634" y="251" width="670" height="679" key="search.everywhere.popup/0.25.1792.1013/-1920.-11.1920.1055@0.25.1792.1013" timestamp="1627400103622" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

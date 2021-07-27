@@ -43,9 +43,9 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
     private static final int MESSAGE_DM = 629;
     private static final int MESSAGE_ROOM = 1229;
     public static final int MESSAGE_FR = 2001;
-    public static final int DM_LENGTH = 4;
-    public static final int FR_LENGTH = 2;
-    public static final int ROOM_LENGTH = 1;
+    public static final int DM_ID = 4;
+    public static final int FR_ID = 2;
+    public static final int ROOM_ID = 1;
 
     public InboxAdapter(List<JSONObject> list, Context c) {
         messages = list;
@@ -56,11 +56,11 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
     public int getItemViewType(int position) {
         int type = typeOfMessage(position);
         switch (type) {
-            case DM_LENGTH:
+            case DM_ID:
                 return MESSAGE_DM;
-            case ROOM_LENGTH:
+            case ROOM_ID:
                 return MESSAGE_ROOM;
-            case FR_LENGTH:
+            case FR_ID:
                 return MESSAGE_FR;
             default:
                 return 0;
@@ -102,7 +102,13 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
 
     private int typeOfMessage(int position) {
         JSONObject message = messages.get(position);
-        return message.length();
+        int id = -1;
+        try {
+            id = message.getInt("id");
+        } catch (JSONException e) {
+            Log.e(TAG, "Error reading inbox message id", e);
+        }
+        return id;
 
     }
 
@@ -130,7 +136,15 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
 
         @Override
         public void bindMessage(JSONObject message) {
-            String roomObjectId = message.keys().next();
+            Iterator<String> iter = message.keys();
+            String key = iter.next();
+            String roomObjectId;
+            if (key.equals("id")) {
+                roomObjectId = iter.next();
+            } else {
+                roomObjectId = key;
+            }
+            Log.i(TAG, "Id: " + roomObjectId);
             ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
             query.getInBackground(roomObjectId, new GetCallback<Room>() {
                 @Override
