@@ -20,12 +20,15 @@ import com.bumptech.glide.Glide;
 import com.example.travelo.activities.MessagesActivity;
 import com.example.travelo.R;
 import com.example.travelo.activities.RoomActivity;
+import com.example.travelo.models.Inbox;
 import com.example.travelo.models.Messages;
 import com.example.travelo.models.Room;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +37,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewHolder> {
     private List<JSONObject> messages;
@@ -99,7 +104,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         JSONObject obj = messages.get(position);
-        holder.bindMessage(obj);
+        holder.bindMessage(obj, position);
     }
 
     @Override
@@ -124,7 +129,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
             super(itemView);
         }
 
-        abstract void bindMessage(JSONObject message);
+        abstract void bindMessage(JSONObject message, int position);
     }
 
     public class RoomMessageViewHolder extends MessageViewHolder {
@@ -142,7 +147,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
         }
 
         @Override
-        public void bindMessage(JSONObject message) {
+        public void bindMessage(JSONObject message, int position) {
             Iterator<String> iter = message.keys();
             String key = iter.next();
             String roomObjectId;
@@ -232,7 +237,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
             }
 
             @Override
-            public void bindMessage(JSONObject dm) {
+            public void bindMessage(JSONObject dm, int position) {
                 String profileUrl = null;
                 String name = null;
                 String messagesId = null;
@@ -286,26 +291,31 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
         public class FRViewHolder extends MessageViewHolder {
             TextView tvName;
             ImageView ivProfileImage;
+            Button btnAccept;
+            Button btnReject;
             public FRViewHolder(@NonNull View itemView) {
                 super(itemView);
                 tvName = itemView.findViewById(R.id.tvName);
                 ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
+                btnAccept = itemView.findViewById(R.id.btnAccept);
+                btnReject = itemView.findViewById(R.id.btnReject);
             }
 
-            public void bindMessage(JSONObject message) {
+            public void bindMessage(JSONObject message, int position) {
                 String name = "";
-                String userId = null;
+                String tempUserId = null;
                 try {
                     name = message.getString("name");
-                    userId = message.getString("userId");
+                    tempUserId = message.getString("userId");
                 } catch (JSONException e) {
                     Log.e(TAG, "Error with json data", e);
                 }
                 tvName.setText(name);
                 ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
-                if (userId == null) {
+                if (tempUserId == null) {
                     return;
                 }
+                final String userId = tempUserId;
                 userQuery.getInBackground(userId, new GetCallback<ParseUser>() {
                     @Override
                     public void done(ParseUser user, ParseException e) {
@@ -318,6 +328,81 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
                                 .circleCrop() // create an effect of a round profile picture
                                 .into(ivProfileImage);
                     }
+                });
+                // Make friends when accept is clicked
+                btnAccept.setOnClickListener(v -> {
+                    ParseQuery<ParseUser> currentUserQuery = ParseQuery.getQuery(ParseUser.class);
+                    currentUserQuery.include("followers");
+                    currentUserQuery.include(Inbox.KEY);
+                    currentUserQuery.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>() {
+                        @Override
+                        public void done(ParseUser currentUser, ParseException e) {
+                            if (e != null) {
+                                Log.e(TAG, "Couldn't get current user data", e);
+                            }
+                            ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
+                            userQuery.include("followers");
+                            userQuery.include(Inbox.KEY);
+                            userQuery.getInBackground(userId, new GetCallback<ParseUser>() {
+                                @Override
+                                public void done(ParseUser user, ParseException e1) {
+                                    if (e1 != null) {
+                                        Log.e(TAG, "Couldn't get current user data", e1);
+                                    }
+                                    String currentUserId = currentUser.getObjectId();
+                                    Inbox currentInbox = (Inbox) currentUser.getParseObject(Inbox.KEY);
+                                    JSONArray currentJsonInbox = currentInbox.getMessages();
+                                    // Get the index of the friend request
+                                    int index = Inbox.indexOfFriendRequest(currentJsonInbox, userId);
+                                    // If the friend request isn't there, display message and return
+                                    if (index == -1) {
+                                        Log.i(TAG, "Friend request removed");
+                                        Toasty.error(context, "Friend request has been removed", Toast.LENGTH_SHORT, true).show();
+                                        return;
+                                    }
+                                    // Get and set friends for both users
+                                    ParseObject currentFriendsObj = currentUser.getParseObject("followers");
+                                    ParseObject friendsObj = user.getParseObject("followers");
+                                    JSONArray currentFriends = currentFriendsObj.getJSONArray("friends");
+                                    JSONArray friends = friendsObj.getJSONArray("friends");
+                                    currentFriends.put(userId);
+                                    friends.put(currentUserId);
+                                    currentFriendsObj.put("friends", currentFriends);
+                                    friendsObj.put("friends", friends);
+                                    currentFriendsObj.saveInBackground(new SaveCallback() {
+                                        @Override
+                                        public void done(ParseException e) {
+                                            if (e != null) {
+                                                Toasty.error(context, "Error saving friends", Toast.LENGTH_SHORT, true).show();
+                                                return;
+                                            }
+                                            Toasty.success(context, "Accepted friend request", Toast.LENGTH_SHORT, true).show();
+                                        }
+                                    });
+                                    friendsObj.saveInBackground();
+                                    // Remove friend request from inbox
+                                    currentJsonInbox.remove(index);
+                                    currentInbox.setMessages(currentJsonInbox);
+                                    currentInbox.saveInBackground();
+
+                                    // Remove friend request sent from other users inbox
+                                    Inbox userInbox = (Inbox) user.getParseObject(Inbox.KEY);
+                                    JSONArray userJsonInbox = userInbox.getMessages();
+                                    int indexOfSent = Inbox.indexOfFriendRequestSent(userJsonInbox, currentUserId);
+                                    if (indexOfSent == -1) {
+                                        return;
+                                    }
+                                    userJsonInbox.remove(indexOfSent);
+                                    userInbox.setMessages(userJsonInbox);
+                                    userInbox.saveInBackground();
+                                }
+                            });
+
+
+                        }
+                    });
+                    messages.remove(position);
+                    notifyItemRemoved(position);
                 });
             }
         }
@@ -333,7 +418,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
             }
 
             @Override
-            void bindMessage(JSONObject message) {
+            void bindMessage(JSONObject message, int position) {
                 String name = "";
                 String userId = null;
                 try {

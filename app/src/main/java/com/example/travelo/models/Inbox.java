@@ -76,4 +76,25 @@ public class Inbox extends ParseObject {
         return -1;
     }
 
+    // Find index of friend request sent message
+    public static int indexOfFriendRequestSent(JSONArray array, String userId) {
+        for (int i = 0; i < array.length(); i++) {
+            try {
+                JSONObject message = array.getJSONObject(i);
+                // If the message isn't a dm (a room message), continue
+                if (message.getInt("id") != InboxAdapter.FR_SENT_ID) {
+                    continue;
+                }
+                // If the message contains the user id return the index
+                String jsonUserId = message.getString("userId");
+                if (jsonUserId.equals(userId)) {
+                    return i;
+                }
+            } catch (JSONException e) {
+                Log.e("Inbox", "Error reading json data", e);
+            }
+        }
+        return -1;
+    }
+
 }
