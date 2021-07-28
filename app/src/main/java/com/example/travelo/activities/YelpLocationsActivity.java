@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.travelo.BuildConfig;
+import com.example.travelo.R;
 import com.example.travelo.YelpService;
 import com.example.travelo.adapters.YelpAdapter;
 import com.example.travelo.databinding.ActivityYelpLocationsBinding;
@@ -31,7 +33,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class YelpLocationsActivity extends AppCompatActivity {
 
     public static final String BASE_URL = "https://api.yelp.com/v3/";
-    public static final String API_KEY = "qSxMjBAZFTXrq4tPrZTAr1ZqAs9hJ9zOnjcUCV7HLMxmb-VsgE9rpi6zdEI2uQZzpgMFAKDbX-8Qg7fDCZurv8D6XxWA7dGhMI0gFNm2M0cM6eGAWpYpBxgwgALuYHYx";
     public static final String TAG = "YelpLocationsActivity";
 
     ActivityYelpLocationsBinding binding;
@@ -46,6 +47,7 @@ public class YelpLocationsActivity extends AppCompatActivity {
         binding = ActivityYelpLocationsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        final String API_KEY = getString(R.string.yelp_api_key);
         Object obj = Parcels.unwrap(getIntent().getParcelableExtra("markerData"));
         if (obj != null) {
             Log.i(TAG, "Coming from long click");
