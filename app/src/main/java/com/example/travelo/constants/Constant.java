@@ -129,19 +129,36 @@ public class Constant {
                     btnLike.setClickable(true);
                     return;
                 }
-                JSONArray likesArray = post.getLikesArray();
-                try {
-                    if (parameter == 0) {
-                        jsonStringArrayRemove(likesArray, userId);
-                    } else if (parameter == 1) {
-                        likesArray.put(userId);
+                ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
+                userQuery.getInBackground(userId, new GetCallback<ParseUser>() {
+                    @Override
+                    public void done(ParseUser currentUser, ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Error getting data from parse", e);
+                            btnLike.setClickable(true);
+                            return;
+                        }
+                        JSONArray likesArray = post.getLikesArray();
+                        JSONArray liked = currentUser.getJSONArray("liked");
+                        try {
+                            if (parameter == 0) {
+                                jsonStringArrayRemove(likesArray, userId);
+                                jsonStringArrayRemove(liked, postId);
+                            } else if (parameter == 1) {
+                                likesArray.put(userId);
+                                liked.put(postId);
+                            }
+                        } catch (JSONException jsonException) {
+                            jsonException.printStackTrace();
+                        }
+                        post.setLikesArray(likesArray);
+                        currentUser.put("liked", liked);
+                        post.saveInBackground();
+                        currentUser.saveInBackground();
+                        btnLike.setClickable(true);
                     }
-                } catch (JSONException jsonException) {
-                    jsonException.printStackTrace();
-                }
-                post.setLikesArray(likesArray);
-                post.saveInBackground();
-                btnLike.setClickable(true);
+                });
+
             }
         });
     }

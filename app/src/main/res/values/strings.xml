@@ -50,5 +50,6 @@
     <string name="friend_request_sent">Friend Request Sent</string>
     <string name="delete">Delete</string>
     <string name="friends">Friends</string>
+    <string name="liked">Liked</string>
 
 </resources>

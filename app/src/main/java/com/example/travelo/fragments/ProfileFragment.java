@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.travelo.activities.PostsActivity;
 import com.example.travelo.activities.UsersActivity;
 import com.example.travelo.listeners.EndlessRecyclerViewScrollListener;
 import com.example.travelo.activities.MessagesActivity;
@@ -779,6 +780,8 @@ public class ProfileFragment extends Fragment {
             case R.id.action_following:
                 goToUsers(2);
                 break;
+            case R.id.action_liked:
+                goToPosts(0);
             default:
                 break;
         }
@@ -786,6 +789,13 @@ public class ProfileFragment extends Fragment {
 
     public void goToUsers(int parameter) {
         Intent intent = new Intent(getContext(), UsersActivity.class);
+        intent.putExtra("type", parameter);
+        intent.putExtra("userId", user.getObjectId());
+        startActivity(intent);
+    }
+
+    public void goToPosts(int parameter) {
+        Intent intent = new Intent(getContext(), PostsActivity.class);
         intent.putExtra("type", parameter);
         intent.putExtra("userId", user.getObjectId());
         startActivity(intent);

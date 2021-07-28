@@ -13,4 +13,9 @@
     <item
         android:id="@+id/action_following"
         android:title="@string/following" />
+    <item
+        android:id="@+id/action_liked"
+        android:icon="@drawable/ufi_heart_icon"
+        android:title="@string/liked"
+        app:showAsAction="always" />
 </menu>

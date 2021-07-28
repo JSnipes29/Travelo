@@ -31,10 +31,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ufi_heart.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ufi_heart_active.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ufi_heart_icon.xml" afterDir="false" />
+    <list default="true" id="a49c008a-52d3-4d30-bcd7-2eb0d9095957" name="Default Changelist" comment="User can like post in home feed">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/activities/PostsActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_posts.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -46,10 +45,11 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/adapters/PostAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/adapters/PostAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/constants/Constant.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/constants/Constant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/models/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/models/Post.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_post.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_post.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/ProfileFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/travelo/fragments/ProfileFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/drawer_view_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/drawer_view_profile.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +122,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
-    <property name="memory.settings.postsync.last.time.stamp" value="1627076092961" />
+    <property name="memory.settings.postsync.last.time.stamp" value="1627489982870" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
   </component>
   <component name="RecentsManager">
@@ -213,13 +213,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1625865131177</updated>
-    </task>
-    <task id="LOCAL-00082" summary="Cleaned up code and added comments in InboxFragment">
-      <created>1626970240049</created>
-      <option name="number" value="00082" />
-      <option name="presentableId" value="LOCAL-00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1626970240049</updated>
     </task>
     <task id="LOCAL-00083" summary="Organized code into more folders">
       <created>1626970903358</created>
@@ -557,7 +550,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627425966661</updated>
     </task>
-    <option name="localTasksCounter" value="131" />
+    <task id="LOCAL-00131" summary="User can like post in home feed">
+      <created>1627489087752</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1627489087752</updated>
+    </task>
+    <option name="localTasksCounter" value="132" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -573,7 +573,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed minor UI bug in edit map fragment and fixed bug with app crashing on slow connection" />
     <MESSAGE value="Fixed bug where user would tap take a photo and not take a photo, resulting in the post not posting" />
     <MESSAGE value="Fixed bug with users not readying up" />
     <MESSAGE value="Fixed bug where the map wouldn't update with all users markers in room" />
@@ -598,7 +597,8 @@
     <MESSAGE value="Users can see their friends in the profile fragment" />
     <MESSAGE value="Users can view their followers and following by clicking on app bar in profile fragment" />
     <MESSAGE value="Users can see the following and followers of other users while viewing their profile" />
-    <option name="LAST_COMMIT_MESSAGE" value="Users can see the following and followers of other users while viewing their profile" />
+    <MESSAGE value="User can like post in home feed" />
+    <option name="LAST_COMMIT_MESSAGE" value="User can like post in home feed" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-1084" y="197" key="#com.intellij.ide.util.MemberChooser" timestamp="1627415065559">
@@ -686,12 +686,12 @@
     </state>
     <state width="1358" height="259" key="GridCell.Tab.1.right/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627069825301" />
     <state width="1358" height="259" key="GridCell.Tab.1.right/0.25.1792.1013/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1627418855133" />
-    <state x="-1402" y="222" key="Vcs.Push.Dialog.v2" timestamp="1627425973673">
+    <state x="-1402" y="222" key="Vcs.Push.Dialog.v2" timestamp="1627489094703">
       <screen x="-1920" y="-11" width="1920" height="1055" />
     </state>
     <state x="-1402" y="222" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1627317260152" />
     <state x="483" y="248" key="Vcs.Push.Dialog.v2/0.25.1792.1010/-1920.-11.1920.1055@0.25.1792.1010" timestamp="1627330697831" />
-    <state x="-1402" y="222" key="Vcs.Push.Dialog.v2/0.25.1792.1013/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1627425973673" />
+    <state x="-1402" y="222" key="Vcs.Push.Dialog.v2/0.25.1792.1013/-1920.-11.1920.1055@-1920.-11.1920.1055" timestamp="1627489094703" />
     <state x="483" y="249" key="Vcs.Push.Dialog.v2/0.25.1792.1013/-1920.-11.1920.1055@0.25.1792.1013" timestamp="1627406885701" />
     <state x="483" y="267" key="Vcs.Push.Dialog.v2/0.25.1792.1095/-1920.-11.1920.1055@0.25.1792.1095" timestamp="1626375029876" />
     <state x="-1402" y="203" key="Vcs.Push.Dialog.v2/0.25.1792.1095/-1920.-11.1920.970@-1920.-11.1920.970" timestamp="1627318414375" />
