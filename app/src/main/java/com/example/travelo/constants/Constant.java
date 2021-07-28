@@ -94,10 +94,10 @@ public class Constant {
                 JSONArray likesArray = post.getLikesArray();
                 try {
                     if (jsonStringArrayContains(likesArray, userId)) {
-                        btnLike.setPressed(true);
+                        btnLike.setSelected(true);
                         btnLike.setOnClickListener(v -> unlike(btnLike, postId, userId));
                     } else {
-                        btnLike.setPressed(false);
+                        btnLike.setSelected(false);
                         btnLike.setOnClickListener(v -> like(btnLike, postId, userId));
                     }
                 } catch (JSONException jsonException) {
