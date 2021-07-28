@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.example.travelo.activities.DetailsPostActivity;
 import com.example.travelo.activities.ProfileActivity;
 import com.example.travelo.R;
+import com.example.travelo.constants.Constant;
 import com.example.travelo.models.Post;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -66,6 +68,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         TextView tvTimestamp;
         RelativeLayout rlPost;
         final ImageView ivImage;
+        Button btnLike;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,6 +78,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             tvTimestamp = itemView.findViewById(R.id.tvTimestamp);
             rlPost = itemView.findViewById(R.id.rlPost);
             ivImage = itemView.findViewById(R.id.ivImage);
+            btnLike = itemView.findViewById(R.id.btnLike);
         }
 
         public void bind(Post post) {
@@ -100,6 +104,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                         .load(image.getUrl())
                         .into(ivImage);
             }
+            // Setup like button
+            //btnLike.setOnClickListener(v -> btnLike.setPressed(true));
+            Constant.setupLikeButton(btnLike, post.getObjectId());
+
             // On click go to detail post
             rlPost.setOnClickListener(v -> {
                 Intent intent = new Intent(context, DetailsPostActivity.class);

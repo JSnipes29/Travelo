@@ -27,6 +27,7 @@ public class Post extends ParseObject {
     public static final String DEFAULT_DESCRIPTION = "Map";
     public static final String KEY_PHOTO = "photo";
     public static final String KEY_USER_ARRAY = "userArray";
+    public static final String KEY_LIKES_ARRAY = "likesArray";
 
 
     public Post() {}
@@ -148,6 +149,14 @@ public class Post extends ParseObject {
 
     public void setUserArray(JSONArray array) {
         put(KEY_USER_ARRAY, array);
+    }
+
+    public void setLikesArray(JSONArray array) {
+        put(KEY_LIKES_ARRAY, array);
+    }
+
+    public JSONArray getLikesArray() {
+        return getJSONArray(KEY_LIKES_ARRAY);
     }
 
 
