@@ -277,4 +277,9 @@ public class Constant {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         return itemTouchHelper;
     }
+
+    public static int dpsToPixels(Context context, int dps) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dps * scale + 0.5f);
+    }
 }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.travelo.activities.ProfileActivity;
 import com.example.travelo.R;
+import com.example.travelo.constants.Constant;
 
 import java.util.List;
 
@@ -20,10 +21,18 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
     List<String[]> users;
     Context context;
+    int type;
 
     public UsersAdapter(Context context, List<String[]> users) {
         this.context = context;
         this.users = users;
+        this.type = 0;
+    }
+
+    public UsersAdapter(Context context, List<String[]> users, int type) {
+        this.context = context;
+        this.users = users;
+        this.type = type;
     }
 
     @NonNull
@@ -56,6 +65,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         }
 
         public void bind(String[] user) {
+            if (type == 1) {
+                int imageSize = Constant.dpsToPixels(context, 45);
+                ivProfileImage.getLayoutParams().height = imageSize;
+                ivProfileImage.getLayoutParams().width = imageSize;
+                tvName.setVisibility(View.GONE);
+            }
             tvName.setText(user[0]);
             String url = user[1];
             if (url != null) {

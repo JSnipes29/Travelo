@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.travelo.R;
+import com.example.travelo.adapters.UsersAdapter;
 import com.example.travelo.constants.Constant;
 import com.example.travelo.databinding.ActivityRoomBinding;
 import com.example.travelo.fragments.EditMapFragment;
@@ -35,6 +38,10 @@ import org.json.JSONObject;
 import org.parceler.Parcel;
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import es.dmoral.toasty.Toasty;
 
 public class RoomActivity extends AppCompatActivity {
@@ -43,12 +50,15 @@ public class RoomActivity extends AppCompatActivity {
     ActivityRoomBinding binding;
     String id;
     String ownerId;
+    UsersAdapter userAdapter;
+    List<String[]> usersList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityRoomBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
+        Context context = this;
         setContentView(view);
         Intent intent = getIntent();
         id = intent.getStringExtra("room");
@@ -93,6 +103,27 @@ public class RoomActivity extends AppCompatActivity {
                             }
                         }
                     });
+                    // Set up users in bar
+                    usersList = new ArrayList<>();
+                    JSONObject jsonUsers = room.getProfileImages();
+                    Iterator<String> iter = jsonUsers.keys();
+
+                    while(iter.hasNext()) {
+                        String key = iter.next();
+                        try {
+                            String imageUrl = jsonUsers.getString(key);
+                            String[] userArray = {key, imageUrl};
+                            usersList.add(userArray);
+                        } catch (JSONException jsonException) {
+                            Log.e(TAG, "Error getting users", jsonException);
+                        }
+                    }
+                    // Bind the users who were in the room
+                    userAdapter = new UsersAdapter(context, usersList, 1);
+                    binding.rvUsers.setAdapter(userAdapter);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+                    binding.rvUsers.setLayoutManager(linearLayoutManager);
+
                     setBottomNavigation(room);
                 } else {
                     Log.e(TAG, "Error joining room", e);
