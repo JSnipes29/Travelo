@@ -43,13 +43,6 @@ public class WaitingPostFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static WaitingPostFragment newInstance() {
-        WaitingPostFragment fragment = new WaitingPostFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +97,7 @@ public class WaitingPostFragment extends Fragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
         return view;
+
     }
 
     public void refresh() {

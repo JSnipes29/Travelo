@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -93,7 +94,8 @@ public class KickRoomFragment extends DialogFragment {
                     }
                 }
                 adapter.notifyDataSetChanged();
-                Constant.setupKickSwipe(context, users, adapter, binding.rvUsers,roomId);
+                ItemTouchHelper itemTouchHelper = Constant.setupKickSwipe(context, users, adapter, roomId);
+                itemTouchHelper.attachToRecyclerView(binding.rvUsers);
             }
         });
     }

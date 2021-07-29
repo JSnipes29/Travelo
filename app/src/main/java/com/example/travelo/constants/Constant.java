@@ -218,7 +218,7 @@ public class Constant {
         });
     }
 
-    public static void setupKickSwipe(Context context, List<String> users, NameAdapter adapter, RecyclerView rv, String roomId) {
+    public static ItemTouchHelper setupKickSwipe(Context context, List<String> users, NameAdapter adapter, String roomId) {
         // Configure swipe to remove
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP) {
 
@@ -236,12 +236,12 @@ public class Constant {
                 userQuery.whereEqualTo("username", name);
                 userQuery.findInBackground(new FindCallback<ParseUser>() {
                     @Override
-                    public void done(List<ParseUser> users, ParseException e) {
-                        if (e != null || users.isEmpty()) {
+                    public void done(List<ParseUser> userList, ParseException e) {
+                        if (e != null || userList.isEmpty()) {
                             Toasty.error(context, "Error getting user data", Toast.LENGTH_SHORT, true).show();
                             return;
                         }
-                        ParseUser user = users.get(0);
+                        ParseUser user = userList.get(0);
                         String username = user.getUsername();
                         String userId = user.getObjectId();
                         kick(context, userId, username, roomId);
@@ -256,6 +256,6 @@ public class Constant {
             }
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(rv);
+        return itemTouchHelper;
     }
 }
