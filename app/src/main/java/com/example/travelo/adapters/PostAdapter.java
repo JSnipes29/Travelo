@@ -2,6 +2,8 @@ package com.example.travelo.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.travelo.activities.DetailsPostActivity;
@@ -26,6 +29,7 @@ import com.example.travelo.models.Post;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
+import org.json.JSONException;
 import org.parceler.Parcels;
 
 import java.util.List;
@@ -69,6 +73,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         RelativeLayout rlPost;
         final ImageView ivImage;
         Button btnLike;
+        ImageView ivLikeAnimation;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,6 +84,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             rlPost = itemView.findViewById(R.id.rlPost);
             ivImage = itemView.findViewById(R.id.ivImage);
             btnLike = itemView.findViewById(R.id.btnLike);
+            ivLikeAnimation = itemView.findViewById(R.id.ivLikeAnimation);
         }
 
         public void bind(Post post) {
@@ -105,23 +111,55 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                         .into(ivImage);
             }
             // Setup like button
-            //btnLike.setOnClickListener(v -> btnLike.setPressed(true));
             Constant.setupLikeButton(btnLike, post.getObjectId());
 
-            // On click go to detail post
-            rlPost.setOnClickListener(v -> {
-                Intent intent = new Intent(context, DetailsPostActivity.class);
-                intent.putExtra("post", Parcels.wrap(post));
-                // Shared content transition
-                Pair<View, String> profileImage = Pair.create((View)ivProfileImage, "profileImage");
-                Pair<View, String> name = Pair.create((View)tvName, "name");
-                Pair<View, String> description = Pair.create((View)tvDescription, "description");
-                Pair<View, String> imagePair = Pair.create((View)ivImage, "image");
-                ActivityOptionsCompat options =
-                        ActivityOptionsCompat.makeSceneTransitionAnimation(activity,
-                                profileImage, name, description, imagePair);
-                context.startActivity(intent, options.toBundle());
+            ivLikeAnimation.setVisibility(View.GONE);
+
+            // Setup long click to like
+            ivImage.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Log.i("PostAdapter","Long clicked");
+
+                    String userId = ParseUser.getCurrentUser().getObjectId();
+                    try {
+                        if (!Constant.jsonStringArrayContains(post.getLikesArray(), userId)) {
+                          Constant.like(btnLike, post.getObjectId(), userId);
+                            Drawable drawable = ivLikeAnimation.getDrawable();
+                            ivLikeAnimation.setVisibility(View.VISIBLE);
+                            if (drawable instanceof AnimatedVectorDrawableCompat) {
+                                AnimatedVectorDrawableCompat avd = (AnimatedVectorDrawableCompat) drawable;
+                                avd.start();
+                            } else if (drawable instanceof AnimatedVectorDrawable) {
+                                AnimatedVectorDrawable avd = (AnimatedVectorDrawable) drawable;
+                                avd.start();
+                            }
+                         }
+                    } catch (JSONException jsonException) {
+                        jsonException.printStackTrace();
+                    }
+                    ivImage.setOnLongClickListener(view -> {return true;});
+                    return true;
+                }
             });
+            ivImage.setOnClickListener(v -> goToDetailedPost(post));
+
+            // On click go to detail post
+            rlPost.setOnClickListener(v -> goToDetailedPost(post));
+        }
+
+        public void goToDetailedPost(Post post) {
+            Intent intent = new Intent(context, DetailsPostActivity.class);
+            intent.putExtra("post", Parcels.wrap(post));
+            // Shared content transition
+            Pair<View, String> profileImage = Pair.create((View)ivProfileImage, "profileImage");
+            Pair<View, String> name = Pair.create((View)tvName, "name");
+            Pair<View, String> description = Pair.create((View)tvDescription, "description");
+            Pair<View, String> imagePair = Pair.create((View)ivImage, "image");
+            ActivityOptionsCompat options =
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(activity,
+                            profileImage, name, description, imagePair);
+            context.startActivity(intent, options.toBundle());
         }
 
     }
