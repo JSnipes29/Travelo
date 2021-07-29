@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.example.travelo.activities.MessagesActivity;
 import com.example.travelo.R;
 import com.example.travelo.activities.RoomActivity;
+import com.example.travelo.constants.Constant;
 import com.example.travelo.models.Inbox;
 import com.example.travelo.models.Messages;
 import com.example.travelo.models.Room;
@@ -205,15 +206,24 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
                     }
 
                     if (room == null) {
-                        Toast.makeText(context, "This room is no longer available", Toast.LENGTH_SHORT).show();
+                        Toasty.error(context, "This room is no longer available", Toast.LENGTH_SHORT, true).show();
                         return;
                     }
 
                     if (!room.getJoinable()) {
                         if (!room.getOwner().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
-                            Toast.makeText(context, "This is room is no longer joinable", Toast.LENGTH_SHORT).show();
+                            Toasty.error(context, "This is room is no longer joinable", Toast.LENGTH_SHORT, true).show();
                             return;
                         }
+                    }
+                    JSONArray kicked = room.getKicked();
+                    try {
+                        if (Constant.jsonStringArrayContains(kicked, ParseUser.getCurrentUser().getObjectId())) {
+                            Toasty.error(context, "You have been kicked from this room", Toast.LENGTH_SHORT, true).show();
+                            return;
+                        }
+                    } catch (JSONException jsonException) {
+                        jsonException.printStackTrace();
                     }
                     Intent intent = new Intent(context, RoomActivity.class);
                     intent.putExtra("room", roomObjectId);

@@ -1,5 +1,6 @@
 package com.example.travelo.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.travelo.R;
 import com.example.travelo.adapters.ChatAdapter;
+import com.example.travelo.constants.Constant;
 import com.example.travelo.databinding.FragmentRoomMessagesBinding;
 import com.example.travelo.models.Messages;
 import com.example.travelo.models.Room;
@@ -158,12 +160,20 @@ public class RoomMessagesFragment extends Fragment {
 
     void refreshMessages(int type) {
         if (type == 0) {
+            Context context = getContext();
             // Specify which class to query
             ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
             // Specify the object id
             query.getInBackground(room.getObjectId(), new GetCallback<Room>() {
                 public void done(Room r, ParseException e) {
                     room = r;
+                    try {
+                        if (Constant.kicked(context, room, ParseUser.getCurrentUser().getObjectId())) {
+                            return;
+                        }
+                    } catch (JSONException jsonException) {
+                        jsonException.printStackTrace();
+                    }
                     if (e == null) {
                         while (messages.length() > 0) {
                             messages.remove(0);

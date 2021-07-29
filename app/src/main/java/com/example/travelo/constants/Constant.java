@@ -1,24 +1,33 @@
 package com.example.travelo.constants;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.travelo.activities.MainActivity;
 import com.example.travelo.adapters.InboxAdapter;
+import com.example.travelo.adapters.NameAdapter;
 import com.example.travelo.models.Inbox;
 import com.example.travelo.models.Post;
 import com.example.travelo.models.Room;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
@@ -171,5 +180,82 @@ public class Constant {
                 return;
             }
         }
+    }
+
+    public static boolean kicked(Context context, Room room, String userId) throws JSONException{
+        JSONArray kicked = room.getKicked();
+        if (jsonStringArrayContains(kicked, userId)) {
+            Toasty.error(context, "You have been kicked", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, MainActivity.class);
+            context.startActivity(intent);
+            return true;
+        }
+        return false;
+    }
+
+    public static void kick(Context context, String userId, String username, String roomId) {
+        ParseQuery<Room> roomQuery = ParseQuery.getQuery(Room.class);
+        roomQuery.getInBackground(roomId, new GetCallback<Room>() {
+            @Override
+            public void done(Room room, ParseException e) {
+                JSONArray kicked = room.getKicked();
+                kicked.put(userId);
+                room.setKicked(kicked);
+                JSONObject users = room.getUsers();
+                users.remove(username);
+                room.setUsers(users);
+                room.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Toasty.error(context, "Error getting user data", Toast.LENGTH_SHORT, true).show();
+                            return;
+                        }
+                        Toasty.success(context, "Removed user from room", Toast.LENGTH_SHORT, true).show();
+                    }
+                });
+            }
+        });
+    }
+
+    public static void setupKickSwipe(Context context, List<String> users, NameAdapter adapter, RecyclerView rv, String roomId) {
+        // Configure swipe to remove
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP) {
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                Log.i(TAG, "On move");
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                int position = viewHolder.getAdapterPosition();
+                String name = users.get(position);
+                ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
+                userQuery.whereEqualTo("username", name);
+                userQuery.findInBackground(new FindCallback<ParseUser>() {
+                    @Override
+                    public void done(List<ParseUser> users, ParseException e) {
+                        if (e != null || users.isEmpty()) {
+                            Toasty.error(context, "Error getting user data", Toast.LENGTH_SHORT, true).show();
+                            return;
+                        }
+                        ParseUser user = users.get(0);
+                        String username = user.getUsername();
+                        String userId = user.getObjectId();
+                        kick(context, userId, username, roomId);
+                        users.remove(position);
+                        adapter.notifyItemRemoved(position);
+                    }
+                });
+
+
+
+
+            }
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(rv);
     }
 }

@@ -15,9 +15,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.travelo.R;
+import com.example.travelo.constants.Constant;
 import com.example.travelo.databinding.ActivityRoomBinding;
 import com.example.travelo.fragments.EditMapFragment;
 import com.example.travelo.fragments.InviteFriendsFragment;
+import com.example.travelo.fragments.KickRoomFragment;
 import com.example.travelo.fragments.RoomMessagesFragment;
 import com.example.travelo.models.Room;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -152,6 +154,9 @@ public class RoomActivity extends AppCompatActivity {
                 Log.i(TAG, "Clicked on invite");
                 inviteFriends();
                 break;
+            case R.id.action_kick:
+                Log.i(TAG, "Clicked on kick");
+                kick();
             default:
                 break;
         }
@@ -169,5 +174,19 @@ public class RoomActivity extends AppCompatActivity {
         bundle.putString("roomObjectId", id);
         inviteFriendsFragment.setArguments(bundle);
         inviteFriendsFragment.show(fragmentManager, "InviteFriends");
+    }
+
+    // Launch invite friends fragment
+    public void kick() {
+        if (!ParseUser.getCurrentUser().getObjectId().equals(ownerId)) {
+            Toasty.error(this, "You can't kick people", Toast.LENGTH_SHORT, true).show();
+            return;
+        }
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        KickRoomFragment kickRoomFragment = new KickRoomFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("roomObjectId", id);
+        kickRoomFragment.setArguments(bundle);
+        kickRoomFragment.show(fragmentManager, "KickRoom");
     }
 }

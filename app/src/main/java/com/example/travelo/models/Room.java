@@ -24,6 +24,7 @@ public class Room extends ParseObject {
     public static final String KEY_MAP = "map";
     public static final String KEY_PROFILE_IMAGES = "profileImages";
     public static final String KEY_JOINABLE = "joinable";
+    public static final String KEY_KICKED = "kicked";
 
     public ParseUser getOwner() {
         return getParseUser(KEY_OWNER);
@@ -73,5 +74,13 @@ public class Room extends ParseObject {
 
     public boolean getJoinable() {
         return getBoolean(KEY_JOINABLE);
+    }
+
+    public void setKicked(JSONArray kicked) {
+        put(KEY_KICKED, kicked);
+    }
+
+    public JSONArray getKicked() {
+        return getJSONArray(KEY_KICKED);
     }
 }

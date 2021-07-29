@@ -5,5 +5,9 @@
             android:id="@+id/nav_invite"
             android:icon="@drawable/ic_baseline_person_add_24"
             android:title="@string/invite" />
+        <item
+            android:id="@+id/action_kick"
+            android:icon="@drawable/ic_baseline_person_remove_24"
+            android:title="@string/kick" />
 
 </menu>

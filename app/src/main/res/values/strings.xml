@@ -51,5 +51,6 @@
     <string name="delete">Delete</string>
     <string name="friends">Friends</string>
     <string name="liked">Liked</string>
+    <string name="kick">Kick</string>
 
 </resources>

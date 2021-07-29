@@ -1,5 +1,6 @@
 package com.example.travelo.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -23,6 +24,7 @@ import com.example.travelo.activities.PostMapActivity;
 import com.example.travelo.R;
 import com.example.travelo.activities.YelpLocationsActivity;
 import com.example.travelo.adapters.CustomWindowAdapter;
+import com.example.travelo.constants.Constant;
 import com.example.travelo.databinding.FragmentEditMapBinding;
 import com.example.travelo.models.MarkerTag;
 import com.example.travelo.models.Room;
@@ -430,6 +432,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
         if (map == null) {
             return;
         }
+        Context context = getContext();
         ParseQuery<Room> roomQuery = ParseQuery.getQuery(Room.class);
         roomQuery.getInBackground(room.getObjectId(), new GetCallback<Room>() {
             @Override
@@ -439,6 +442,13 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                     return;
                 }
                 room = updatedRoom;
+                try {
+                    if (Constant.kicked(context, room, ParseUser.getCurrentUser().getObjectId())) {
+                        return;
+                    }
+                } catch (JSONException jsonException) {
+                    jsonException.printStackTrace();
+                }
                 JSONObject jsonMap = room.getMap();
                 try {
                     JSONArray markers = jsonMap.getJSONArray("markers");

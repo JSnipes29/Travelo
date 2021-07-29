@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.travelo.activities.RoomActivity;
 import com.example.travelo.adapters.InboxAdapter;
+import com.example.travelo.constants.Constant;
 import com.example.travelo.databinding.FragmentJoinRoomBinding;
 import com.example.travelo.models.Inbox;
 import com.example.travelo.models.Room;
@@ -89,6 +90,16 @@ public class JoinRoomFragment extends DialogFragment {
                     dismiss();
                     return;
                 }
+            }
+            JSONArray kicked = rooms.get(0).getKicked();
+            try {
+                if (Constant.jsonStringArrayContains(kicked, ParseUser.getCurrentUser().getObjectId())) {
+                    Toasty.error(v.getContext(), "You have been kicked from this room", Toast.LENGTH_SHORT, true).show();
+                    dismiss();
+                    return;
+                }
+            } catch (JSONException jsonException) {
+                jsonException.printStackTrace();
             }
             dismiss();
             Log.i(TAG, String.valueOf(getContext()));
