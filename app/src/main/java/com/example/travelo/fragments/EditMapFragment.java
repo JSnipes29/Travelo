@@ -119,14 +119,6 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                             MarkerTag tag = (MarkerTag) marker.getTag();
                             LatLng position = new LatLng(tag.getLatitude(), tag.getLongitude());
                             marker.remove();
-                            // Define color of marker icon
-                            /*BitmapDescriptor defaultMarker = MarkerTag.colorMarker(tag.getColor());
-                            Marker replace = map.addMarker(new MarkerOptions()
-                                    .position(new LatLng(tag.getLatitude(), tag.getLongitude()))
-                                    .icon(defaultMarker));
-                            replace.setTag(tag);
-                            replace.setSnippet(marker.getSnippet());
-                            replace.setDraggable(true);*/
                             ParseQuery<Room> roomQuery = ParseQuery.getQuery(Room.class);
                             roomQuery.getInBackground(room.getObjectId(), new GetCallback<Room>() {
                                 @Override

@@ -31,7 +31,7 @@ public class Document implements Comparable<Document> {
         this.document = text;
         termFrequency = new HashMap<String, Integer>();
 
-        readFileAndPreProcess();
+        preProcess();
     }
 
     /**
@@ -42,7 +42,7 @@ public class Document implements Comparable<Document> {
      * We don't do any stemming.
      * Once the pre-processing is done, we create and update the
      */
-    private void readFileAndPreProcess() {
+    private void preProcess() {
         String[] text = document.split(" ");
         for (int i = 0; i < text.length; i++) {
             String nextWord = text[i];
@@ -96,11 +96,4 @@ public class Document implements Comparable<Document> {
         return document;
     }
 
-    /**
-     * This method is used for pretty-printing a Document object.
-     * @return the filename
-     */
-    public String toString() {
-        return document;
-    }
 }

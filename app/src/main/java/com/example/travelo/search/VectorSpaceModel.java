@@ -104,36 +104,5 @@ public class VectorSpaceModel {
         return getDotProduct(d1, d2) / (getMagnitude(d1) * getMagnitude(d2));
     }
 
-    public double averageCosineSimilarity(ArrayList<Document> documents, int i1, int i2) {
-        double cosineSum = 0;
-        for (int i = i1; i < i2 + 1; i++) {
-            for (int j = i + 1; j < i2; j++) {
-                Document doc1 = documents.get(i);
-                Document doc2 = documents.get(j);
-                System.out.println("\nComparing " + doc1 + " and " + doc2);
-                double x = cosineSimilarity(doc1, doc2);
-                System.out.println(x);
-                cosineSum+= x;
-
-            }
-        }
-        return cosineSum / ((double)(i2 - i1));
-    }
-
-    public double averageCosineSimilarity(ArrayList<Document> documents, int i1, int i2, int i3, int i4) {
-        double cosineSum = 0;
-        for (int i = i1; i < i2; i++) {
-            for (int j = i3; j < i4; j++) {
-                Document doc1 = documents.get(i);
-                Document doc2 = documents.get(j);
-                System.out.println("\nComparing " + doc1 + " and " + doc2);
-                double x = cosineSimilarity(doc1, doc2);
-                System.out.println(x);
-                cosineSum+= x;
-
-            }
-        }
-        return cosineSum / ((double)((i2 - i1) * (i4-i3)));
-    }
 
 }
