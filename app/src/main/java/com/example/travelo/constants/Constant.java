@@ -193,7 +193,7 @@ public class Constant {
         return false;
     }
 
-    public static void kick(Context context, String userId, String username, String roomId, int type) {
+    public static void kick(Context context, ParseUser user, String userId, String username, String roomId, int type) {
         ParseQuery<Room> roomQuery = ParseQuery.getQuery(Room.class);
         roomQuery.getInBackground(roomId, new GetCallback<Room>() {
             @Override
@@ -206,7 +206,7 @@ public class Constant {
                 room.setUsers(users);
                 if (type == 0) {
                     JSONObject profileImages = room.getProfileImages();
-                    profileImages.remove("username");
+                    profileImages.remove(username);
                     room.setProfileImages(profileImages);
                 }
                 room.saveInBackground(new SaveCallback() {
@@ -221,6 +221,16 @@ public class Constant {
                 });
             }
         });
+        // Remove message from inbox
+        Inbox inbox = (Inbox) user.getParseObject(Inbox.KEY);
+        JSONArray jsonInbox = inbox.getMessages();
+        int index = Inbox.indexOfRoomMessage(jsonInbox, roomId);
+        if (index == -1) {
+            return;
+        }
+        jsonInbox.remove(index);
+        inbox.setMessages(jsonInbox);
+        inbox.saveInBackground();
     }
 
     public static ItemTouchHelper setupKickSwipe(Context context, List<String> users, NameAdapter adapter, String roomId, int type) {
@@ -239,6 +249,7 @@ public class Constant {
                 String name = users.get(position);
                 ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
                 userQuery.whereEqualTo("username", name);
+                userQuery.include(Inbox.KEY);
                 userQuery.findInBackground(new FindCallback<ParseUser>() {
                     @Override
                     public void done(List<ParseUser> userList, ParseException e) {
@@ -249,9 +260,12 @@ public class Constant {
                         ParseUser user = userList.get(0);
                         String username = user.getUsername();
                         String userId = user.getObjectId();
-                        kick(context, userId, username, roomId, type);
                         users.remove(position);
                         adapter.notifyItemRemoved(position);
+                        if (userId.equals(ParseUser.getCurrentUser().getObjectId())) {
+                            return;
+                        }
+                        kick(context, user, userId, username, roomId, type);
                     }
                 });
 
