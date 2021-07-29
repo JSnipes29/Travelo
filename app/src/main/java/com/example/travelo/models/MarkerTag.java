@@ -12,6 +12,7 @@ public class MarkerTag {
     public List<YelpBusinesses> locations;
     public double latitude;
     public double longitude;
+    String color;
 
 
     // Empty constructor for parcelable
@@ -22,6 +23,14 @@ public class MarkerTag {
         this.locations = locations;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public MarkerTag(List<YelpBusinesses> locations, double latitude, double longitude, String color) {
+        super();
+        this.locations = locations;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.color = color;
     }
 
     public static BitmapDescriptor colorMarker(String color) {
@@ -61,5 +70,9 @@ public class MarkerTag {
 
     public double getLongitude() {
         return longitude;
+    }
+
+    public String getColor() {
+        return color;
     }
 }

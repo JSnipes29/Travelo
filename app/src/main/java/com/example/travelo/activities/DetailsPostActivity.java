@@ -153,8 +153,7 @@ public class DetailsPostActivity extends AppCompatActivity {
                         public void onMarkerDragStart(@NonNull Marker marker) {
                             MarkerTag tag = (MarkerTag) marker.getTag();
                             // Define color of marker icon
-                            BitmapDescriptor defaultMarker =
-                                    BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+                            BitmapDescriptor defaultMarker = MarkerTag.colorMarker(tag.getColor());
                             Marker replace = map.addMarker(new MarkerOptions()
                                     .position(new LatLng(tag.getLatitude(), tag.getLongitude()))
                                     .icon(defaultMarker));
@@ -251,7 +250,7 @@ public class DetailsPostActivity extends AppCompatActivity {
                 Marker marker = map.addMarker(new MarkerOptions()
                         .position(new LatLng(latitude, longitude))
                         .icon(defaultMarker));
-                marker.setTag(new MarkerTag(businesses, latitude, longitude));
+                marker.setTag(new MarkerTag(businesses, latitude, longitude, color));
                 marker.setSnippet(user);
                 marker.setDraggable(true);
             }
