@@ -11,7 +11,7 @@ Original App Design Project - README
 
 ## Overview
 ### Description
-App that lets users build maps of their favorite places and share it. Can also share roadtrips
+App that lets users build maps of their favorite places and share it.
 ### App Evaluation
 - **Category:** Traveling/ Social Media
 - **Mobile:** Mobile-first experience
@@ -37,7 +37,6 @@ App that lets users build maps of their favorite places and share it. Can also s
 * DM other users
 * Chat with other users in a room
 * Follow other users
-* Create an itinerary for trips
 
 ### 2. Screen Archetypes
 
