@@ -20,6 +20,7 @@ import android.view.animation.BounceInterpolator;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.example.travelo.activities.DetailsPostActivity;
 import com.example.travelo.activities.PostMapActivity;
 import com.example.travelo.R;
 import com.example.travelo.activities.YelpLocationsActivity;
@@ -68,6 +69,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
     GoogleMap map;
     Room room;
     String color;
+    boolean owner = false;
     public static final long POLL_INTERVAL = TimeUnit.SECONDS.toMillis(5);
     Handler handler = new Handler();
     Runnable refreshMapRunnable;
@@ -100,6 +102,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
         mapFragment.onCreate(savedInstanceState);
         mapFragment.onResume();
         if (mapFragment != null) {
+            Context context = getContext();
             mapFragment.getMapAsync(new OnMapReadyCallback() {
                 @Override
                 public void onMapReady(GoogleMap map) {
@@ -107,7 +110,81 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                     map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                     map.setInfoWindowAdapter(new CustomWindowAdapter(getLayoutInflater(), getContext()));
                     populateMap();
+                    map.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+                        @Override
+                        public void onMarkerDragStart(@NonNull Marker marker) {
+                            Log.i(TAG, "Removing marker");
+                            // Pause the refresher
+                            pauseRefreshMap();
+                            MarkerTag tag = (MarkerTag) marker.getTag();
+                            LatLng position = new LatLng(tag.getLatitude(), tag.getLongitude());
+                            marker.remove();
+                            // Define color of marker icon
+                            /*BitmapDescriptor defaultMarker = MarkerTag.colorMarker(tag.getColor());
+                            Marker replace = map.addMarker(new MarkerOptions()
+                                    .position(new LatLng(tag.getLatitude(), tag.getLongitude()))
+                                    .icon(defaultMarker));
+                            replace.setTag(tag);
+                            replace.setSnippet(marker.getSnippet());
+                            replace.setDraggable(true);*/
+                            ParseQuery<Room> roomQuery = ParseQuery.getQuery(Room.class);
+                            roomQuery.getInBackground(room.getObjectId(), new GetCallback<Room>() {
+                                @Override
+                                public void done(Room updatedRoom, ParseException e) {
+                                    if (e != null) {
+                                        Log.e(TAG, "Trouble updating room data", e);
+                                        Toasty.error(context, "Error removing marker", Toast.LENGTH_SHORT, true).show();
+                                        resumeRefreshMap();
+                                        return;
+                                    }
+                                    room = updatedRoom;
+                                    JSONObject jsonMap = room.getMap();
+                                    try {
+                                        JSONArray markers = jsonMap.getJSONArray("markers");
+                                        for (int i = 0; i < markers.length(); i++) {
+                                            JSONObject jsonMarker = markers.getJSONObject(i);
+                                            double latitude = jsonMarker.getDouble("latitude");
+                                            double longitude = jsonMarker.getDouble("longitude");
+                                            LatLng jsonPosition = new LatLng(latitude, longitude);
+                                            Log.i(TAG, "json:" + latitude + " " + longitude);
+                                            Log.i(TAG, "delete:" + tag.getLatitude() + " " + tag.getLongitude());
+                                            if (jsonPosition.equals(position)) {
+                                                markers.remove(i);
+                                                jsonMap.put("markers", markers);
+                                                room.setMap(jsonMap);
+                                                room.saveInBackground(new SaveCallback() {
+                                                    @Override
+                                                    public void done(ParseException e) {
+                                                        resumeRefreshMap();
+                                                        if (e != null) {
+                                                            Log.e(TAG, "Trouble updating room data", e);
+                                                            Toasty.error(context, "Error removing marker", Toast.LENGTH_SHORT, true).show();
+                                                            return;
+                                                        }
+                                                        Toasty.success(context, "Removed marker", Toast.LENGTH_SHORT, true).show();
+                                                    }
+                                                });
+                                                return;
+                                            }
+                                        }
+                                    } catch (JSONException jsonException) {
+                                        Log.e(TAG,"Error getting markers from server", jsonException);
+                                    }
+                                }
+                            });
 
+                        }
+
+                        @Override
+                        public void onMarkerDrag(@NonNull Marker marker) {
+
+                        }
+
+                        @Override
+                        public void onMarkerDragEnd(@NonNull Marker marker) {
+
+                        }
+                    });
                 }
             });
         } else {
@@ -218,12 +295,12 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
     public void onResume() {
         super.onResume();
         mapFragment.onResume();
-        handler.postDelayed(refreshMapRunnable, POLL_INTERVAL);
+        resumeRefreshMap();
     }
 
     @Override
     public void onPause() {
-        handler.removeCallbacksAndMessages(null);
+        pauseRefreshMap();
         super.onPause();
         mapFragment.onPause();
     }
@@ -267,12 +344,14 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
             // Define color of marker icon
             BitmapDescriptor defaultMarker = MarkerTag.colorMarker(markerColor);
             LatLng position = new LatLng(lat, lon);
+            MarkerTag tag = new MarkerTag(businesses, lat, lon, color);
             markerSet.add(position);
             Marker marker = map.addMarker(new MarkerOptions()
                     .position(position)
                     .icon(defaultMarker));
-            marker.setTag(businesses);
+            marker.setTag(tag);
             marker.setSnippet(ParseUser.getCurrentUser().getUsername());
+            marker.setDraggable(true);
             dropPinEffect(marker);
             // Populate the yelp data into a json object
             // Upload the json data to the server
@@ -342,6 +421,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
     // Get the marker data from the Parse server and add it to the map
     public void populateMap() {
         ParseQuery<Room> roomQuery = ParseQuery.getQuery(Room.class);
+        roomQuery.include("owner");
         roomQuery.getInBackground(room.getObjectId(), new GetCallback<Room>() {
             @Override
             public void done(Room updatedRoom, ParseException e) {
@@ -350,6 +430,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                     Toasty.error(getContext(), "Couldn't populate map", Toasty.LENGTH_SHORT, true).show();
                 }
                 room = updatedRoom;
+                owner = room.getParseUser("owner").getObjectId().equals(ParseUser.getCurrentUser().getObjectId());
                 JSONObject jsonMap = room.getMap();
                 try {
                     JSONArray markers = jsonMap.getJSONArray("markers");
@@ -379,14 +460,22 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                             businesses.add(business);
                         }
                         LatLng position = new LatLng(latitude, longitude);
+                        MarkerTag tag = new MarkerTag(businesses, latitude, longitude, color);
                         // Define color of marker icon
                         BitmapDescriptor defaultMarker = MarkerTag.colorMarker(markerColor);
                         Marker marker = map.addMarker(new MarkerOptions()
                                 .position(position)
                                 .icon(defaultMarker));
-                        marker.setTag(businesses);
+                        marker.setTag(tag);
                         marker.setSnippet(user);
                         markerSet.add(position);
+                        ParseUser currentUser = ParseUser.getCurrentUser();
+                        String username = currentUser.getUsername();
+                        if (user.equals(username) || owner) {
+                            marker.setDraggable(true);
+                        } else {
+                            marker.setDraggable(false);
+                        }
                     }
                 } catch (JSONException jsonException) {
                     Log.e(TAG,"Error getting markers from server", jsonException);
@@ -481,15 +570,18 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                             YelpBusinesses business = YelpBusinesses.makeBusiness(name, rating, numRatings, imageUrl, price, distanceMeters, location, category);
                             businesses.add(business);
                         }
+                        MarkerTag tag = new MarkerTag(businesses, latitude, longitude, color);
                         // Define color of marker icon
                         BitmapDescriptor defaultMarker = MarkerTag.colorMarker(markerColor);
                         Marker marker = map.addMarker(new MarkerOptions()
                                 .position(position)
                                 .icon(defaultMarker));
-                        marker.setTag(businesses);
+                        marker.setTag(tag);
                         marker.setSnippet(user);
                         dropPinEffect(marker);
                         markerSet.add(position);
+                        String username = ParseUser.getCurrentUser().getUsername();
+                        marker.setDraggable(user.equals(username) || owner);
                     }
                 } catch (JSONException jsonException) {
                     Log.e(TAG,"Error getting markers from server", jsonException);
@@ -528,5 +620,13 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                 break;
 
         }
+    }
+
+    public void pauseRefreshMap() {
+        handler.removeCallbacksAndMessages(null);
+    }
+
+    public void resumeRefreshMap() {
+        handler.postDelayed(refreshMapRunnable, POLL_INTERVAL);
     }
 }
