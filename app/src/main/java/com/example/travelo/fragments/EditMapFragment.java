@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,7 +33,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -49,7 +49,9 @@ import org.parceler.Parcels;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import es.dmoral.toasty.Toasty;
 
@@ -64,16 +66,13 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
     GoogleMap map;
     Room room;
     String color;
+    public static final long POLL_INTERVAL = TimeUnit.SECONDS.toMillis(5);
+    Handler handler = new Handler();
+    Runnable refreshMapRunnable;
+    HashSet<LatLng> markerSet;
 
     public EditMapFragment() {
         // Required empty public constructor
-    }
-
-    public static EditMapFragment newInstance() {
-        EditMapFragment fragment = new EditMapFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -86,6 +85,14 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                              Bundle savedInstanceState) {
         binding = FragmentEditMapBinding.inflate(getLayoutInflater(), container, false);
         View view = binding.getRoot();
+        refreshMapRunnable = new Runnable() {
+            @Override
+            public void run() {
+                refreshMap();
+                handler.postDelayed(this, POLL_INTERVAL);
+            }
+        };
+        markerSet = new HashSet<>();
         room = (Room) Parcels.unwrap(getArguments().getParcelable("room"));
         mapFragment = (MapView) view.findViewById(R.id.map);
         mapFragment.onCreate(savedInstanceState);
@@ -98,6 +105,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                     map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                     map.setInfoWindowAdapter(new CustomWindowAdapter(getLayoutInflater(), getContext()));
                     populateMap();
+
                 }
             });
         } else {
@@ -208,10 +216,12 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
     public void onResume() {
         super.onResume();
         mapFragment.onResume();
+        handler.postDelayed(refreshMapRunnable, POLL_INTERVAL);
     }
 
     @Override
     public void onPause() {
+        handler.removeCallbacksAndMessages(null);
         super.onPause();
         mapFragment.onPause();
     }
@@ -254,8 +264,10 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
             YelpBusinesses.setButtonAll(businesses, false);
             // Define color of marker icon
             BitmapDescriptor defaultMarker = MarkerTag.colorMarker(markerColor);
+            LatLng position = new LatLng(lat, lon);
+            markerSet.add(position);
             Marker marker = map.addMarker(new MarkerOptions()
-                    .position(new LatLng(lat, lon))
+                    .position(position)
                     .icon(defaultMarker));
             marker.setTag(businesses);
             marker.setSnippet(ParseUser.getCurrentUser().getUsername());
@@ -364,13 +376,15 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                             YelpBusinesses business = YelpBusinesses.makeBusiness(name, rating, numRatings, imageUrl, price, distanceMeters, location, category);
                             businesses.add(business);
                         }
+                        LatLng position = new LatLng(latitude, longitude);
                         // Define color of marker icon
                         BitmapDescriptor defaultMarker = MarkerTag.colorMarker(markerColor);
                         Marker marker = map.addMarker(new MarkerOptions()
-                                .position(new LatLng(latitude, longitude))
+                                .position(position)
                                 .icon(defaultMarker));
                         marker.setTag(businesses);
                         marker.setSnippet(user);
+                        markerSet.add(position);
                     }
                 } catch (JSONException jsonException) {
                     Log.e(TAG,"Error getting markers from server", jsonException);
@@ -408,6 +422,70 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                 } else { // done elapsing, show window
                     marker.showInfoWindow();
                 }
+            }
+        });
+    }
+
+    public void refreshMap() {
+        if (map == null) {
+            return;
+        }
+        ParseQuery<Room> roomQuery = ParseQuery.getQuery(Room.class);
+        roomQuery.getInBackground(room.getObjectId(), new GetCallback<Room>() {
+            @Override
+            public void done(Room updatedRoom, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Couldn't refresh map", e);
+                    return;
+                }
+                room = updatedRoom;
+                JSONObject jsonMap = room.getMap();
+                try {
+                    JSONArray markers = jsonMap.getJSONArray("markers");
+                    for (int i = 0; i < markers.length(); i++) {
+                        JSONObject jsonMarker = markers.getJSONObject(i);
+                        double latitude = jsonMarker.getDouble("latitude");
+                        double longitude = jsonMarker.getDouble("longitude");
+                        LatLng position = new LatLng(latitude, longitude);
+                        if (markerSet.contains(position)) {
+                            continue;
+                        }
+                        List<YelpBusinesses> businesses = new ArrayList<>();
+                        String markerColor = jsonMarker.getString("color");
+                        String user = jsonMarker.getString("user");
+                        JSONArray places = jsonMarker.getJSONArray("places");
+                        for (int j = 0; j < places.length(); j++) {
+                            JSONObject place = places.getJSONObject(j);
+                            String name = place.getString("name");
+                            double rating = place.getDouble("rating");
+                            int numRatings = place.getInt("num_ratings");
+                            String imageUrl = place.getString("image_url");
+                            String price = place.getString("price");
+                            double distanceMeters = place.getDouble("distance");
+                            String category = place.getString("category");
+                            String address = place.getString("address");
+                            String city = place.getString("city");
+                            String state = place.getString("state");
+                            String country = place.getString("country");
+                            YelpLocation location = YelpLocation.makeLocation(address, city, state, country);
+                            YelpBusinesses business = YelpBusinesses.makeBusiness(name, rating, numRatings, imageUrl, price, distanceMeters, location, category);
+                            businesses.add(business);
+                        }
+                        // Define color of marker icon
+                        BitmapDescriptor defaultMarker = MarkerTag.colorMarker(markerColor);
+                        Marker marker = map.addMarker(new MarkerOptions()
+                                .position(position)
+                                .icon(defaultMarker));
+                        marker.setTag(businesses);
+                        marker.setSnippet(user);
+                        dropPinEffect(marker);
+                        markerSet.add(position);
+                    }
+                } catch (JSONException jsonException) {
+                    Log.e(TAG,"Error getting markers from server", jsonException);
+                }
+
+
             }
         });
     }
