@@ -25,6 +25,7 @@ import com.example.travelo.R;
 import com.example.travelo.adapters.InboxAdapter;
 import com.example.travelo.databinding.FragmentInboxBinding;
 import com.example.travelo.models.Inbox;
+import com.example.travelo.models.Messages;
 import com.example.travelo.search.Corpus;
 import com.example.travelo.search.Document;
 import com.example.travelo.search.VectorSpaceModel;
@@ -151,12 +152,25 @@ public class InboxFragment extends Fragment {
                     String text = null;
                     if (jsonMessage.getInt("id") == InboxAdapter.ROOM_ID) {
                         text = jsonMessage.getString(jsonMessage.keys().next());
+                    } else if (jsonMessage.getInt("id") == InboxAdapter.DM_ID) {
+                        String messageId = jsonMessage.getString("messages");
+                        ParseQuery<Messages> messagesQuery = ParseQuery.getQuery(Messages.class);
+                        Messages messages = messagesQuery.get(messageId);
+                        JSONArray jsonMessages = messages.getMessages();
+                        StringBuilder textBuilder = new StringBuilder(jsonMessage.getString("username") + " ");
+                        for (int k = 0; k < jsonMessages.length(); k++) {
+                            JSONObject message = jsonMessages.getJSONObject(k);
+                            String body = message.getString("body");
+                            textBuilder.append(body).append(" ");
+                        }
+                        text = textBuilder.toString();
+                        Log.i(TAG, "Body: " + text);
                     } else {
                         text = jsonMessage.getString("username");
                     }
                     Document doc = new Document(text);
                     documents.add(doc);
-                } catch (JSONException e) {
+                } catch (JSONException | ParseException e) {
                     Log.e(TAG, "Error loading data to json", e);
                 }
             }
