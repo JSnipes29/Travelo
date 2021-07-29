@@ -193,7 +193,7 @@ public class Constant {
         return false;
     }
 
-    public static void kick(Context context, String userId, String username, String roomId) {
+    public static void kick(Context context, String userId, String username, String roomId, int type) {
         ParseQuery<Room> roomQuery = ParseQuery.getQuery(Room.class);
         roomQuery.getInBackground(roomId, new GetCallback<Room>() {
             @Override
@@ -204,6 +204,11 @@ public class Constant {
                 JSONObject users = room.getUsers();
                 users.remove(username);
                 room.setUsers(users);
+                if (type == 0) {
+                    JSONObject profileImages = room.getProfileImages();
+                    profileImages.remove("username");
+                    room.setProfileImages(profileImages);
+                }
                 room.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -218,7 +223,7 @@ public class Constant {
         });
     }
 
-    public static ItemTouchHelper setupKickSwipe(Context context, List<String> users, NameAdapter adapter, String roomId) {
+    public static ItemTouchHelper setupKickSwipe(Context context, List<String> users, NameAdapter adapter, String roomId, int type) {
         // Configure swipe to remove
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP) {
 
@@ -244,7 +249,7 @@ public class Constant {
                         ParseUser user = userList.get(0);
                         String username = user.getUsername();
                         String userId = user.getObjectId();
-                        kick(context, userId, username, roomId);
+                        kick(context, userId, username, roomId, type);
                         users.remove(position);
                         adapter.notifyItemRemoved(position);
                     }

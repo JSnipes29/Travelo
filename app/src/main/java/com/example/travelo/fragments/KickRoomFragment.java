@@ -94,7 +94,7 @@ public class KickRoomFragment extends DialogFragment {
                     }
                 }
                 adapter.notifyDataSetChanged();
-                ItemTouchHelper itemTouchHelper = Constant.setupKickSwipe(context, users, adapter, roomId);
+                ItemTouchHelper itemTouchHelper = Constant.setupKickSwipe(context, users, adapter, roomId, 0);
                 itemTouchHelper.attachToRecyclerView(binding.rvUsers);
             }
         });

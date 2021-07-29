@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.example.travelo.R;
 import com.example.travelo.adapters.NameAdapter;
+import com.example.travelo.constants.Constant;
 import com.example.travelo.databinding.FragmentWaitingPostBinding;
 import com.example.travelo.models.Room;
 import com.parse.GetCallback;
@@ -80,6 +82,11 @@ public class WaitingPostFragment extends Fragment {
         binding.rvNames.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         binding.rvNames.setLayoutManager(linearLayoutManager);
+        String ownerId = room.getOwner().getObjectId();
+        if (ownerId.equals(ParseUser.getCurrentUser().getObjectId())) {
+            ItemTouchHelper itemTouchHelper = Constant.setupKickSwipe(getContext(), users, adapter, room.getObjectId(), 1);
+            itemTouchHelper.attachToRecyclerView(binding.rvNames);
+        }
 
         // Setup refresh listener which triggers new data loading
         binding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
