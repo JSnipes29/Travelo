@@ -150,23 +150,34 @@ public class InboxFragment extends Fragment {
                 try {
                     JSONObject jsonMessage = array.getJSONObject(i);
                     String text = null;
-                    if (jsonMessage.getInt("id") == InboxAdapter.ROOM_ID) {
-                        text = jsonMessage.getString(jsonMessage.keys().next());
-                    } else if (jsonMessage.getInt("id") == InboxAdapter.DM_ID) {
-                        String messageId = jsonMessage.getString("messages");
-                        ParseQuery<Messages> messagesQuery = ParseQuery.getQuery(Messages.class);
-                        Messages messages = messagesQuery.get(messageId);
-                        JSONArray jsonMessages = messages.getMessages();
-                        StringBuilder textBuilder = new StringBuilder(jsonMessage.getString("username") + " ");
-                        for (int k = 0; k < jsonMessages.length(); k++) {
-                            JSONObject message = jsonMessages.getJSONObject(k);
-                            String body = message.getString("body");
-                            textBuilder.append(body).append(" ");
-                        }
-                        text = textBuilder.toString();
-                        Log.i(TAG, "Body: " + text);
-                    } else {
-                        text = jsonMessage.getString("username");
+                    int messageType = jsonMessage.getInt("id");
+                    switch (messageType) {
+                        case InboxAdapter.ROOM_ID:
+                            text = jsonMessage.getString(jsonMessage.keys().next()) + " room rooms";
+                            break;
+                        case InboxAdapter.DM_ID:
+                            String messageId = jsonMessage.getString("messages");
+                            ParseQuery<Messages> messagesQuery = ParseQuery.getQuery(Messages.class);
+                            Messages messages = messagesQuery.get(messageId);
+                            JSONArray jsonMessages = messages.getMessages();
+                            StringBuilder textBuilder = new StringBuilder(jsonMessage.getString("username") + " ");
+                            for (int k = 0; k < jsonMessages.length(); k++) {
+                                JSONObject message = jsonMessages.getJSONObject(k);
+                                String body = message.getString("body");
+                                textBuilder.append(body).append(" ");
+                            }
+                            text = textBuilder.toString();
+                            Log.i(TAG, "Body: " + text);
+                            break;
+                        case InboxAdapter.FR_ID:
+                            text = jsonMessage.getString("name") + " friend request";
+                            break;
+                        case InboxAdapter.FR_SENT_ID:
+                            text = jsonMessage.getString("name") + " friend request sent send";
+                                break;
+                        default:
+                            text = jsonMessage.getString("username");
+                            break;
                     }
                     Document doc = new Document(text);
                     documents.add(doc);
