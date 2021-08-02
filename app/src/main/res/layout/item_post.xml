@@ -103,4 +103,25 @@
         android:textSize="24sp"
         tools:text="1,124" />
 
+    <Button
+        android:id="@+id/ivComments"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_below="@+id/ivImage"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@+id/tvLikeCount"
+        android:backgroundTint="?colorOnSecondary"
+        android:background="@drawable/ic_baseline_message_24" />
+    <TextView
+        android:id="@+id/tvCommentCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivImage"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@+id/ivComments"
+        android:textSize="24sp"
+        tools:text="1,124" />
+
 </RelativeLayout>

@@ -75,6 +75,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         Button btnLike;
         ImageView ivLikeAnimation;
         final TextView tvLikeCount;
+        TextView tvCommentCount;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -87,6 +88,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             btnLike = itemView.findViewById(R.id.btnLike);
             ivLikeAnimation = itemView.findViewById(R.id.ivLikeAnimation);
             tvLikeCount = itemView.findViewById(R.id.tvLikeCount);
+            tvCommentCount = itemView.findViewById(R.id.tvCommentCount);
         }
 
         public void bind(Post post) {
@@ -112,6 +114,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                         .load(image.getUrl())
                         .into(ivImage);
             }
+            // Setup comments count
+            int commentsSize = post.getComments().length();
+            tvCommentCount.setText(String.valueOf(commentsSize));
+
             // Setup like button
             Constant.setupLikeButton(btnLike, post.getObjectId(), tvLikeCount);
 
