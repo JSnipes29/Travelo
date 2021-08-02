@@ -7,7 +7,6 @@ import java.util.Set;
 /**
  * This class represents one document.
  * It will keep track of the term frequencies.
- * @author swapneel
  * @author julius
  */
 public class Document implements Comparable<Document> {

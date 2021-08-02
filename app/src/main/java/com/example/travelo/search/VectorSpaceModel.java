@@ -7,7 +7,6 @@ import java.util.Set;
 /**
  * This class implements the Vector-Space model.
  * It takes a corpus and creates the tf-idf vectors for each document.
- * @author swapneel
  * @author julius
  */
 public class VectorSpaceModel {

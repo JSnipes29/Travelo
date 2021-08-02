@@ -8,7 +8,6 @@ import java.util.TreeSet;
 /**
  * This class represents a corpus of documents.
  * It will create an inverted index for these documents.
- * @author swapneel
  *
  */
 public class Corpus {
