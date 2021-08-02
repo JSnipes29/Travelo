@@ -16,6 +16,7 @@ import com.example.travelo.adapters.NameAdapter;
 import com.example.travelo.models.Inbox;
 import com.example.travelo.models.Post;
 import com.example.travelo.models.Room;
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -330,6 +331,30 @@ public class Constant {
                         Log.i(TAG, "Message removed from inbox");
                     }
                 });
+            }
+        });
+    }
+
+    public static void deleteRoom(Context context, String roomId, String userId) {
+        ParseQuery<Room> roomQuery = ParseQuery.getQuery(Room.class);
+        roomQuery.getInBackground(roomId, new GetCallback<Room>() {
+            @Override
+            public void done(Room room, ParseException e) {
+                if (e != null) {
+                    Log.e(context.getClass().getSimpleName(), "Error getting room data", e);
+                    return;
+                }
+                room.deleteInBackground(new DeleteCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Toasty.error(context, "Error deleting room", Toast.LENGTH_SHORT, true).show();
+                        } else {
+                            Toasty.success(context, "Room successfully deleted", Toast.LENGTH_SHORT, true).show();
+                        }
+                    }
+                });
+                removeMessage(userId, roomId, InboxAdapter.ROOM_ID);
             }
         });
     }

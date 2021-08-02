@@ -137,14 +137,14 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
         RecyclerView rvUsers;
         TextView tvRoomId;
         Button btnJoin;
+        Button btnDelete;
 
         public RoomMessageViewHolder(View itemView) {
             super(itemView);
             tvRoomId = (TextView) itemView.findViewById(R.id.tvRoomId);
             rvUsers = (RecyclerView) itemView.findViewById(R.id.rvUsers);
             btnJoin = (Button) itemView.findViewById(R.id.btnJoin);
-
-
+            btnDelete = (Button) itemView.findViewById(R.id.btnDelete);
         }
 
         @Override
@@ -159,6 +159,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
             }
             Log.i(TAG, "Id: " + roomObjectId);
             ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
+            query.include(Room.KEY_OWNER);
             query.getInBackground(roomObjectId, new GetCallback<Room>() {
                 @Override
                 public void done(Room room, ParseException e) {
@@ -193,7 +194,13 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
                     rvUsers.setLayoutManager(linearLayoutManager);
                     btnJoin.setOnClickListener(v -> goToRoom(roomObjectId));
-
+                    // Setup delete room button
+                    String roomOwnerId = room.getOwner().getObjectId();
+                    String userId = ParseUser.getCurrentUser().getObjectId();
+                    if (roomOwnerId.equals(userId)) {
+                        btnDelete.setVisibility(View.VISIBLE);
+                        btnDelete.setOnClickListener(v -> deleteRoom(roomObjectId, userId, position));
+                    }
                 }
             });
         }
@@ -240,6 +247,12 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
                 }
 
             });
+        }
+
+        public void deleteRoom(String roomId, String userId, int position) {
+            messages.remove(position);
+            notifyItemRemoved(position);
+            Constant.deleteRoom(context, roomId, userId);
         }
     }
         public class DMViewHolder extends MessageViewHolder {
