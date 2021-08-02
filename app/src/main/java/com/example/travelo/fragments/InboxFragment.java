@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,6 +50,7 @@ public class InboxFragment extends Fragment {
     FragmentInboxBinding binding;
     InboxAdapter inboxAdapter;
     List<JSONObject> list;
+    SearchView searchView;
     public static final String TAG = "InboxFragment";
 
     public InboxFragment() {
@@ -94,6 +96,22 @@ public class InboxFragment extends Fragment {
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(binding.rvInbox);
+        // Setup refresh listener which triggers new data loading
+        binding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                String query = null;
+                if (searchView != null) {
+                    query = searchView.getQuery().toString();
+                }
+                queryInbox(2, query);
+            }
+        });
+        // Configure the refreshing colors
+        binding.swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
         return view;
     }
 
@@ -133,7 +151,7 @@ public class InboxFragment extends Fragment {
     public void jsonToList(JSONArray array, String query, int parameter) {
         list.clear();
         inboxAdapter.notifyDataSetChanged();
-        if (query == null) {
+        if (query == null || query.isEmpty()) {
             for (int i = array.length() - 1; i >= 0; i--) {
                 try {
                     list.add(array.getJSONObject(i));
@@ -142,6 +160,9 @@ public class InboxFragment extends Fragment {
 
                 }
             }
+            if (binding != null && parameter == 2) {
+                binding.swipeContainer.setRefreshing(false);
+            }
         } else {
             // Use vector space model to get the most relevant results from the query
             // Create a list of documents
@@ -149,7 +170,7 @@ public class InboxFragment extends Fragment {
             for (int i = 0; i < array.length(); i++) {
                 try {
                     JSONObject jsonMessage = array.getJSONObject(i);
-                    String text = null;
+                    String text;
                     int messageType = jsonMessage.getInt("id");
                     switch (messageType) {
                         case InboxAdapter.ROOM_ID:
@@ -233,6 +254,9 @@ public class InboxFragment extends Fragment {
             }
         }
         inboxAdapter.notifyDataSetChanged();
+        if (binding != null && parameter == 2) {
+            binding.swipeContainer.setRefreshing(false);
+        }
     }
 
     @Override
@@ -251,7 +275,7 @@ public class InboxFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.inbox_menu, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
