@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.provider.MediaStore;
 import android.util.Log;
@@ -64,6 +65,7 @@ public class ProfileFragment extends Fragment {
     ParseUser user;
     PostAdapter postAdapter;
     List<Post> posts;
+    String userId;
     EndlessRecyclerViewScrollListener scrollListener;
     public static final int GALLERY_REQUEST = 12;
     public static final int LIMIT = 10;
@@ -93,8 +95,8 @@ public class ProfileFragment extends Fragment {
             query.include("followers");
             query.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>() {
                 @Override
-                public void done(ParseUser object, ParseException e) {
-                    user = object;
+                public void done(ParseUser updatedUser, ParseException e) {
+                    user = updatedUser;
                     if (binding != null) {
                         binding.ivProfileImage.setOnClickListener(v -> setProfileImage());
                         binding.bar.setVisibility(View.VISIBLE);
@@ -176,6 +178,8 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
+        // Setup pull to refresh
+        setupPullToRefresh();
         // Setup drawer view
         setupDrawerContent(binding.nvView);
         queryPosts(0);
@@ -799,6 +803,42 @@ public class ProfileFragment extends Fragment {
         intent.putExtra("type", parameter);
         intent.putExtra("userId", user.getObjectId());
         startActivity(intent);
+    }
+
+    public void setupPullToRefresh() {
+        final Context context = getContext();
+        if (user == null) {
+            Toasty.error(context, "Error getting user data", Toast.LENGTH_SHORT, true).show();
+        } else {
+            userId = user.getObjectId();
+        }
+        // Setup refresh listener which triggers new data loading
+        binding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
+                userQuery.include("followers");
+                userQuery.getInBackground(userId, new GetCallback<ParseUser>() {
+                    @Override
+                    public void done(ParseUser updatedUser, ParseException e) {
+                        if (binding != null) {
+                            binding.swipeContainer.setRefreshing(false);
+                        }
+                        if (e != null || updatedUser == null) {
+                            Toasty.error(context, "Error updating user data", Toast.LENGTH_SHORT, true).show();
+                            return;
+                        }
+                        user = updatedUser;
+                        setUpProfileFragment();
+                    }
+                });
+            }
+        });
+        // Configure the refreshing colors
+        binding.swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
     }
 
 }
