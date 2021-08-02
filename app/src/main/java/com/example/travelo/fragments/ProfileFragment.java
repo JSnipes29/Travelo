@@ -74,6 +74,14 @@ public class ProfileFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static Fragment newInstance() {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("user", null);
+        Fragment fragment = new ProfileFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
