@@ -184,10 +184,18 @@ public class Constant {
         }
     }
 
-    public static boolean kicked(Context context, Room room, String userId) throws JSONException{
+    public static boolean kicked(Context context, Room room, String userId) throws JSONException {
+        if (room == null) {
+            String message = "Room is no longer available";
+            Toasty.error(context, message, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, MainActivity.class);
+            context.startActivity(intent);
+            return true;
+        }
         JSONArray kicked = room.getKicked();
         if (jsonStringArrayContains(kicked, userId)) {
-            Toasty.error(context, "You have been kicked", Toast.LENGTH_SHORT).show();
+            String message = "You have been kicked";
+            Toasty.error(context, message, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(context, MainActivity.class);
             context.startActivity(intent);
             return true;
@@ -278,6 +286,52 @@ public class Constant {
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         return itemTouchHelper;
+    }
+
+    public static void removeMessage(String userId, String messageId, int messageType) {
+        ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
+        userQuery.include(Inbox.KEY);
+        userQuery.getInBackground(userId, new GetCallback<ParseUser>() {
+            @Override
+            public void done(ParseUser user, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Problem loading user data from server", e);
+                    return;
+                }
+                Inbox inbox = (Inbox) user.getParseObject(Inbox.KEY);
+                JSONArray jsonInbox = inbox.getMessages();
+                int index;
+                switch (messageType) {
+                    case InboxAdapter.ROOM_ID:
+                        index = Inbox.indexOfRoomMessage(jsonInbox, messageId);
+                        break;
+                    case InboxAdapter.FR_ID:
+                        index = Inbox.indexOfFriendRequest(jsonInbox, messageId);
+                        break;
+                    case InboxAdapter.FR_SENT_ID:
+                        index = Inbox.indexOfFriendRequestSent(jsonInbox, messageId);
+                        break;
+                    case InboxAdapter.DM_ID:
+                        index = -1;
+                        break;
+                    default:
+                        index = -1;
+                        break;
+                }
+                if (index == -1) {
+                    return;
+                }
+                jsonInbox.remove(index);
+                inbox.setMessages(jsonInbox);
+                inbox.saveInBackground(exception -> {
+                    if (exception != null) {
+                        Log.e(TAG, "Couldn't remove message from inbox", exception);
+                    } else {
+                        Log.i(TAG, "Message removed from inbox");
+                    }
+                });
+            }
+        });
     }
 
     public static int dpsToPixels(Context context, int dps) {

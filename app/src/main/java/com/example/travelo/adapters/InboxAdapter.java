@@ -164,7 +164,14 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
                 public void done(Room room, ParseException e) {
                     if (e != null) {
                         Log.e(TAG, "Couldn't bind room message", e);
+                        messages.remove(position);
+                        if (room == null) {
+                            String userId = ParseUser.getCurrentUser().getObjectId();
+                            Constant.removeMessage(userId, roomObjectId, InboxAdapter.ROOM_ID);
+                        }
+                        return;
                     }
+
                     String roomId = room.getRoomId();
                     tvRoomId.setText(roomId);
                     // Bind the users who were in the room
