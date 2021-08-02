@@ -116,35 +116,24 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             ivLikeAnimation.setVisibility(View.GONE);
 
             // Setup long click to like
-            ivImage.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    Log.i("PostAdapter","Long clicked");
-
-                    String userId = ParseUser.getCurrentUser().getObjectId();
-                    try {
-                        if (!Constant.jsonStringArrayContains(post.getLikesArray(), userId)) {
-                          Constant.like(btnLike, post.getObjectId(), userId);
-                            Drawable drawable = ivLikeAnimation.getDrawable();
-                            ivLikeAnimation.setVisibility(View.VISIBLE);
-                            if (drawable instanceof AnimatedVectorDrawableCompat) {
-                                AnimatedVectorDrawableCompat avd = (AnimatedVectorDrawableCompat) drawable;
-                                avd.start();
-                            } else if (drawable instanceof AnimatedVectorDrawable) {
-                                AnimatedVectorDrawable avd = (AnimatedVectorDrawable) drawable;
-                                avd.start();
-                            }
-                         }
-                    } catch (JSONException jsonException) {
-                        jsonException.printStackTrace();
+            ivImage.setOnLongClickListener(v -> {
+                Log.i("PostAdapter","Long clicked to like");
+                if (btnLike.isClickable()) {
+                    btnLike.performClick();
+                    Drawable drawable = ivLikeAnimation.getDrawable();
+                    ivLikeAnimation.setVisibility(View.VISIBLE);
+                    if (drawable instanceof AnimatedVectorDrawableCompat) {
+                        AnimatedVectorDrawableCompat avd = (AnimatedVectorDrawableCompat) drawable;
+                        avd.start();
+                    } else if (drawable instanceof AnimatedVectorDrawable) {
+                        AnimatedVectorDrawable avd = (AnimatedVectorDrawable) drawable;
+                        avd.start();
                     }
-                    ivImage.setOnLongClickListener(view -> {return true;});
-                    return true;
                 }
+                return true;
             });
+            // On click go to detailed post
             ivImage.setOnClickListener(v -> goToDetailedPost(post));
-
-            // On click go to detail post
             rlPost.setOnClickListener(v -> goToDetailedPost(post));
         }
 
@@ -161,6 +150,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                             profileImage, name, description, imagePair);
             context.startActivity(intent, options.toBundle());
         }
+
 
     }
 }

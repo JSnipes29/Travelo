@@ -153,9 +153,11 @@ public class Constant {
                             if (parameter == 0) {
                                 jsonStringArrayRemove(likesArray, userId);
                                 jsonStringArrayRemove(liked, postId);
+                                btnLike.setOnClickListener(v -> like(btnLike, postId, userId));
                             } else if (parameter == 1) {
                                 likesArray.put(userId);
                                 liked.put(postId);
+                                btnLike.setOnClickListener(v -> unlike(btnLike, postId, userId));
                             }
                         } catch (JSONException jsonException) {
                             jsonException.printStackTrace();
