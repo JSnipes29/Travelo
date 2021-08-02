@@ -166,6 +166,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
                     if (e != null) {
                         Log.e(TAG, "Couldn't bind room message", e);
                         messages.remove(position);
+                        notifyItemRemoved(position);
                         if (room == null) {
                             String userId = ParseUser.getCurrentUser().getObjectId();
                             Constant.removeMessage(userId, roomObjectId, InboxAdapter.ROOM_ID);

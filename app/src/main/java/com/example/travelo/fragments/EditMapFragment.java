@@ -518,10 +518,6 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
         roomQuery.getInBackground(room.getObjectId(), new GetCallback<Room>() {
             @Override
             public void done(Room updatedRoom, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Couldn't refresh map", e);
-                    return;
-                }
                 room = updatedRoom;
                 try {
                     if (Constant.kicked(context, room, ParseUser.getCurrentUser().getObjectId())) {
@@ -529,6 +525,10 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                     }
                 } catch (JSONException jsonException) {
                     jsonException.printStackTrace();
+                }
+                if (e != null) {
+                    Log.e(TAG, "Couldn't refresh map", e);
+                    return;
                 }
                 JSONObject jsonMap = room.getMap();
                 try {
