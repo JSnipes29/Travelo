@@ -35,12 +35,12 @@ public class Document implements Comparable<Document> {
     }
 
     /**
-     * This method will read in the file and do some pre-processing.
+     * This method will read contents of the document string and pre-process.
      * The following things are done in pre-processing:
      * Every word is converted to lower case.
      * Every character that is not a letter or a digit is removed.
      * We don't do any stemming.
-     * Once the pre-processing is done, we create and update the
+     * Once the pre-processing is done, we create and update the term frequency map
      */
     private void preProcess() {
         String[] text = document.split(" ");
@@ -90,7 +90,7 @@ public class Document implements Comparable<Document> {
     }
 
     /**
-     * @return the filename
+     * @return the contents of the document
      */
     private String getDocument() {
         return document;
