@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
@@ -91,7 +92,7 @@ public class Constant {
     }
 
     // Setup action of a like button
-    public static void setupLikeButton(Button btnLike, String postId) {
+    public static void setupLikeButton(Button btnLike, String postId, TextView tvLikeCount) {
         final String userId = ParseUser.getCurrentUser().getObjectId();
         ParseQuery<Post> postQuery = ParseQuery.getQuery(Post.class);
         postQuery.getInBackground(postId, new GetCallback<Post>() {
@@ -103,12 +104,14 @@ public class Constant {
                 }
                 JSONArray likesArray = post.getLikesArray();
                 try {
+                    int likesCount = likesArray.length();
+                    tvLikeCount.setText(String.valueOf(likesCount));
                     if (jsonStringArrayContains(likesArray, userId)) {
                         btnLike.setSelected(true);
-                        btnLike.setOnClickListener(v -> unlike(btnLike, postId, userId));
+                        btnLike.setOnClickListener(v -> unlike(btnLike, postId, userId, tvLikeCount));
                     } else {
                         btnLike.setSelected(false);
-                        btnLike.setOnClickListener(v -> like(btnLike, postId, userId));
+                        btnLike.setOnClickListener(v -> like(btnLike, postId, userId, tvLikeCount));
                     }
                 } catch (JSONException jsonException) {
                     jsonException.printStackTrace();
@@ -117,18 +120,18 @@ public class Constant {
         });
     }
 
-    public static void unlike(Button btnLike, String postId, String userId) {
+    public static void unlike(Button btnLike, String postId, String userId, TextView tvLikeCount) {
         btnLike.setSelected(false);
-        setLikes(0, btnLike, postId, userId);
+        setLikes(0, btnLike, postId, userId, tvLikeCount);
     }
 
-    public static void like(Button btnLike, String postId, String userId) {
+    public static void like(Button btnLike, String postId, String userId, TextView tvLikeCount) {
         btnLike.setSelected(true);
-        setLikes(1, btnLike, postId, userId);
+        setLikes(1, btnLike, postId, userId, tvLikeCount);
     }
 
     // 0 == unlike, 1 == like
-    public static void setLikes(int parameter, Button btnLike, String postId, String userId) {
+    public static void setLikes(int parameter, Button btnLike, String postId, String userId, TextView tvLikeCount) {
         btnLike.setClickable(false);
         ParseQuery<Post> postQuery = ParseQuery.getQuery(Post.class);
         postQuery.getInBackground(postId, new GetCallback<Post>() {
@@ -154,15 +157,17 @@ public class Constant {
                             if (parameter == 0) {
                                 jsonStringArrayRemove(likesArray, userId);
                                 jsonStringArrayRemove(liked, postId);
-                                btnLike.setOnClickListener(v -> like(btnLike, postId, userId));
+                                btnLike.setOnClickListener(v -> like(btnLike, postId, userId, tvLikeCount));
                             } else if (parameter == 1) {
                                 likesArray.put(userId);
                                 liked.put(postId);
-                                btnLike.setOnClickListener(v -> unlike(btnLike, postId, userId));
+                                btnLike.setOnClickListener(v -> unlike(btnLike, postId, userId, tvLikeCount));
                             }
                         } catch (JSONException jsonException) {
                             jsonException.printStackTrace();
                         }
+                        int likesCount = likesArray.length();
+                        tvLikeCount.setText(String.valueOf(likesCount));
                         post.setLikesArray(likesArray);
                         currentUser.put("liked", liked);
                         post.saveInBackground();
