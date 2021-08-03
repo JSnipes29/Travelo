@@ -171,6 +171,20 @@
         android:tint="?colorOnPrimary"
         android:clickable="true"
         android:src="@drawable/ic_baseline_message_24" />
+
+    <TextView
+        android:id="@+id/tvBio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvFollowing"
+        android:layout_alignBottom="@+id/ivProfileImage"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        tools:text="This is my test bio. My name is John Doe. I like to make maps of my favorite places" />
 </RelativeLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <com.google.android.material.navigation.NavigationView

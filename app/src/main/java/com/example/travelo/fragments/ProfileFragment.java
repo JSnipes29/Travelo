@@ -121,6 +121,7 @@ public class ProfileFragment extends Fragment {
 
     public void setUpProfileFragment() {
         binding.tvName.setText(user.getUsername());
+        binding.tvBio.setText(user.getString("bio"));
         Glide.with(getContext())
                 .load(user.getParseFile("profileImage").getUrl())
                 .circleCrop()
