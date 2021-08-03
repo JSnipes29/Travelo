@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.provider.MediaStore;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -27,6 +30,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.travelo.activities.PostsActivity;
 import com.example.travelo.activities.UsersActivity;
+import com.example.travelo.constants.Constant;
 import com.example.travelo.listeners.EndlessRecyclerViewScrollListener;
 import com.example.travelo.activities.MessagesActivity;
 import com.example.travelo.R;
@@ -59,7 +63,7 @@ import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements ComposeBioFragment.ComposeBioListener  {
 
     public static final String TAG = "ProfileFragment";
     FragmentProfileBinding binding;
@@ -123,6 +127,13 @@ public class ProfileFragment extends Fragment {
                     user = updatedUser;
                     if (binding != null) {
                         binding.ivProfileImage.setOnClickListener(v -> setProfileImage());
+                        binding.tvBio.setClickable(true);
+                        binding.tvBio.setOnClickListener(v -> setBio());
+                        String bio = user.getString("bio");
+                        if (bio == null || bio.isEmpty()) {
+                            String text = "<u>" + Constant.CLICK_BIO + "</u>";
+                            binding.tvBio.setText(Html.fromHtml(text));
+                        }
                         binding.bar.setVisibility(View.VISIBLE);
                         setUpProfileFragment();
                     }
@@ -137,7 +148,10 @@ public class ProfileFragment extends Fragment {
 
     public void setUpProfileFragment() {
         binding.tvName.setText(user.getUsername());
-        binding.tvBio.setText(user.getString("bio"));
+        String bio = user.getString("bio");
+        if (bio != null && !bio.isEmpty()) {
+            binding.tvBio.setText(user.getString("bio"));
+        }
         Glide.with(getContext())
                 .load(user.getParseFile("profileImage").getUrl())
                 .circleCrop()
@@ -173,6 +187,7 @@ public class ProfileFragment extends Fragment {
                 binding.btnFriend.setOnClickListener(v -> friend());
                 binding.btnInvite.setVisibility(View.GONE);
             }
+
         }
         // Set the following and followers click listeners
         binding.tvFollowersCount.setOnClickListener(v -> goToUsers(1));
@@ -764,6 +779,28 @@ public class ProfileFragment extends Fragment {
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
         Log.i(TAG, "activity started");
+    }
+
+    // Start bio setup by going to fragment
+    public void setBio() {
+        String oldBio = binding.tvBio.getText().toString();
+        FragmentManager fm = getChildFragmentManager();
+        Bundle bundle = new Bundle();
+        bundle.putString("oldBio", oldBio);
+        ComposeBioFragment composeBio = new ComposeBioFragment();
+        composeBio.setArguments(bundle);
+        composeBio.show(fm, "Compose Bio");
+    }
+
+    @Override
+    public void onFinishComposeBio(String bio) {
+        if (binding != null) {
+            binding.tvBio.setText(bio);
+            if (bio == null || bio.isEmpty()) {
+                String text = "<u>" + Constant.CLICK_BIO + "</u>";
+                binding.tvBio.setText(Html.fromHtml(text));
+            }
+        }
     }
 
     public void invite() {

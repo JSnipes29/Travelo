@@ -52,5 +52,6 @@
     <string name="friends">Friends</string>
     <string name="liked">Liked</string>
     <string name="kick">Kick</string>
+    <string name="update">Update</string>
 
 </resources>

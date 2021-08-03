@@ -162,6 +162,7 @@
             android:layout_marginBottom="0dp"
             android:layout_toEndOf="@+id/ivProfileImage"
             android:textSize="12sp"
+            android:clickable="false"
             tools:text="This is my test bio. My name is John Doe. I like to make maps of my favorite places. Testing how much I can write" />
     </RelativeLayout>
     </com.google.android.material.appbar.CollapsingToolbarLayout>
