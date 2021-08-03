@@ -101,8 +101,6 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
         }
 
         if (swipeContainer != null) {
-            int x = ((LinearLayoutManager)mLayoutManager).findFirstCompletelyVisibleItemPosition();
-            Log.i("TEST", "X: " + x);
             swipeContainer.setEnabled(((LinearLayoutManager)mLayoutManager).findFirstCompletelyVisibleItemPosition() == 0);
         }
     }
