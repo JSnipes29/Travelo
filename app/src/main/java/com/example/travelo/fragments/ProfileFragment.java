@@ -37,6 +37,7 @@ import com.example.travelo.models.Inbox;
 import com.example.travelo.models.Messages;
 import com.example.travelo.models.Post;
 import com.example.travelo.models.Room;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -64,9 +65,11 @@ public class ProfileFragment extends Fragment {
     FragmentProfileBinding binding;
     ParseUser user;
     PostAdapter postAdapter;
+    LinearLayoutManager postLayoutManager;
     List<Post> posts;
     String userId;
     EndlessRecyclerViewScrollListener scrollListener;
+    int index = 0;
     public static final int GALLERY_REQUEST = 12;
     public static final int LIMIT = 10;
 
@@ -98,6 +101,19 @@ public class ProfileFragment extends Fragment {
         binding.btnInvite.setVisibility(View.GONE);
         binding.btnFriend.setVisibility(View.GONE);
         binding.bar.setVisibility(View.GONE);
+        // Bind posts to recycler view
+        posts = new ArrayList<>();
+        postAdapter = new PostAdapter(getContext(), posts, (AppCompatActivity)getActivity());
+        binding.rvPosts.setAdapter(postAdapter);
+        postLayoutManager = new LinearLayoutManager(getContext());
+        binding.rvPosts.setLayoutManager(postLayoutManager);
+        scrollListener = new EndlessRecyclerViewScrollListener(postLayoutManager, binding.swipeContainer) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                queryPosts(1);
+            }
+        };
+        binding.rvPosts.addOnScrollListener(scrollListener);
         if (user == null) {
             ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
             query.include("followers");
@@ -163,19 +179,7 @@ public class ProfileFragment extends Fragment {
         binding.tvFollowers.setOnClickListener(v -> goToUsers(1));
         binding.tvFollowingCount.setOnClickListener(v -> goToUsers(2));
         binding.tvFollowing.setOnClickListener(v -> goToUsers(2));
-        // Bind posts to recycler view
-        posts = new ArrayList<>();
-        postAdapter = new PostAdapter(getContext(), posts, (AppCompatActivity)getActivity());
-        binding.rvPosts.setAdapter(postAdapter);
-        LinearLayoutManager postLayoutManager = new LinearLayoutManager(getContext());
-        binding.rvPosts.setLayoutManager(postLayoutManager);
-        scrollListener = new EndlessRecyclerViewScrollListener(postLayoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                queryPosts(1);
-            }
-        };
-        binding.rvPosts.addOnScrollListener(scrollListener);
+
         // Setup app bar
         // Set up the app bar
         binding.bar.setOnMenuClickedListener(new View.OnClickListener() {
@@ -505,6 +509,7 @@ public class ProfileFragment extends Fragment {
             if (parameter == 0 && binding != null) {
                 binding.shimmerLayout.setVisibility(View.GONE);
                 binding.rvPosts.setVisibility(View.VISIBLE);
+                scrollListener.resetState();
             }
             scrollListener.resetState();
         });
@@ -839,6 +844,7 @@ public class ProfileFragment extends Fragment {
                         }
                         user = updatedUser;
                         setUpProfileFragment();
+                        scrollListener.resetState();
                     }
                 });
             }
@@ -849,5 +855,26 @@ public class ProfileFragment extends Fragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
     }
+
+    public void setSwipeToRefreshEnabled(boolean enabled) {
+        binding.swipeContainer.setEnabled(enabled);
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+
 
 }

@@ -1,9 +1,12 @@
 package com.example.travelo.listeners;
 
+import android.util.Log;
+
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnScrollListener {
     // The minimum amount of items to have below your current scroll position
@@ -17,11 +20,17 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
     private boolean loading = true;
     // Sets the starting page index
     private int startingPageIndex = 0;
+    SwipeRefreshLayout swipeContainer;
 
     RecyclerView.LayoutManager mLayoutManager;
 
     public EndlessRecyclerViewScrollListener(LinearLayoutManager layoutManager) {
         this.mLayoutManager = layoutManager;
+    }
+
+    public EndlessRecyclerViewScrollListener(LinearLayoutManager layoutManager, final SwipeRefreshLayout swipeContainer) {
+        this.mLayoutManager = layoutManager;
+        this.swipeContainer = swipeContainer;
     }
 
     public EndlessRecyclerViewScrollListener(GridLayoutManager layoutManager) {
@@ -89,6 +98,12 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
             currentPage++;
             onLoadMore(currentPage, totalItemCount, view);
             loading = true;
+        }
+
+        if (swipeContainer != null) {
+            int x = ((LinearLayoutManager)mLayoutManager).findFirstCompletelyVisibleItemPosition();
+            Log.i("TEST", "X: " + x);
+            swipeContainer.setEnabled(((LinearLayoutManager)mLayoutManager).findFirstCompletelyVisibleItemPosition() == 0);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.example.travelo.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MotionEventCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.example.travelo.R;
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             touchSlopField.setAccessible(true);
 
             final int touchSlop = (int) touchSlopField.get(recyclerView);
-            touchSlopField.set(recyclerView, touchSlop * 3);
+            touchSlopField.set(recyclerView, touchSlop * 4);
         } catch (Exception ignore) {
         }
 
@@ -133,4 +135,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return id;
     }
+
 }
