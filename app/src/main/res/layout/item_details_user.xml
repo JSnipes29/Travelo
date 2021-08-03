@@ -39,4 +39,17 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="5dp"
         android:background="?colorOnSecondary" />
+
+    <TextView
+        android:id="@+id/tvBio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvName"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="10dp"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:textSize="12sp"
+        tools:text="This is a bio of a person" />
 </RelativeLayout>

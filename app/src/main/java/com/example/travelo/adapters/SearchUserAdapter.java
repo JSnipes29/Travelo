@@ -52,18 +52,22 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
 
         ImageView ivProfileImage;
         TextView tvName;
+        TextView tvBio;
         RelativeLayout rlUser;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
             tvName = itemView.findViewById(R.id.tvName);
+            tvBio = itemView.findViewById(R.id.tvBio);
             rlUser = itemView.findViewById(R.id.rlUser);
         }
 
         public void bind(ParseUser user) {
             String username = user.getUsername();
             tvName.setText(username);
+            String bio = user.getString("bio");
+            tvBio.setText(bio);
             ParseFile profileImageFile = user.getParseFile("profileImage");
             if (profileImageFile != null) {
                 String profileImageUrl = profileImageFile.getUrl();
