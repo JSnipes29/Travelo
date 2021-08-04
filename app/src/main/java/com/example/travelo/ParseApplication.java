@@ -24,6 +24,7 @@ public class ParseApplication extends Application {
                 .applicationId("56FOAmOXvVk5GqnDojmLIpmnZW8SzMXr8JkIy4Cn")
                 .clientKey("wsE9tdqbYL8gNd96TmlR791XKyOX5szd4ZruZpLZ")
                 .server("https://parseapi.back4app.com")
+                .enableLocalDataStore()
                 .build()
         );
     }

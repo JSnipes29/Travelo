@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.travelo.R;
 import com.example.travelo.databinding.ActivityProfileBinding;
@@ -21,6 +22,8 @@ import com.parse.ParseUser;
 import org.parceler.Parcels;
 
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -49,16 +52,17 @@ public class ProfileActivity extends AppCompatActivity {
         query.include("followers");
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
-            public void done(List<ParseUser> objects, ParseException e) {
+            public void done(List<ParseUser> users, ParseException e) {
                 if (e != null) {
                     Log.e("UsersAdapter","Couldn't retrieve user",e);
+                    Toasty.error(context, "Error contacting with server: Can't retrieve to user data", Toast.LENGTH_SHORT, true).show();
                     return;
                 }
-                if (objects.isEmpty()) {
+                if (users.isEmpty()) {
                     Log.i("UsersAdapter", "Couldn't find user");
                     return;
                 }
-                ParseUser parseUser = objects.get(0);
+                ParseUser parseUser = users.get(0);
                 Log.i("UsersAdapter","Found user: " + parseUser.getObjectId());
                 intent.putExtra("parseUser", Parcels.wrap(parseUser));
                 context.startActivity(intent);

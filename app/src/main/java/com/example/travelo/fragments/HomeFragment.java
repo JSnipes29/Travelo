@@ -1,5 +1,6 @@
 package com.example.travelo.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -29,9 +30,11 @@ import com.example.travelo.adapters.PostAdapter;
 import com.example.travelo.adapters.UsersAdapter;
 import com.example.travelo.databinding.FragmentHomeBinding;
 import com.example.travelo.models.Post;
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -155,10 +158,21 @@ public class HomeFragment extends Fragment {
         query.findInBackground((posts, e) -> {
             if (e != null) {
                 Log.e(TAG, "Couldn't get post", e);
+                getPostsFromLocal();
                 return;
             }
             for (Post post: posts) {
                 Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getOwner().getUsername());
+                // Pin the post in the local database on start
+                if (parameter == 0) {
+                    ParseObject.unpinAllInBackground("HomePosts", e1 -> {
+                        if (e1 != null) {
+                            Log.e(TAG, "Error unpinning posts from local datastore");
+                            return;
+                        }
+                        ParseObject.pinAllInBackground("HomePosts", posts);
+                    });
+                }
             }
             if (parameter == 1) {
                 Log.i(TAG, "Endless scrolling in effect");
@@ -309,6 +323,30 @@ public class HomeFragment extends Fragment {
                     binding.searchShimmerLayout.setVisibility(View.GONE);
                     binding.rvSearchedUsers.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+    }
+
+    public void getPostsFromLocal() {
+        Context context = getContext();
+        ParseQuery<Post> postQuery = ParseQuery.getQuery(Post.class);
+        postQuery.fromLocalDatastore();
+        postQuery.include(Post.KEY_OWNER);
+        postQuery.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> localPosts, ParseException e) {
+                if (e != null) {
+                    Toasty.error(context, "Error getting posts from local datastore", Toast.LENGTH_SHORT, true).show();
+                    return;
+                }
+                posts.addAll(localPosts);
+                postAdapter.notifyDataSetChanged();
+                if (binding != null) {
+                    binding.shimmerLayout.setVisibility(View.GONE);
+                    binding.shimmerLayout.hideShimmer();
+                    binding.rvPosts.setVisibility(View.VISIBLE);
+                }
+                Log.i(TAG, "Home feed using local datastore");
             }
         });
     }
