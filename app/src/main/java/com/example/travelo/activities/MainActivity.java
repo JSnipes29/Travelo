@@ -23,6 +23,7 @@ import com.example.travelo.fragments.AddTripFragment;
 import com.example.travelo.fragments.CreateRoomFragment;
 import com.example.travelo.fragments.HomeFragment;
 import com.example.travelo.fragments.InboxFragment;
+import com.example.travelo.fragments.JoinRoomFragment;
 import com.example.travelo.fragments.ProfileFragment;
 import com.parse.ParseUser;
 
@@ -150,12 +151,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void shortcut(int shortcut) {
+        FragmentManager fm = getSupportFragmentManager();
         switch (shortcut) {
             case Constant.CREATE_MAP_SHORTCUT:
                 //Launch create room fragment
-                FragmentManager fm = getSupportFragmentManager();
                 CreateRoomFragment createRoomFragment = new CreateRoomFragment();
                 createRoomFragment.show(fm, "CreateRoom");
+                break;
+            case Constant.JOIN_MAP_SHORTCUT:
+                //Launch join room fragment
+                JoinRoomFragment joinRoomFragment = new JoinRoomFragment();
+                joinRoomFragment.show(fm, "JoinRoom");
                 break;
             default:
                 return;
@@ -165,6 +171,11 @@ public class MainActivity extends AppCompatActivity {
     @Shortcut(id = "create_map", icon = R.drawable.ic_baseline_add_location_alt_24, shortLabel = "Create Map")
     public void createTrip() {
         shortcut(Constant.CREATE_MAP_SHORTCUT);
+    }
+
+    @Shortcut(id = "join_map", icon = R.drawable.ic_baseline_add_location_alt_24, shortLabel = "Join Map")
+    public void joinTrip() {
+        shortcut(Constant.JOIN_MAP_SHORTCUT);
     }
 
     // Checks if a user is logged in

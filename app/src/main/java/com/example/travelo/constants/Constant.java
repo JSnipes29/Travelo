@@ -38,6 +38,7 @@ public class Constant {
     public static final String CLICK_BIO = "Click to edit bio";
     public static final int MAX_BIO_LENGTH = 144;
     public static final int CREATE_MAP_SHORTCUT = 1;
+    public static final int JOIN_MAP_SHORTCUT = 2;
     public static void invite(Context context, Room room, String userId, final String TAG, DialogFragment fragment) {
         ParseQuery<ParseUser> userParseQuery = ParseQuery.getQuery(ParseUser.class);
         userParseQuery.include(Inbox.KEY);
