@@ -97,7 +97,6 @@ public class HomeFragment extends Fragment {
             }
         };
         binding.rvPosts.addOnScrollListener(scrollListener);
-        binding.rvPosts.setNestedScrollingEnabled(false);
         // Query posts to populate feed
         queryPosts(0);
 

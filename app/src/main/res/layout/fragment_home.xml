@@ -1,10 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.HomeFragment">
 
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/ctl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentScrim="?colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:title="@string/app_name">
+            <RelativeLayout
+                android:id="@+id/rlTop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?colorOnPrimary"
+                app:layout_collapseMode="parallax">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -28,6 +47,26 @@
         android:text="@string/app_name"
         android:textColor="?colorOnPrimary"
         android:textSize="60sp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFollowing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        />
+    <View
+        android:id="@+id/border"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/rvFollowing"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:background="?colorPrimary" />
+            </RelativeLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmerLayout"
         android:layout_width="match_parent"
@@ -52,35 +91,15 @@
         android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/border">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPosts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:nestedScrollingEnabled="false"/>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvFollowing"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/toolbar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="0dp"
         />
-
-    <View
-        android:id="@+id/border"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@+id/rvFollowing"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="0dp"
-        android:background="?colorPrimary" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSearchedUsers"
@@ -91,6 +110,7 @@
         android:layout_centerHorizontal="true"
         android:visibility="gone"
         android:layout_marginTop="0dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         />
 
     <com.facebook.shimmer.ShimmerFrameLayout
@@ -115,6 +135,4 @@
 
         </LinearLayout>
     </com.facebook.shimmer.ShimmerFrameLayout>
-
-
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
