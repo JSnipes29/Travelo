@@ -26,7 +26,7 @@
         android:fontFamily="@font/cursive"
         android:text="@string/create_trip"
         android:textColor="?colorPrimaryVariant"
-        android:textSize="96sp" />
+        android:textSize="80sp" />
 
     <EditText
         android:id="@+id/etRoomId"
