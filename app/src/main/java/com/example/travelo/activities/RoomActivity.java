@@ -52,6 +52,7 @@ public class RoomActivity extends AppCompatActivity {
     String ownerId;
     UsersAdapter userAdapter;
     List<String[]> usersList;
+    List<String> usernames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +106,7 @@ public class RoomActivity extends AppCompatActivity {
                     });
                     // Set up users in bar
                     usersList = new ArrayList<>();
+                    usernames = new ArrayList<>();
                     JSONObject jsonUsers = room.getProfileImages();
                     Iterator<String> iter = jsonUsers.keys();
 
@@ -114,6 +116,7 @@ public class RoomActivity extends AppCompatActivity {
                             String imageUrl = jsonUsers.getString(key);
                             String[] userArray = {key, imageUrl};
                             usersList.add(userArray);
+                            usernames.add(key);
                         } catch (JSONException jsonException) {
                             Log.e(TAG, "Error getting users", jsonException);
                         }
@@ -219,5 +222,30 @@ public class RoomActivity extends AppCompatActivity {
         bundle.putString("roomObjectId", id);
         kickRoomFragment.setArguments(bundle);
         kickRoomFragment.show(fragmentManager, "KickRoom");
+    }
+
+    // Refresh user list on app bar
+    public void refreshUsers(JSONObject jsonUsers) {
+        Iterator<String> iter = jsonUsers.keys();
+        boolean usersAdded = false;
+        while(iter.hasNext()) {
+            String key = iter.next();
+            if (usernames.contains(key)) {
+                continue;
+            }
+            try {
+                String imageUrl = jsonUsers.getString(key);
+                String[] userArray = {key, imageUrl};
+                usersList.add(userArray);
+                usernames.add(key);
+                userAdapter.notifyDataSetChanged();
+                usersAdded = true;
+            } catch (JSONException jsonException) {
+                Log.e(TAG, "Error getting users", jsonException);
+            }
+        }
+        if (usersAdded) {
+            Toasty.info(this, "Users joined", Toast.LENGTH_SHORT, true).show();
+        }
     }
 }

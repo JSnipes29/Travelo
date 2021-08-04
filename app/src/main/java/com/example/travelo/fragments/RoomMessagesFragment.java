@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.travelo.R;
+import com.example.travelo.activities.RoomActivity;
 import com.example.travelo.adapters.ChatAdapter;
 import com.example.travelo.constants.Constant;
 import com.example.travelo.databinding.FragmentRoomMessagesBinding;
@@ -193,6 +194,10 @@ public class RoomMessagesFragment extends Fragment {
                         }
                     } else {
                         Log.e(TAG, "Error loading messages", e);
+                    }
+                    if (getActivity() != null) {
+                        JSONObject jsonUsers = room.getProfileImages();
+                        ((RoomActivity) getActivity()).refreshUsers(jsonUsers);
                     }
                 }
             });

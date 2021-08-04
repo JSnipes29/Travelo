@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.example.travelo.activities.DetailsPostActivity;
 import com.example.travelo.activities.PostMapActivity;
 import com.example.travelo.R;
+import com.example.travelo.activities.RoomActivity;
 import com.example.travelo.activities.YelpLocationsActivity;
 import com.example.travelo.adapters.CustomWindowAdapter;
 import com.example.travelo.constants.Constant;
@@ -579,6 +580,10 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                     Log.e(TAG,"Error getting markers from server", jsonException);
                 }
 
+                if (getActivity() != null) {
+                    JSONObject jsonUsers = room.getProfileImages();
+                    ((RoomActivity) getActivity()).refreshUsers(jsonUsers);
+                }
 
             }
         });
