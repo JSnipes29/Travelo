@@ -53,5 +53,6 @@
     <string name="liked">Liked</string>
     <string name="kick">Kick</string>
     <string name="update">Update</string>
+    <string name="update_bio">Update Bio</string>
 
 </resources>
