@@ -158,7 +158,9 @@ public class HomeFragment extends Fragment {
         query.findInBackground((posts, e) -> {
             if (e != null) {
                 Log.e(TAG, "Couldn't get post", e);
-                getPostsFromLocal();
+                if (parameter == 0) {
+                    getPostsFromLocal();
+                }
                 return;
             }
             for (Post post: posts) {
