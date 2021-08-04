@@ -65,4 +65,6 @@ dependencies {
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
     implementation 'com.github.florent37:awesomebar:1.0.3'
 
+    implementation 'com.github.matthiasrobbers:shortbread:1.4.0'
+    annotationProcessor 'com.github.matthiasrobbers:shortbread-compiler:1.4.0'
 }

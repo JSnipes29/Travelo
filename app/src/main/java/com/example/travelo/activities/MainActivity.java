@@ -13,17 +13,23 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.travelo.R;
 import com.example.travelo.adapters.MainFragmentPagerAdapter;
+import com.example.travelo.constants.Constant;
 import com.example.travelo.databinding.ActivityMainBinding;
 import com.example.travelo.fragments.AddTripFragment;
+import com.example.travelo.fragments.CreateRoomFragment;
 import com.example.travelo.fragments.HomeFragment;
 import com.example.travelo.fragments.InboxFragment;
 import com.example.travelo.fragments.ProfileFragment;
 import com.parse.ParseUser;
 
 import java.lang.reflect.Field;
+
+import es.dmoral.toasty.Toasty;
+import shortbread.Shortcut;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        if (checkUser()) {
+            Intent i = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(i);
+            finish();
+            return;
+        }
         final FragmentManager fragmentManager = getSupportFragmentManager();
         pagerAdapter = new MainFragmentPagerAdapter(fragmentManager, getLifecycle());
         binding.viewPager.setAdapter(pagerAdapter);
@@ -77,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 swipe = false;
             }
         });
+
     }
 
 
@@ -134,6 +147,33 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return id;
+    }
+
+    public void shortcut(int shortcut) {
+        switch (shortcut) {
+            case Constant.CREATE_MAP_SHORTCUT:
+                //Launch create room fragment
+                FragmentManager fm = getSupportFragmentManager();
+                CreateRoomFragment createRoomFragment = new CreateRoomFragment();
+                createRoomFragment.show(fm, "CreateRoom");
+                break;
+            default:
+                return;
+        }
+    }
+
+    @Shortcut(id = "create_map", icon = R.drawable.ic_baseline_add_location_alt_24, shortLabel = "Create Map")
+    public void createTrip() {
+        shortcut(Constant.CREATE_MAP_SHORTCUT);
+    }
+
+    // Checks if a user is logged in
+    public boolean checkUser() {
+        if (ParseUser.getCurrentUser() == null) {
+            Toasty.error(this, "Must be logged in", Toast.LENGTH_SHORT, true).show();
+            return true;
+        }
+        return false;
     }
 
 }

@@ -9,13 +9,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.travelo.R;
+import com.example.travelo.constants.Constant;
 import com.example.travelo.databinding.ActivityLoginBinding;
+import com.example.travelo.fragments.CreateRoomFragment;
 import com.example.travelo.fragments.SignupFragment;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import es.dmoral.toasty.Toasty;
+import shortbread.Shortcut;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -79,4 +83,5 @@ public class LoginActivity extends AppCompatActivity {
         SignupFragment signupFragment = SignupFragment.newInstance("Sign Up");
         signupFragment.show(fm, "fragment_signup");
     }
+
 }
