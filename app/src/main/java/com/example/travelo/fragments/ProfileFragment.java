@@ -81,10 +81,10 @@ public class ProfileFragment extends Fragment implements ComposeBioFragment.Comp
         // Required empty public constructor
     }
 
-    public static Fragment newInstance() {
+    public static ProfileFragment newInstance() {
         Bundle bundle = new Bundle();
         bundle.putParcelable("user", null);
-        Fragment fragment = new ProfileFragment();
+        ProfileFragment fragment = new ProfileFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -124,6 +124,10 @@ public class ProfileFragment extends Fragment implements ComposeBioFragment.Comp
             query.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>() {
                 @Override
                 public void done(ParseUser updatedUser, ParseException e) {
+                    if (e != null) {
+                        Log.e(TAG, "Error loading profile data", e);
+                        return;
+                    }
                     user = updatedUser;
                     if (binding != null) {
                         binding.ivProfileImage.setOnClickListener(v -> setProfileImage());

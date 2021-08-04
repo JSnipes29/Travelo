@@ -130,6 +130,10 @@ public class InboxFragment extends Fragment {
         userQuery.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>() {
             @Override
             public void done(ParseUser user, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error loading inbox data", e);
+                    return;
+                }
                 Inbox inbox = (Inbox) user.getParseObject(Inbox.KEY);
                 JSONArray jsonInbox = inbox.getMessages();
                 jsonToList(jsonInbox, query, parameter);

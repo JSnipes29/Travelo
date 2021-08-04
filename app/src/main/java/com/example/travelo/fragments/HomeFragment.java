@@ -200,6 +200,10 @@ public class HomeFragment extends Fragment {
         q.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>() {
             @Override
             public void done(ParseUser user, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error getting following data", e);
+                    return;
+                }
                 JSONArray jsonFollowing = user.getJSONArray("following");
                 for (int i = 0; i < jsonFollowing.length(); i++) {
                     ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
