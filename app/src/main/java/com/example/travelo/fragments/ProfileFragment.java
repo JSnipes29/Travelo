@@ -44,6 +44,7 @@ import com.example.travelo.models.Room;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.parse.DeleteCallback;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -533,10 +534,23 @@ public class ProfileFragment extends Fragment implements ComposeBioFragment.Comp
         query.findInBackground((posts, e) -> {
             if (e != null) {
                 Log.e(TAG, "Couldn't get post", e);
+                getLocalPosts();
                 return;
             }
             for (Post post: posts) {
                 Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getOwner().getUsername());
+            }
+            // Pin posts in local datastore
+            if (parameter == 0 && user.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+                ParseObject.unpinAllInBackground("ProfilePosts", posts, new DeleteCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Trouble pinning posts to local datastore", e);
+                        }
+                        ParseObject.pinAllInBackground("ProfilePosts", posts);
+                    }
+                });
             }
             if (parameter == 1) {
                 Log.i(TAG, "Endless scrolling in effect");
@@ -553,6 +567,33 @@ public class ProfileFragment extends Fragment implements ComposeBioFragment.Comp
                 scrollListener.resetState();
             }
             scrollListener.resetState();
+        });
+    }
+
+    private void getLocalPosts() {
+        Context context = getContext();
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.include(Post.KEY_OWNER);
+        query.setLimit(LIMIT);
+        query.whereEqualTo("userArray", user.getUsername());
+        query.addDescendingOrder(Post.KEY_CREATED_AT);
+        query.fromLocalDatastore();
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> localPosts, ParseException e) {
+                if (e != null) {
+                    Toasty.error(context, "Error getting posts", Toast.LENGTH_SHORT, true).show();
+                    return;
+                }
+                posts.addAll(localPosts);
+                postAdapter.notifyDataSetChanged();
+                if (binding != null) {
+                    binding.shimmerLayout.setVisibility(View.GONE);
+                    binding.rvPosts.setVisibility(View.VISIBLE);
+                    scrollListener.resetState();
+                }
+                scrollListener.resetState();
+            }
         });
     }
 

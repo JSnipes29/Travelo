@@ -26,6 +26,7 @@ import com.example.travelo.fragments.InboxFragment;
 import com.example.travelo.fragments.JoinRoomFragment;
 import com.example.travelo.fragments.ProfileFragment;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import java.lang.reflect.Field;
@@ -101,16 +102,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logout(MenuItem mi) {
-        try {
-            ParseUser.getCurrentUser().unpin();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } finally {
-            ParseUser.logOut();
-            Intent i = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(i);
-            finish();
-        }
+        ParseObject.unpinAllInBackground();
+        ParseUser.logOutInBackground();
+        Intent i = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(i);
+        finish();
     }
 
     public int getPage(int itemId) {
