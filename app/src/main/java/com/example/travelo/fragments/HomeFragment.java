@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.travelo.activities.MainActivity;
 import com.example.travelo.adapters.SearchUserAdapter;
 import com.example.travelo.listeners.EndlessRecyclerViewScrollListener;
 import com.example.travelo.R;
@@ -57,6 +58,7 @@ public class HomeFragment extends Fragment {
     EndlessRecyclerViewScrollListener scrollListener;
     List<ParseUser> searchedUsers;
     SearchUserAdapter searchUserAdapter;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -109,7 +111,6 @@ public class HomeFragment extends Fragment {
         binding.rvFollowing.setLayoutManager(followingLayoutManger);
         // Query users to populate users following
         queryFollowing();
-
         // Configure pull to refresh
         binding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -132,7 +133,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 // Open the draw when menu is clicked
                 if (binding != null) {
-                    binding.drawerLayout.openDrawer(GravityCompat.START);
+                    ((MainActivity)getActivity()).openDrawer();
                 }
             }
         });
@@ -144,6 +145,12 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity)getActivity()).setupDrawer(R.menu.menu_main);
     }
 
     // Query posts from the server, parameter 0 == onStart, 1 == endless scrolling, 2 == pull to refresh

@@ -1,6 +1,7 @@
 package com.example.travelo.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.core.view.MotionEventCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -25,6 +26,7 @@ import com.example.travelo.fragments.HomeFragment;
 import com.example.travelo.fragments.InboxFragment;
 import com.example.travelo.fragments.JoinRoomFragment;
 import com.example.travelo.fragments.ProfileFragment;
+import com.google.android.material.navigation.NavigationView;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -188,6 +190,20 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    // Opens drawer
+    public void openDrawer() {
+        binding.drawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    public NavigationView getNavigationView() {
+        return binding.nvView;
+    }
+
+    public void setupDrawer(int menu) {
+        binding.nvView.getMenu().clear();
+        binding.nvView.inflateMenu(menu);
     }
 
 }

@@ -28,6 +28,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.travelo.activities.MainActivity;
 import com.example.travelo.activities.PostsActivity;
 import com.example.travelo.activities.UsersActivity;
 import com.example.travelo.constants.Constant;
@@ -229,14 +230,14 @@ public class ProfileFragment extends Fragment implements ComposeBioFragment.Comp
             public void onClick(View v) {
                 // Open the draw when menu is clicked
                 if (binding != null) {
-                    binding.drawerLayout.openDrawer(GravityCompat.START);
+                    ((MainActivity)getActivity()).openDrawer();
                 }
             }
         });
         // Setup pull to refresh
         setupPullToRefresh();
         // Setup drawer view
-        setupDrawerContent(binding.nvView);
+        setupDrawerContent(((MainActivity)getActivity()).getNavigationView());
         queryPosts(0);
     }
 
@@ -244,6 +245,12 @@ public class ProfileFragment extends Fragment implements ComposeBioFragment.Comp
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity)getActivity()).setupDrawer(R.menu.drawer_view_profile);
     }
 
     public void follow() {

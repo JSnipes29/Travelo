@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.travelo.R;
+import com.example.travelo.activities.MainActivity;
 import com.example.travelo.adapters.InboxAdapter;
 import com.example.travelo.databinding.FragmentInboxBinding;
 import com.example.travelo.models.Inbox;
@@ -113,7 +115,7 @@ public class InboxFragment extends Fragment {
             public void onClick(View v) {
                 // Open the draw when menu is clicked
                 if (binding != null) {
-                    binding.drawerLayout.openDrawer(GravityCompat.START);
+                    ((MainActivity)getActivity()).openDrawer();
                 }
             }
         });
@@ -274,6 +276,11 @@ public class InboxFragment extends Fragment {
         binding = null;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity)getActivity()).setupDrawer(R.menu.menu_main);
+    }
 
     public void setupSearch() {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
