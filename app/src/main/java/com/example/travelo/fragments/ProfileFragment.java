@@ -534,7 +534,9 @@ public class ProfileFragment extends Fragment implements ComposeBioFragment.Comp
         query.findInBackground((posts, e) -> {
             if (e != null) {
                 Log.e(TAG, "Couldn't get post", e);
-                getLocalPosts();
+                if (parameter == 0) {
+                    getLocalPosts();
+                }
                 return;
             }
             for (Post post: posts) {
