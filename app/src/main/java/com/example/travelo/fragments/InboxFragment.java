@@ -2,27 +2,20 @@ package com.example.travelo.fragments;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.MenuItemCompat;
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.appcompat.widget.SearchView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.example.travelo.R;
 import com.example.travelo.adapters.InboxAdapter;
 import com.example.travelo.databinding.FragmentInboxBinding;
 import com.example.travelo.models.Inbox;
@@ -67,8 +60,6 @@ public class InboxFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentInboxBinding.inflate(getLayoutInflater(), container, false);
         View view = binding.getRoot();
-        ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
         list = new ArrayList<>();
         inboxAdapter = new InboxAdapter(list, getContext());
         binding.rvInbox.setAdapter(inboxAdapter);
@@ -112,6 +103,20 @@ public class InboxFragment extends Fragment {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+        searchView = binding.searchView;
+        // Setup search item
+        setupSearch();
+
+        // Set up the app bar
+        binding.toolbar.setOnMenuClickedListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open the draw when menu is clicked
+                if (binding != null) {
+                    binding.drawerLayout.openDrawer(GravityCompat.START);
+                }
+            }
+        });
         return view;
     }
 
@@ -269,17 +274,8 @@ public class InboxFragment extends Fragment {
         binding = null;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.inbox_menu, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+    public void setupSearch() {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -294,12 +290,10 @@ public class InboxFragment extends Fragment {
                 return false;
             }
         });
-        searchView.setOnSearchClickListener(v -> binding.tvAppName.setVisibility(View.GONE));
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
                 // Reset the elements of the inbox
-                binding.tvAppName.setVisibility(View.VISIBLE);
                 queryInbox(0, null);
                 return false;
             }
