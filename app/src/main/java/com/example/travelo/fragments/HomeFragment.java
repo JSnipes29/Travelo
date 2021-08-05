@@ -4,23 +4,19 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.MenuItemCompat;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.travelo.adapters.SearchUserAdapter;
@@ -30,7 +26,7 @@ import com.example.travelo.adapters.PostAdapter;
 import com.example.travelo.adapters.UsersAdapter;
 import com.example.travelo.databinding.FragmentHomeBinding;
 import com.example.travelo.models.Post;
-import com.parse.DeleteCallback;
+import com.google.android.material.navigation.NavigationView;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -77,9 +73,6 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(getLayoutInflater(), container, false);
         View view = binding.getRoot();
-        // Setup toolbar
-        ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
         // Set up empty searched users
         searchedUsers = new ArrayList<>();
         searchUserAdapter = new SearchUserAdapter(getContext(), searchedUsers);
@@ -128,7 +121,17 @@ public class HomeFragment extends Fragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-
+        // Set up the app bar
+        binding.toolbar.setOnMenuClickedListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open the draw when menu is clicked
+                if (binding != null) {
+                    binding.drawerLayout.openDrawer(GravityCompat.START);
+                }
+            }
+        });
+        setupSearch();
         return view;
     }
 
@@ -256,23 +259,12 @@ public class HomeFragment extends Fragment {
 
     }
 
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_main, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+    public void setupSearch() {
+        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // Search the server using the query
-                searchView.clearFocus();
+                binding.searchView.clearFocus();
                 if (binding != null) {
                     // Set the feed recycler view to gone
                     binding.rvPosts.setVisibility(View.GONE);
@@ -291,8 +283,7 @@ public class HomeFragment extends Fragment {
                 return false;
             }
         });
-        searchView.setOnSearchClickListener(v -> binding.tvAppName.setVisibility(View.GONE));
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+        binding.searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
                 // Clear the searched users view
@@ -301,7 +292,6 @@ public class HomeFragment extends Fragment {
                 binding.searchShimmerLayout.setVisibility(View.GONE);
                 binding.rvSearchedUsers.setVisibility(View.GONE);
                 // Make the feed and other elements visible again
-                binding.tvAppName.setVisibility(View.VISIBLE);
                 binding.rvPosts.setVisibility(View.VISIBLE);
                 binding.rvFollowing.setVisibility(View.VISIBLE);
                 binding.border.setVisibility(View.VISIBLE);
@@ -360,4 +350,24 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    // Setup the contents of the menu drawer
+    public void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                selectDrawerItem(item);
+                return true;
+            }
+        });
+    }
+    // Choose what happens when item on menu drawer is selected
+    public void selectDrawerItem(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.action_logout:
+                Log.i(TAG, "Clicked on logout");
+                break;
+            default:
+                break;
+        }
+    }
 }
