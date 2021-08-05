@@ -16,6 +16,7 @@ import com.example.travelo.R;
 import com.example.travelo.adapters.CommentAdapter;
 import com.example.travelo.adapters.CustomWindowAdapter;
 import com.example.travelo.adapters.UsersAdapter;
+import com.example.travelo.constants.Constant;
 import com.example.travelo.databinding.ActivityDetailsPostBinding;
 import com.example.travelo.models.MarkerTag;
 import com.example.travelo.models.Post;
@@ -117,6 +118,7 @@ public class DetailsPostActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 Log.e(TAG, "Couldn't updated json object with comment", e);
             }
+            JSONArray oldComments = post.getComments();
             JSONArray jsonComments = post.getComments();
             jsonComments.put(jsonComment);
             post.setComments(jsonComments);
@@ -125,6 +127,9 @@ public class DetailsPostActivity extends AppCompatActivity {
                 public void done(ParseException e) {
                     if (e != null) {
                         Log.e(TAG, "Problem loading comment to server", e);
+                        Toasty.error(DetailsPostActivity.this, "Couldn't upload comment", Toast.LENGTH_SHORT, true).show();
+                        post.setComments(oldComments);
+                        post.saveInBackground();
                         return;
                     }
                     Toasty.success(DetailsPostActivity.this, "Comment uploaded successfully", Toast.LENGTH_SHORT, true).show();
