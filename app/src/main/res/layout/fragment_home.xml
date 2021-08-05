@@ -30,15 +30,14 @@
                 android:background="?colorOnPrimary"
                 app:layout_collapseMode="parallax">
     <com.github.florent37.awesomebar.AwesomeBar
-        android:id="@+id/toolbar"
+        android:id="@+id/homeBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="0dp"
-        android:background="?attr/colorOnPrimary"
-        app:bar_primaryColor="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
+        android:background="?colorOnPrimary"
+        app:bar_primaryColor="?colorPrimary"
         android:elevation="4dp"
         ></com.github.florent37.awesomebar.AwesomeBar>
 
@@ -46,7 +45,7 @@
                     android:id="@+id/searchView"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/toolbar"
+                    android:layout_alignBottom="@+id/homeBar"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
@@ -58,7 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/homeBar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="0dp"
         />
@@ -113,7 +112,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/homeBar"
         android:layout_centerHorizontal="true"
         android:visibility="gone"
         android:layout_marginTop="0dp"
@@ -125,7 +124,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/homeBar"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <LinearLayout
             android:layout_width="match_parent"

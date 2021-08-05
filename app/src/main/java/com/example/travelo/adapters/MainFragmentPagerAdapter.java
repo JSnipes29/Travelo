@@ -17,7 +17,7 @@ import java.util.List;
 
 public class MainFragmentPagerAdapter extends FragmentStateAdapter {
 
-    private static final List<Fragment> BASE_FRAGMENTS = Arrays.asList(new HomeFragment(), new AddTripFragment(), ProfileFragment.newInstance() , new InboxFragment());
+    private static final List<Fragment> BASE_FRAGMENTS = Arrays.asList(HomeFragment.newInstance(), new AddTripFragment(), ProfileFragment.newInstance() , new InboxFragment());
     private static final int HOME_POSITION = 0;
     private static final int ADD_POSITION = 1;
     private static final int PROFILE_POSITION = 2;

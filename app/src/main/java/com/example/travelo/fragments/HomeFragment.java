@@ -62,6 +62,11 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static HomeFragment newInstance() {
+        HomeFragment fragment = new HomeFragment();
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,7 +127,7 @@ public class HomeFragment extends Fragment {
                 android.R.color.holo_red_light);
 
         // Set up the app bar
-        binding.toolbar.setOnMenuClickedListener(new View.OnClickListener() {
+        binding.homeBar.setOnMenuClickedListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Open the draw when menu is clicked

@@ -108,7 +108,7 @@ public class InboxFragment extends Fragment {
         setupSearch();
 
         // Set up the app bar
-        binding.toolbar.setOnMenuClickedListener(new View.OnClickListener() {
+        binding.inboxBar.setOnMenuClickedListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Open the draw when menu is clicked
