@@ -334,6 +334,7 @@ public class HomeFragment extends Fragment {
         ParseQuery<Post> postQuery = ParseQuery.getQuery(Post.class);
         postQuery.fromLocalDatastore();
         postQuery.include(Post.KEY_OWNER);
+        postQuery.addDescendingOrder(Post.KEY_CREATED_AT);
         postQuery.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> localPosts, ParseException e) {
