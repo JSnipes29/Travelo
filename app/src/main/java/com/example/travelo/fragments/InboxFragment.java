@@ -80,8 +80,9 @@ public class InboxFragment extends Fragment {
             allMessages = false;
         }
         // Configure swipe to remove
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback;
         if (!allMessages) {
-            ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP) {
+            simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP) {
 
                 @Override
                 public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -100,9 +101,29 @@ public class InboxFragment extends Fragment {
 
                 }
             };
+        } else {
+            simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP) {
+
+                @Override
+                public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                    Log.i(TAG, "On move");
+                    return false;
+                }
+
+                @Override
+                public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                    //Remove swiped item from list and notify the RecyclerView
+                    int position = viewHolder.getAdapterPosition();
+                    JSONObject message = list.get(position);
+                    list.remove(position);
+                    inboxAdapter.notifyItemRemoved(position);
+                    unArchive(message, position);
+
+                }
+            };
+        }
             ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
             itemTouchHelper.attachToRecyclerView(binding.rvInbox);
-        }
         // Setup refresh listener which triggers new data loading
         binding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -380,9 +401,14 @@ public class InboxFragment extends Fragment {
                             Toasty.error(context, "Error archiving message", Toast.LENGTH_SHORT, true).show();
                             return;
                         }
-                        Snackbar.make(parentView, R.string.archived, Snackbar.LENGTH_LONG)
-                        .setAction(R.string.undo, undoArchive(message, position))
-                        .show();
+                        if (allMessages) {
+                            list.add(position, message);
+                            inboxAdapter.notifyItemInserted(position);
+                        } else {
+                            Snackbar.make(parentView, R.string.archived, Snackbar.LENGTH_LONG)
+                                    .setAction(R.string.undo, undoArchive(message, position))
+                                    .show();
+                        }
 
                     }
                 });
@@ -390,55 +416,76 @@ public class InboxFragment extends Fragment {
         });
     }
 
-    public View.OnClickListener undoArchive(JSONObject message, int position) {
-        Context context = getContext();
+    public View.OnClickListener archive(JSONObject message, int position) {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Get the inbox of the current user
-                ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
-                userQuery.include(Inbox.KEY);
-                userQuery.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>() {
+                archiveMessage(message, position);
+            }
+        };
+    }
+
+    public View.OnClickListener undoArchive(JSONObject message, int position) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                unArchive(message, position);
+
+            }
+        };
+    }
+
+    public void unArchive(JSONObject message, int position) {
+        Context context = getContext();
+        View parentView = binding.rl;
+        // Get the inbox of the current user
+        ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
+        userQuery.include(Inbox.KEY);
+        userQuery.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>() {
+            @Override
+            public void done(ParseUser user, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error loading inbox data", e);
+                    return;
+                }
+                Inbox inbox = (Inbox) user.getParseObject(Inbox.KEY);
+                JSONArray jsonInbox = inbox.getMessages();
+                int updatedPosition = -1;
+                try {
+                    updatedPosition = Constant.indexOfMessage(message, jsonInbox);
+                } catch (JSONException jsonException) {
+                    jsonException.printStackTrace();
+                }
+                if (updatedPosition == -1) {
+                    Toasty.error(context, "Error finding message", Toast.LENGTH_SHORT, true).show();
+                    return;
+                }
+                try {
+                    message.put("archived", false);
+                    jsonInbox.put(updatedPosition, message);
+                } catch (JSONException jsonException) {
+                    jsonException.printStackTrace();
+                }
+                inbox.setMessages(jsonInbox);
+                inbox.saveInBackground(new SaveCallback() {
                     @Override
-                    public void done(ParseUser user, ParseException e) {
+                    public void done(ParseException e) {
                         if (e != null) {
-                            Log.e(TAG, "Error loading inbox data", e);
+                            Toasty.error(context, "Error undoing archive message", Toast.LENGTH_SHORT, true).show();
                             return;
                         }
-                        Inbox inbox = (Inbox) user.getParseObject(Inbox.KEY);
-                        JSONArray jsonInbox = inbox.getMessages();
-                        int updatedPosition = -1;
-                        try {
-                            updatedPosition = Constant.indexOfMessage(message, jsonInbox);
-                        } catch (JSONException jsonException) {
-                            jsonException.printStackTrace();
+                        if (!allMessages) {
+                            list.add(position, message);
+                            inboxAdapter.notifyItemInserted(position);
+                        } else {
+                            Snackbar.make(parentView, R.string.not_archived, Snackbar.LENGTH_LONG)
+                                    .setAction(R.string.undo, archive(message, position))
+                                    .show();
                         }
-                        if (updatedPosition == -1) {
-                            Toasty.error(context, "Error finding message", Toast.LENGTH_SHORT, true).show();
-                            return;
-                        }
-                        try {
-                            message.put("archived", false);
-                            jsonInbox.put(updatedPosition, message);
-                        } catch (JSONException jsonException) {
-                            jsonException.printStackTrace();
-                        }
-                        inbox.setMessages(jsonInbox);
-                        inbox.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                if (e != null) {
-                                    Toasty.error(context, "Error undoing archive message", Toast.LENGTH_SHORT, true).show();
-                                    return;
-                                }
-                                list.add(position, message);
-                                inboxAdapter.notifyItemInserted(position);
-                            }
-                        });
                     }
                 });
             }
-        };
+        });
     }
 
 }

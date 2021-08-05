@@ -57,5 +57,6 @@
     <string name="archived">Archived</string>
     <string name="undo">Undo</string>
     <string name="all_messages">All Messages</string>
+    <string name="not_archived">Message is no longer archived</string>
 
 </resources>
