@@ -43,6 +43,7 @@ import com.example.travelo.models.Post;
 import com.example.travelo.models.Room;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
+import com.parse.DeleteCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -99,6 +100,7 @@ public class ProfileFragment extends Fragment implements ComposeBioFragment.Comp
                              Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(getLayoutInflater(), container, false);
         View view = binding.getRoot();
+        Context context = getContext();
         user = (ParseUser) Parcels.unwrap(getArguments().getParcelable("user"));
         binding.btnMessage.setVisibility(View.GONE);
         binding.btnFollow.setVisibility(View.GONE);
@@ -126,21 +128,27 @@ public class ProfileFragment extends Fragment implements ComposeBioFragment.Comp
                 public void done(ParseUser updatedUser, ParseException e) {
                     if (e != null) {
                         Log.e(TAG, "Error loading profile data", e);
+                        ParseQuery<ParseUser> localQuery = ParseQuery.getQuery(ParseUser.class);
+                        localQuery.include("followers");
+                        localQuery.fromLocalDatastore();
+                        localQuery.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>() {
+                            @Override
+                            public void done(ParseUser localUser, ParseException e) {
+                                if (e != null || localUser == null) {
+                                    Log.e(TAG, "Error loading profile data", e);
+                                    Toasty.error(context, "Error loading profile data", Toast.LENGTH_SHORT, true).show();
+                                    return;
+                                }
+                                user = localUser;
+                                setupCurrentProfile();
+                            }
+                        });
                         return;
                     }
                     user = updatedUser;
-                    if (binding != null) {
-                        binding.ivProfileImage.setOnClickListener(v -> setProfileImage());
-                        binding.tvBio.setClickable(true);
-                        binding.tvBio.setOnClickListener(v -> setBio());
-                        String bio = user.getString("bio");
-                        if (bio == null || bio.isEmpty()) {
-                            String text = "<u>" + Constant.CLICK_BIO + "</u>";
-                            binding.tvBio.setText(Html.fromHtml(text));
-                        }
-                        binding.bar.setVisibility(View.VISIBLE);
-                        setUpProfileFragment();
-                    }
+                    // Update the user in the local datastore
+                    user.pinInBackground();
+                    setupCurrentProfile();
                 }
             });
         } else {
@@ -149,6 +157,20 @@ public class ProfileFragment extends Fragment implements ComposeBioFragment.Comp
         return view;
     }
 
+    public void setupCurrentProfile() {
+        if (binding != null) {
+            binding.ivProfileImage.setOnClickListener(v -> setProfileImage());
+            binding.tvBio.setClickable(true);
+            binding.tvBio.setOnClickListener(v -> setBio());
+            String bio = user.getString("bio");
+            if (bio == null || bio.isEmpty()) {
+                String text = "<u>" + Constant.CLICK_BIO + "</u>";
+                binding.tvBio.setText(Html.fromHtml(text));
+            }
+            binding.bar.setVisibility(View.VISIBLE);
+            setUpProfileFragment();
+        }
+    }
 
     public void setUpProfileFragment() {
         binding.tvName.setText(user.getUsername());

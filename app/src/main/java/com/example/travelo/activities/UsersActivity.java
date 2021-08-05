@@ -3,6 +3,7 @@ package com.example.travelo.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -51,12 +52,17 @@ public class UsersActivity extends AppCompatActivity {
     }
 
     public void queryUser(int parameter, String userId) {
+        Context context = this;
         ParseQuery<ParseUser> currentUserQuery = ParseQuery.getQuery(ParseUser.class);
         currentUserQuery.include("followers");
         // Get the current user
         currentUserQuery.getInBackground(userId, new GetCallback<ParseUser>() {
             @Override
             public void done(ParseUser currentUser, ParseException e) {
+                if (e != null) {
+                    Toasty.error(context, "Error getting user data", Toast.LENGTH_SHORT, true).show();
+                    return;
+                }
                 ParseObject followers = currentUser.getParseObject("followers");
                 JSONArray jsonUsers;
                 if (parameter == 0) {
@@ -88,6 +94,10 @@ public class UsersActivity extends AppCompatActivity {
             userQuery.getInBackground(userId, new GetCallback<ParseUser>() {
                 @Override
                 public void done(ParseUser user, ParseException e) {
+                    if (e != null) {
+                        Log.e(TAG, "Error getting users data", e);
+                        return;
+                    }
                     users.add(user);
                     adapter.notifyDataSetChanged();
                 }

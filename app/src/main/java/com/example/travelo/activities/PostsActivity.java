@@ -3,9 +3,11 @@ package com.example.travelo.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.travelo.adapters.PostAdapter;
 import com.example.travelo.databinding.ActivityPostsBinding;
@@ -20,6 +22,8 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 public class PostsActivity extends AppCompatActivity {
 
@@ -49,12 +53,15 @@ public class PostsActivity extends AppCompatActivity {
     }
 
     public void queryPosts() {
+        Context context = this;
         ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
         userQuery.getInBackground(userId, new GetCallback<ParseUser>() {
             @Override
             public void done(ParseUser user, ParseException e) {
                 if (e != null) {
                     Log.e(TAG, "Error getting user data", e);
+                    Toasty.error(context, "Error retrieving data from server", Toast.LENGTH_SHORT, true).show();
+                    return;
                 }
                 JSONArray array = user.getJSONArray("liked");
                 try {
