@@ -48,7 +48,7 @@ public class Inbox extends ParseObject {
                 // If the message contains the user id return the index
                 Iterator<String> iterator = message.keys();
                 String jsonUserId = iterator.next();
-                if (jsonUserId.equals("id")) {
+                while (jsonUserId.equals("id") || jsonUserId.equals("archived")) {
                     jsonUserId = iterator.next();
                 }
                 if (jsonUserId.equals(roomObjectId)) {
@@ -94,6 +94,27 @@ public class Inbox extends ParseObject {
                 // If the message contains the user id return the index
                 String jsonUserId = message.getString("userId");
                 if (jsonUserId.equals(userId)) {
+                    return i;
+                }
+            } catch (JSONException e) {
+                Log.e("Inbox", "Error reading json data", e);
+            }
+        }
+        return -1;
+    }
+
+    // Find index of dm
+    public static int indexOfDM(JSONArray array, String messagesId) {
+        for (int i = 0; i < array.length(); i++) {
+            try {
+                JSONObject message = array.getJSONObject(i);
+                // If the message isn't a dm continue
+                if (message.getInt("id") != InboxAdapter.DM_ID) {
+                    continue;
+                }
+                // If the message contains the user id return the index
+                String jsonMessagesId = message.getString("messages");
+                if (jsonMessagesId.equals(messagesId)) {
                     return i;
                 }
             } catch (JSONException e) {

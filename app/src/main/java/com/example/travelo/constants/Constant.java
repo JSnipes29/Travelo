@@ -29,6 +29,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Iterator;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
@@ -366,6 +367,43 @@ public class Constant {
                 removeMessage(userId, roomId, InboxAdapter.ROOM_ID);
             }
         });
+    }
+
+    public static int indexOfMessage(JSONObject message, JSONArray inbox) throws JSONException {
+        int id = message.getInt("id");
+        int index = -1;
+        switch (id) {
+            case InboxAdapter.ROOM_ID:
+                Iterator<String> iterator = message.keys();
+                String roomId = "";
+                while(iterator.hasNext()) {
+                    String key = iterator.next();
+                    if (key.equals("id") || key.equals("archived")) {
+                        continue;
+                    } else {
+                        roomId = key;
+                        break;
+                    }
+                }
+                index = Inbox.indexOfRoomMessage(inbox, roomId);
+                break;
+            case InboxAdapter.FR_ID:
+                String frMessageId = message.getString("userId");
+                index = Inbox.indexOfFriendRequest(inbox, frMessageId);
+                break;
+            case InboxAdapter.FR_SENT_ID:
+                String frsMssageId = message.getString("userId");
+                index = Inbox.indexOfFriendRequestSent(inbox, frsMssageId);
+                break;
+            case InboxAdapter.DM_ID:
+                String messagesId = message.getString("messages");
+                index = Inbox.indexOfDM(inbox, messagesId);
+                break;
+            default:
+                index = -1;
+                break;
+        }
+        return index;
     }
 
     public static int dpsToPixels(Context context, int dps) {

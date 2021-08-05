@@ -54,5 +54,7 @@
     <string name="kick">Kick</string>
     <string name="update">Update</string>
     <string name="update_bio">Update Bio</string>
+    <string name="archived">Archived</string>
+    <string name="undo">Undo</string>
 
 </resources>

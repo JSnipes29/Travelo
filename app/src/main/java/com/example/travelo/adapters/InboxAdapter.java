@@ -151,12 +151,10 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
         public void bindMessage(JSONObject message, int position) {
             Iterator<String> iter = message.keys();
             String key = iter.next();
-            String roomObjectId;
-            if (key.equals("id")) {
-                roomObjectId = iter.next();
-            } else {
-                roomObjectId = key;
+            while (key.equals("id") || key.equals("archived")) {
+                key = iter.next();
             }
+            String roomObjectId = key;
             Log.i(TAG, "Id: " + roomObjectId);
             ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
             query.include(Room.KEY_OWNER);
