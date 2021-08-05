@@ -155,11 +155,17 @@ public class HomeFragment extends Fragment {
         if (parameter == 0 && binding != null) {
             binding.shimmerLayout.startShimmer();
         }
+        Context context = getContext();
         query.findInBackground((posts, e) -> {
             if (e != null) {
                 Log.e(TAG, "Couldn't get post", e);
                 if (parameter == 0) {
                     getPostsFromLocal();
+                } else if (parameter == 2) {
+                    Toasty.error(context, "Error refreshing home feed", Toast.LENGTH_SHORT, true).show();
+                    if (binding != null) {
+                        binding.swipeContainer.setRefreshing(false);
+                    }
                 }
                 return;
             }
