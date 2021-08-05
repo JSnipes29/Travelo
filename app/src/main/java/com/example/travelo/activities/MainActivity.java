@@ -206,4 +206,10 @@ public class MainActivity extends AppCompatActivity {
         binding.nvView.inflateMenu(menu);
     }
 
+    public void goToAllMessages(MenuItem item) {
+        Intent intent = new Intent(this, InboxActivity.class);
+        intent.putExtra("allMessages", true);
+        startActivity(intent);
+    }
+
 }

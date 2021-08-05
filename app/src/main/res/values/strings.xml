@@ -56,5 +56,6 @@
     <string name="update_bio">Update Bio</string>
     <string name="archived">Archived</string>
     <string name="undo">Undo</string>
+    <string name="all_messages">All Messages</string>
 
 </resources>

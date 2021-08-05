@@ -124,15 +124,17 @@ public class InboxFragment extends Fragment {
         setupSearch();
 
         // Set up the app bar
-        binding.inboxBar.setOnMenuClickedListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Open the draw when menu is clicked
-                if (binding != null) {
-                    ((MainActivity)getActivity()).openDrawer();
+        if (getActivity() instanceof MainActivity) {
+            binding.inboxBar.setOnMenuClickedListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Open the draw when menu is clicked
+                    if (binding != null) {
+                        ((MainActivity) getActivity()).openDrawer();
+                    }
                 }
-            }
-        });
+            });
+        }
         return view;
     }
 
@@ -309,7 +311,9 @@ public class InboxFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((MainActivity)getActivity()).setupDrawer(R.menu.menu_main);
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).setupDrawer(R.menu.menu_inbox);
+        }
     }
 
     public void setupSearch() {
@@ -436,4 +440,5 @@ public class InboxFragment extends Fragment {
             }
         };
     }
+
 }
