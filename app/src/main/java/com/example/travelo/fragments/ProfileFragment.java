@@ -537,6 +537,8 @@ public class ProfileFragment extends Fragment implements ComposeBioFragment.Comp
             start = posts.size();
             query.whereLessThan(Post.KEY_CREATED_AT, posts.get(posts.size() - 1).getCreatedAt());
         } else {
+            posts.clear();
+            postAdapter.notifyDataSetChanged();
             start = 0;
         }
         if (parameter == 0 && binding != null) {
