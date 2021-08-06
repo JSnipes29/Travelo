@@ -237,7 +237,9 @@ public class ProfileFragment extends Fragment implements ComposeBioFragment.Comp
         // Setup pull to refresh
         setupPullToRefresh();
         // Setup drawer view
-        setupDrawerContent(((MainActivity)getActivity()).getNavigationView());
+        if (getActivity() instanceof MainActivity) {
+            setupDrawerContent(((MainActivity) getActivity()).getNavigationView());
+        }
         queryPosts(0);
     }
 
@@ -250,7 +252,9 @@ public class ProfileFragment extends Fragment implements ComposeBioFragment.Comp
     @Override
     public void onResume() {
         super.onResume();
-        ((MainActivity)getActivity()).setupDrawer(R.menu.drawer_view_profile);
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).setupDrawer(R.menu.drawer_view_profile);
+        }
     }
 
     public void follow() {
