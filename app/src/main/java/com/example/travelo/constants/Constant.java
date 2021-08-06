@@ -17,6 +17,11 @@ import com.example.travelo.adapters.NameAdapter;
 import com.example.travelo.models.Inbox;
 import com.example.travelo.models.Post;
 import com.example.travelo.models.Room;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -40,6 +45,7 @@ public class Constant {
     public static final int MAX_BIO_LENGTH = 144;
     public static final int CREATE_MAP_SHORTCUT = 1;
     public static final int JOIN_MAP_SHORTCUT = 2;
+    public static final float MAP_ZOOM = 12f;
     public static void invite(Context context, Room room, String userId, final String TAG, DialogFragment fragment) {
         ParseQuery<ParseUser> userParseQuery = ParseQuery.getQuery(ParseUser.class);
         userParseQuery.include(Inbox.KEY);
@@ -405,6 +411,33 @@ public class Constant {
         }
         return index;
     }
+
+    public static void centerMap(Context context, GoogleMap map, List<LatLng> markerLocations) {
+        int numMarkers = markerLocations.size();
+        CameraUpdate cameraUpdate;
+        switch (numMarkers) {
+            case 0:
+                return;
+            case 1:
+                cameraUpdate = CameraUpdateFactory.newLatLngZoom(markerLocations.get(0), MAP_ZOOM);
+                map.moveCamera(cameraUpdate);
+                break;
+            default:
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                for (LatLng location: markerLocations) {
+                    builder.include(location);
+                }
+                LatLngBounds bounds = builder.build();
+                int width = context.getResources().getDisplayMetrics().widthPixels;
+                int height = context.getResources().getDisplayMetrics().heightPixels;
+                int padding = (int) (height * 0.20);
+                cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding);
+                map.moveCamera(cameraUpdate);
+                break;
+        }
+
+    }
+
 
     public static int dpsToPixels(Context context, int dps) {
         final float scale = context.getResources().getDisplayMetrics().density;

@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.travelo.activities.MainActivity;
 import com.example.travelo.R;
 import com.example.travelo.adapters.CustomWindowAdapter;
+import com.example.travelo.constants.Constant;
 import com.example.travelo.databinding.FragmentPostMapBinding;
 import com.example.travelo.models.MarkerTag;
 import com.example.travelo.models.Post;
@@ -114,6 +115,9 @@ public class PostMapFragment extends Fragment {
             // Else the user can add a description and post to server
             binding.btnAddPhoto.setOnClickListener(v -> launchCamera());
             binding.btnProceed.setOnClickListener(v -> {
+                if (binding != null) {
+                    binding.btnProceed.setClickable(false);
+                }
                 // If there is no photo, take a screenshot of the map and post it as the photo
                 if (photoFile == null) {
                     map.snapshot(new GoogleMap.SnapshotReadyCallback() {
@@ -197,6 +201,7 @@ public class PostMapFragment extends Fragment {
     // Get the marker data from the Parse server and add it to the map
     public void populateMap() {
         JSONObject jsonMap = room.getMap();
+        List<LatLng> markerLocations = new ArrayList<>();
         try {
             JSONArray markers = jsonMap.getJSONArray("markers");
             for (int i = 0; i < markers.length(); i++) {
@@ -231,10 +236,12 @@ public class PostMapFragment extends Fragment {
                         .icon(defaultMarker));
                 marker.setTag(businesses);
                 marker.setSnippet(user);
+                markerLocations.add(new LatLng(latitude, longitude));
             }
         } catch (JSONException e) {
             Log.e(TAG,"Error getting markers from server", e);
         }
+        Constant.centerMap(getContext(), map, markerLocations);
     }
 
     protected void loadMap(GoogleMap googleMap) {

@@ -28,6 +28,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.ParseException;
@@ -223,6 +224,7 @@ public class DetailsPostActivity extends AppCompatActivity {
     // Get the marker data from the Parse server and add it to the map
     public void populateMap() {
         JSONObject jsonMap = post.getMap();
+        List<LatLng> markerLocations = new ArrayList<>();
         try {
             JSONArray markers = jsonMap.getJSONArray("markers");
             for (int i = 0; i < markers.length(); i++) {
@@ -258,11 +260,12 @@ public class DetailsPostActivity extends AppCompatActivity {
                 marker.setTag(new MarkerTag(businesses, latitude, longitude, color));
                 marker.setSnippet(user);
                 marker.setDraggable(true);
+                markerLocations.add(new LatLng(latitude, longitude));
             }
         } catch (JSONException e) {
             Log.e(TAG,"Error getting markers from server", e);
         }
-
+        Constant.centerMap(this, map, markerLocations);
     }
 
     protected void loadMap(GoogleMap googleMap) {
