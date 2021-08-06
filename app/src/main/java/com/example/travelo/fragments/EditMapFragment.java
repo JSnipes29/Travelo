@@ -192,6 +192,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                     if (e != null) {
                         Log.e(TAG, "Error readying up", e);
                         Toasty.error(getContext(), "", Toasty.LENGTH_SHORT, true).show();
+                        return;
                     }
                     JSONObject users = room.getUsers();
                     try {
@@ -205,6 +206,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                     String id = room.getObjectId();
                     intent.putExtra("id", id);
                     startActivity(intent);
+                    getActivity().finish();
                 }
             });
 
@@ -421,6 +423,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
                 if (e != null) {
                     Log.e(TAG, "Trouble getting room data from server to populate map", e);
                     Toasty.error(getContext(), "Couldn't populate map", Toasty.LENGTH_SHORT, true).show();
+                    return;
                 }
                 room = updatedRoom;
                 owner = room.getParseUser("owner").getObjectId().equals(ParseUser.getCurrentUser().getObjectId());

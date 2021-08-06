@@ -109,7 +109,7 @@ public class CreateRoomFragment extends DialogFragment {
                                 return;
                             }
                             Log.i(TAG, "Done Creating Room");
-                            Toasty.success(v.getContext(), "Created Trip!", Toast.LENGTH_SHORT, true).show();
+                            Toasty.success(v.getContext(), "Created Map!", Toast.LENGTH_SHORT, true).show();
                             dismiss();
                             Intent intent = new Intent(v.getContext(), RoomActivity.class);
                             intent.putExtra("room", room.getObjectId());

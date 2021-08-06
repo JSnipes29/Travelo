@@ -108,8 +108,6 @@ public class PostMapFragment extends Fragment {
             binding.btnAddPhoto.setVisibility(View.GONE);
             binding.btnProceed.setText(R.string.done);
             binding.btnProceed.setOnClickListener(v -> {
-                Intent intent = new Intent(getContext(), MainActivity.class);
-                startActivity(intent);
                 getActivity().finish();
             });
         } else {
@@ -177,22 +175,23 @@ public class PostMapFragment extends Fragment {
         post.saveInBackground(e -> {
             if (e == null) {
                 Toasty.info(getContext(), "Successfully posted map", Toast.LENGTH_SHORT, true).show();
+                getActivity().finish();
+                // Delete the room after posting the map
+                if (DELETE_ROOM) {
+                    room.deleteInBackground(e1 -> {
+                        if (e1 != null) {
+                            Log.e(TAG, "Error deleting room", e1);
+                            return;
+                        }
+                        Log.i(TAG, "Room has been deleted");
+                    });
+                }
             } else {
                 Log.e(TAG, "Error posting map", e);
+                getActivity().finish();
             }
         });
-        // Delete the room after posting the map
-        if (DELETE_ROOM) {
-            room.deleteInBackground(e -> {
-                if (e != null) {
-                    Log.e(TAG, "Error deleting room", e);
-                    return;
-                }
-                Log.i(TAG, "Room has been deleted");
-            });
-        }
-        Intent intent = new Intent(getContext(), MainActivity.class);
-        startActivity(intent);
+
     }
     // Get the marker data from the Parse server and add it to the map
     public void populateMap() {
