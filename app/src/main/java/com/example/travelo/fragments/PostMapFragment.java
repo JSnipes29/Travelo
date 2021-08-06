@@ -175,15 +175,16 @@ public class PostMapFragment extends Fragment {
         post.saveInBackground(e -> {
             if (e == null) {
                 Toasty.info(getContext(), "Successfully posted map", Toast.LENGTH_SHORT, true).show();
-                getActivity().finish();
                 // Delete the room after posting the map
                 if (DELETE_ROOM) {
                     room.deleteInBackground(e1 -> {
                         if (e1 != null) {
                             Log.e(TAG, "Error deleting room", e1);
                             return;
+                        } else {
+                            Log.i(TAG, "Room has been deleted");
                         }
-                        Log.i(TAG, "Room has been deleted");
+                        getActivity().finish();
                     });
                 }
             } else {
