@@ -85,7 +85,7 @@ public class InboxFragment extends Fragment {
             allMessages = false;
         }
         // Configure swipe to remove
-        ItemTouchHelper.SimpleCallback simpleItemTouchCallback;
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = null;
         if (!allMessages) {
             simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
@@ -116,7 +116,8 @@ public class InboxFragment extends Fragment {
                     super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
                 }
             };
-        } else {
+        } else if (allMessages) {
+            binding.inboxBar.setVisibility(View.INVISIBLE);
             simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
                 @Override
@@ -147,8 +148,8 @@ public class InboxFragment extends Fragment {
                 }
             };
         }
-            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-            itemTouchHelper.attachToRecyclerView(binding.rvInbox);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(binding.rvInbox);
         // Setup refresh listener which triggers new data loading
         binding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
