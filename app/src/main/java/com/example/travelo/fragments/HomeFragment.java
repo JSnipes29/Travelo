@@ -186,16 +186,6 @@ public class HomeFragment extends Fragment {
             }
             for (Post post: posts) {
                 Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getOwner().getUsername());
-                // Pin the post in the local database on start
-                if (parameter == 0) {
-                    ParseObject.unpinAllInBackground("HomePosts", e1 -> {
-                        if (e1 != null) {
-                            Log.e(TAG, "Error unpinning posts from local datastore");
-                            return;
-                        }
-                        ParseObject.pinAllInBackground("HomePosts", posts);
-                    });
-                }
             }
             if (parameter == 1) {
                 Log.i(TAG, "Endless scrolling in effect");
@@ -222,6 +212,14 @@ public class HomeFragment extends Fragment {
             }
             // If on start, remove the shimmer and set the recycler view to visible
             if (parameter == 0) {
+                // Pin the post in the local database on start
+                ParseObject.unpinAllInBackground("HomePosts", e1 -> {
+                    if (e1 != null) {
+                        Log.e(TAG, "Error unpinning posts from local datastore");
+                        return;
+                    }
+                    ParseObject.pinAllInBackground("HomePosts", posts);
+                });
                 if (binding != null) {
                     binding.shimmerLayout.setVisibility(View.GONE);
                     binding.shimmerLayout.hideShimmer();
