@@ -97,12 +97,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-    @Override
-    public void onBackPressed() {
-        return;
-    }
-
     public void logout(MenuItem mi) {
         ParseObject.unpinAllInBackground();
         ParseUser.logOutInBackground();
