@@ -58,5 +58,6 @@
     <string name="undo">Undo</string>
     <string name="all_messages">All Messages</string>
     <string name="not_archived">Message is no longer archived</string>
+    <string name="parse_api_address">https://parseapi.back4app.com</string>
 
 </resources>

@@ -21,9 +21,9 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Inbox.class);
         ParseObject.registerSubclass(Messages.class);
         Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId("56FOAmOXvVk5GqnDojmLIpmnZW8SzMXr8JkIy4Cn")
-                .clientKey("wsE9tdqbYL8gNd96TmlR791XKyOX5szd4ZruZpLZ")
-                .server("https://parseapi.back4app.com")
+                .applicationId(getString(R.string.parse_app_id))
+                .clientKey(getString(R.string.parse_client_key))
+                .server(getString(R.string.parse_api_address))
                 .enableLocalDataStore()
                 .build()
         );
