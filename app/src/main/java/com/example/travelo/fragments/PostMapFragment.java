@@ -100,7 +100,7 @@ public class PostMapFragment extends Fragment {
                 }
             });
         } else {
-            Toast.makeText(getContext(), "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
+            Toasty.error(getContext(), "Error - Map Fragment was null!!", Toast.LENGTH_SHORT, true).show();
         }
         // If the user isn't the owner, they can't add a description or photo
         // and proceeding just goes to main activity
@@ -248,9 +248,9 @@ public class PostMapFragment extends Fragment {
         map = googleMap;
         if (map != null) {
             // Map is ready
-            Toast.makeText(getContext(), "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
+            Toasty.success(getContext(), "Map was loaded properly!", Toast.LENGTH_SHORT, true).show();
         } else {
-            Toast.makeText(getContext(), "Error - Map was null!!", Toast.LENGTH_SHORT).show();
+            Toasty.error(getContext(), "Error - Map was null!!", Toast.LENGTH_SHORT, true).show();
         }
     }
     @Override
