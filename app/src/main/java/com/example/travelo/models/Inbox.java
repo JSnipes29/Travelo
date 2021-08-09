@@ -45,13 +45,9 @@ public class Inbox extends ParseObject {
                 if (message.getInt("id") != InboxAdapter.ROOM_ID) {
                     continue;
                 }
-                // If the message contains the user id return the index
-                Iterator<String> iterator = message.keys();
-                String jsonUserId = iterator.next();
-                while (jsonUserId.equals("id") || jsonUserId.equals("archived")) {
-                    jsonUserId = iterator.next();
-                }
-                if (jsonUserId.equals(roomObjectId)) {
+                // If the message room object id equals to roomObjectId return the index
+                String jsonRoomId = message.getString("roomObjectId");
+                if (jsonRoomId.equals(roomObjectId)) {
                     return i;
                 }
             } catch (JSONException e) {

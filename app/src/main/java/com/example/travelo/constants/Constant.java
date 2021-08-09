@@ -68,7 +68,8 @@ public class Constant {
                 }
                 JSONObject roomMessage = new JSONObject();
                 try {
-                    roomMessage.put(roomObjectId, roomId);
+                    roomMessage.put("roomObjectId", roomObjectId);
+                    roomMessage.put("roomId", roomId);
                     roomMessage.put("id", InboxAdapter.ROOM_ID);
                 } catch (JSONException jsonException) {
                     Log.e(TAG, "Couldn't edit json data", jsonException);
@@ -380,17 +381,7 @@ public class Constant {
         int index = -1;
         switch (id) {
             case InboxAdapter.ROOM_ID:
-                Iterator<String> iterator = message.keys();
-                String roomId = "";
-                while(iterator.hasNext()) {
-                    String key = iterator.next();
-                    if (key.equals("id") || key.equals("archived")) {
-                        continue;
-                    } else {
-                        roomId = key;
-                        break;
-                    }
-                }
+                String roomId = message.getString("roomObjectId");
                 index = Inbox.indexOfRoomMessage(inbox, roomId);
                 break;
             case InboxAdapter.FR_ID:

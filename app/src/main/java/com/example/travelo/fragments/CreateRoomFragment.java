@@ -135,7 +135,8 @@ public class CreateRoomFragment extends DialogFragment {
                                     }
                                     JSONObject roomMessage = new JSONObject();
                                     try {
-                                        roomMessage.put(roomObjectId, roomId);
+                                        roomMessage.put("roomObjectId", roomObjectId);
+                                        roomMessage.put("roomId", roomId);
                                         roomMessage.put("id", InboxAdapter.ROOM_ID);
                                     } catch (JSONException jsonException) {
                                         Log.e(TAG, "Couldn't edit json data", jsonException);

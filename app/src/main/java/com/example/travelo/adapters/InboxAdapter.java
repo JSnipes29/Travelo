@@ -149,12 +149,17 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
 
         @Override
         public void bindMessage(JSONObject message, int position) {
-            Iterator<String> iter = message.keys();
-            String key = iter.next();
-            while (key.equals("id") || key.equals("archived")) {
-                key = iter.next();
+            String tempRoomObjectId = null;
+            try {
+                tempRoomObjectId = message.getString("roomObjectId");
+            } catch (JSONException jsonException) {
+                jsonException.printStackTrace();
             }
-            String roomObjectId = key;
+            if (tempRoomObjectId == null) {
+                Log.e(TAG, "Room objectId is null");
+                return;
+            }
+            final String roomObjectId = tempRoomObjectId;
             Log.i(TAG, "Id: " + roomObjectId);
             ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
             query.include(Room.KEY_OWNER);

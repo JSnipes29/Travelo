@@ -238,7 +238,7 @@ public class InboxFragment extends Fragment {
                     int messageType = jsonMessage.getInt("id");
                     switch (messageType) {
                         case InboxAdapter.ROOM_ID:
-                            text = jsonMessage.getString(jsonMessage.keys().next()) + " room rooms";
+                            text = jsonMessage.getString("roomId") + " room rooms";
                             break;
                         case InboxAdapter.DM_ID:
                             String messageId = jsonMessage.getString("messages");
