@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "648146701396",
+    "project_id": "travelo-319719",
+    "storage_bucket": "travelo-319719.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:648146701396:android:cdf6c7fca6d55da792b1c1",
+        "android_client_info": {
+          "package_name": "com.example.travelo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "648146701396-scoijcs72h73kmufe17ih7odlvbbm4m8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgHnMgT-Id1WPzNQf6qb2nvMJUF_x8x14"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "648146701396-scoijcs72h73kmufe17ih7odlvbbm4m8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

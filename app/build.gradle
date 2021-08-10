@@ -1,7 +1,9 @@
+
 plugins {
     id 'com.android.application'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 30
@@ -47,6 +49,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation 'com.github.parse-community.Parse-SDK-Android:parse:1.25.0'
+    implementation "com.github.parse-community.Parse-SDK-Android:fcm:1.25.0"
+
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
     implementation "com.google.android.material:material:1.0.0"
 
@@ -68,4 +72,8 @@ dependencies {
 
     implementation 'com.github.matthiasrobbers:shortbread:1.4.0'
     annotationProcessor 'com.github.matthiasrobbers:shortbread-compiler:1.4.0'
+
+    implementation platform('com.google.firebase:firebase-bom:28.3.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-messaging:22.0.0'
 }
