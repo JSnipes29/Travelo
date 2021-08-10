@@ -29,6 +29,7 @@ import com.example.travelo.fragments.ProfileFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseUser;
 
 import java.lang.reflect.Field;
@@ -99,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void logout(MenuItem mi) {
         ParseObject.unpinAllInBackground();
+        String userId = ParseUser.getCurrentUser().getObjectId();
+        ParsePush.unsubscribeInBackground(userId);
         ParseUser.logOutInBackground();
         Intent i = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(i);

@@ -27,6 +27,7 @@ import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -85,13 +86,22 @@ public class Constant {
                         if (context != null) {
                             Toasty.success(context, "Invite Sent", Toast.LENGTH_SHORT, true).show();
                         }
+                        invitePushNotification(userId, ParseUser.getCurrentUser().getUsername(), roomId);
                     }
                 });
+
             }
         });
         if (fragment != null) {
             fragment.dismiss();
         }
+    }
+
+    private static void invitePushNotification(String userId, String username, String roomId) {
+        ParsePush pushNotification = new ParsePush();
+        pushNotification.setChannel(userId);
+        pushNotification.setMessage(username + " invited you to room: " + roomId);
+        pushNotification.sendInBackground();
     }
 
     public static boolean jsonStringArrayContains(JSONArray array, String string) throws JSONException {

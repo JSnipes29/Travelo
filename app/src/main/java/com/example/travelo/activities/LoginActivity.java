@@ -16,7 +16,9 @@ import com.example.travelo.fragments.CreateRoomFragment;
 import com.example.travelo.fragments.SignupFragment;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParsePush;
 import com.parse.ParseUser;
+import com.parse.SendCallback;
 
 import es.dmoral.toasty.Toasty;
 import shortbread.Shortcut;
@@ -66,6 +68,8 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 Log.i(TAG, "User logged in");
+                String userId = user.getObjectId();
+                ParsePush.subscribeInBackground(userId);
                 goMainActivity();
                 Toasty.success(LoginActivity.this, "You have logged in!", Toast.LENGTH_SHORT, true).show();
             }

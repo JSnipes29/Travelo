@@ -7,6 +7,7 @@ import com.example.travelo.models.Messages;
 import com.example.travelo.models.Post;
 import com.example.travelo.models.Room;
 import com.parse.Parse;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 
 public class ParseApplication extends Application {
@@ -27,5 +28,8 @@ public class ParseApplication extends Application {
                 .enableLocalDataStore()
                 .build()
         );
+        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+        installation.put("GCMSenderId", getString(R.string.gcm_sender_id));
+        installation.saveInBackground();
     }
 }
