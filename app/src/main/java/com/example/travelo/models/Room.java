@@ -14,7 +14,7 @@ public class Room extends ParseObject {
 
     public Room(String id) {
         super();
-        put("roomId", id);
+        put(KEY_ROOM_ID, id);
     }
 
     public static final String KEY_OWNER = "owner";
@@ -25,6 +25,7 @@ public class Room extends ParseObject {
     public static final String KEY_PROFILE_IMAGES = "profileImages";
     public static final String KEY_JOINABLE = "joinable";
     public static final String KEY_KICKED = "kicked";
+    public static final String KEY_INVITE_ONLY = "inviteOnly";
 
     public ParseUser getOwner() {
         return getParseUser(KEY_OWNER);
@@ -82,5 +83,13 @@ public class Room extends ParseObject {
 
     public JSONArray getKicked() {
         return getJSONArray(KEY_KICKED);
+    }
+
+    public void setInviteOnly(boolean inviteOnly) {
+        put(KEY_INVITE_ONLY, inviteOnly);
+    }
+
+    public boolean getIntiveOnly() {
+        return getBoolean(KEY_INVITE_ONLY);
     }
 }

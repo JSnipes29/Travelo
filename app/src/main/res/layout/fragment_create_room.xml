@@ -9,9 +9,9 @@
         android:id="@+id/btnCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etRoomId"
+        android:layout_below="@+id/cbInviteOnly"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="10dp"
         android:backgroundTint="?colorPrimary"
         android:text="@string/create_trip"
         android:textColor="?colorOnPrimary" />
@@ -50,6 +50,19 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="50dp"
         android:text="ID:"
+        android:textColor="?colorOnSecondary"
         android:textSize="24sp" />
+
+    <CheckBox
+        android:id="@+id/cbInviteOnly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etRoomId"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/invite_only"
+        android:textColor="?colorOnSecondary"
+        android:textSize="16sp" />
 
 </RelativeLayout>

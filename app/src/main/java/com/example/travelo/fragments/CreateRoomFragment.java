@@ -63,8 +63,10 @@ public class CreateRoomFragment extends DialogFragment {
             Toasty.error(getContext(), "Must enter a room id", Toast.LENGTH_SHORT, true).show();
             return;
         }
+        boolean inviteOnly = binding.cbInviteOnly.isChecked();
         Room room = new Room(roomId);
         room.setOwner(ParseUser.getCurrentUser());
+        room.setInviteOnly(inviteOnly);
         JSONObject users = new JSONObject();
         JSONObject profileImages = new JSONObject();
         String profileUrl = ParseUser.getCurrentUser().getParseFile("profileImage").getUrl();

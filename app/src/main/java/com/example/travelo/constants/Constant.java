@@ -202,6 +202,17 @@ public class Constant {
         }
     }
 
+    public static boolean jsonStringObjectContains(JSONObject object, String string) {
+        Iterator<String> iterator = object.keys();
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+            if (key.equals(string)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static boolean kicked(Context context, Room room, String userId) throws JSONException {
         if (room == null) {
             String message = "Room is no longer available";

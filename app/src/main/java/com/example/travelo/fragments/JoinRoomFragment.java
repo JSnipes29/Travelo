@@ -101,6 +101,15 @@ public class JoinRoomFragment extends DialogFragment {
             } catch (JSONException jsonException) {
                 jsonException.printStackTrace();
             }
+            boolean inviteOnly = rooms.get(0).getIntiveOnly();
+            if (inviteOnly) {
+                JSONObject users = rooms.get(0).getUsers();
+                if (!Constant.jsonStringObjectContains(users,ParseUser.getCurrentUser().getUsername())) {
+                    Toasty.error(v.getContext(), "This room is invite only", Toast.LENGTH_SHORT, true).show();
+                    dismiss();
+                    return;
+                }
+            }
             dismiss();
             Log.i(TAG, String.valueOf(getContext()));
             Intent intent = new Intent(v.getContext(), RoomActivity.class);
