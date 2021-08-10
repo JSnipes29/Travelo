@@ -24,6 +24,7 @@ import com.example.travelo.fragments.EditMapFragment;
 import com.example.travelo.fragments.InviteFriendsFragment;
 import com.example.travelo.fragments.KickRoomFragment;
 import com.example.travelo.fragments.RoomMessagesFragment;
+import com.example.travelo.fragments.RoomSettingsFragment;
 import com.example.travelo.models.Room;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -191,6 +192,11 @@ public class RoomActivity extends AppCompatActivity {
             case R.id.action_kick:
                 Log.i(TAG, "Clicked on kick");
                 kick();
+                break;
+            case R.id.action_room_settings:
+                Log.i(TAG, "Clicked on room settings");
+                roomSettings();
+                break;
             default:
                 break;
         }
@@ -222,6 +228,16 @@ public class RoomActivity extends AppCompatActivity {
         bundle.putString("roomObjectId", id);
         kickRoomFragment.setArguments(bundle);
         kickRoomFragment.show(fragmentManager, "KickRoom");
+    }
+
+    // Launch room settings fragment
+    public void roomSettings() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        RoomSettingsFragment roomSettingsFragment = new RoomSettingsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("roomObjectId", id);
+        roomSettingsFragment.setArguments(bundle);
+        roomSettingsFragment.show(fragmentManager, "RoomSettings");
     }
 
     // Refresh user list on app bar

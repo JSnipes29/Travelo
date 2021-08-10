@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.RoomSettingsFragment">
+
+    <TextView
+        android:id="@+id/tvRoomSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/cursive"
+        android:text="@string/room_settings"
+        android:textColor="?colorPrimary"
+        android:textSize="96sp" />
+
+    <CheckBox
+        android:id="@+id/cbInviteOnly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvRoomSettings"
+        android:layout_alignStart="@+id/tvRoomSettings"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/invite_only" />
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="?colorPrimary"
+        android:text="@string/save"
+        android:textColor="?colorOnPrimary"
+        android:visibility="gone" />
+</RelativeLayout>

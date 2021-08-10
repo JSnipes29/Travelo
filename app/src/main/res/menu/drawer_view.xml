@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
         <item
             android:id="@+id/nav_invite"
             android:icon="@drawable/ic_baseline_person_add_24"
-            android:title="@string/invite" />
+            android:title="@string/invite"
+            app:showAsAction="always" />
         <item
             android:id="@+id/action_kick"
             android:icon="@drawable/ic_baseline_person_remove_24"
-            android:title="@string/kick" />
+            android:title="@string/kick"
+            app:showAsAction="always" />
+        <item
+            android:id="@+id/action_room_settings"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="@string/room_settings"
+            app:showAsAction="always" />
 
 </menu>
