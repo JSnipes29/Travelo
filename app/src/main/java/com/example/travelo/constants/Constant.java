@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -213,20 +214,18 @@ public class Constant {
         return false;
     }
 
-    public static boolean kicked(Context context, Room room, String userId) throws JSONException {
+    public static boolean kicked(AppCompatActivity context, Room room, String userId) throws JSONException {
         if (room == null) {
             String message = "Room is no longer available";
             Toasty.error(context, message, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(context, MainActivity.class);
-            context.startActivity(intent);
+            context.finish();
             return true;
         }
         JSONArray kicked = room.getKicked();
         if (jsonStringArrayContains(kicked, userId)) {
             String message = "You have been kicked";
             Toasty.error(context, message, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(context, MainActivity.class);
-            context.startActivity(intent);
+            context.finish();
             return true;
         }
         return false;

@@ -3,6 +3,7 @@ package com.example.travelo.fragments;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -161,7 +162,7 @@ public class RoomMessagesFragment extends Fragment {
 
     void refreshMessages(int type) {
         if (type == 0) {
-            Context context = getContext();
+            AppCompatActivity context = (AppCompatActivity) getActivity();
             // Specify which class to query
             ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
             // Specify the object id

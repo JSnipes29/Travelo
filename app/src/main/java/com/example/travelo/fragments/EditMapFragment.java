@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -517,7 +518,7 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
         if (map == null) {
             return;
         }
-        Context context = getContext();
+        AppCompatActivity context = (AppCompatActivity) getActivity();
         ParseQuery<Room> roomQuery = ParseQuery.getQuery(Room.class);
         roomQuery.getInBackground(room.getObjectId(), new GetCallback<Room>() {
             @Override
