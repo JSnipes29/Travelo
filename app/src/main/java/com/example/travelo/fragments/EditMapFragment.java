@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
 import android.widget.AdapterView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.travelo.activities.DetailsPostActivity;
@@ -213,28 +214,18 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
 
         });
         // Search for a location when the button is pressed
-        binding.ibSearch.setOnClickListener(v -> {
-            String address = binding.etSearch.getText().toString();
-            if (address.isEmpty()) {
-                return;
+        binding.svSearchLocation.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchLocation(query);
+                return true;
             }
-            Geocoder geocoder = new Geocoder(getContext());
-            List<Address> addressList = null;
-            try {
-                addressList = geocoder.getFromLocationName(address, 1);
-            } catch (IOException e) {
-                Log.e(TAG, "Couldn't search for location" , e);
-            }
-            if (addressList == null) {
-                Toasty.error(getContext(), "Place not found", Toast.LENGTH_SHORT, true).show();
-                return;
-            }
-            Address place = addressList.get(0);
-            LatLng latlng = new LatLng(place.getLatitude(), place.getLongitude());
-            map.moveCamera(CameraUpdateFactory.newLatLng(latlng));
-            map.animateCamera(CameraUpdateFactory.zoomTo(14f));
-        });
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
         // Set the spinner up to change the map type
         binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -311,6 +302,27 @@ public class EditMapFragment extends Fragment implements GoogleMap.OnMapLongClic
     public void onLowMemory() {
         super.onLowMemory();
         mapFragment.onLowMemory();
+    }
+
+    public void searchLocation(String address) {
+        if (address.isEmpty()) {
+            return;
+        }
+        Geocoder geocoder = new Geocoder(getContext());
+        List<Address> addressList = null;
+        try {
+            addressList = geocoder.getFromLocationName(address, 1);
+        } catch (IOException e) {
+            Log.e(TAG, "Couldn't search for location" , e);
+        }
+        if (addressList == null) {
+            Toasty.error(getContext(), "Place not found", Toast.LENGTH_SHORT, true).show();
+            return;
+        }
+        Address place = addressList.get(0);
+        LatLng latlng = new LatLng(place.getLatitude(), place.getLongitude());
+        map.moveCamera(CameraUpdateFactory.newLatLng(latlng));
+        map.animateCamera(CameraUpdateFactory.zoomTo(14f));
     }
 
     @Override
