@@ -62,5 +62,8 @@
     <string name="invite_only">Invite Only</string>
     <string name="room_settings">Room Settings</string>
     <string name="save">Save</string>
+    <string name="confirm">Confirm</string>
+    <string name="room_deletion_title">Delete Room:</string>
+    <string name="room_deletion_message">Are you sure you want to delete this room?</string>
 
 </resources>

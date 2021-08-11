@@ -1,6 +1,7 @@
 package com.example.travelo.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -203,7 +205,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
                     String userId = ParseUser.getCurrentUser().getObjectId();
                     if (roomOwnerId.equals(userId)) {
                         btnDelete.setVisibility(View.VISIBLE);
-                        btnDelete.setOnClickListener(v -> deleteRoom(roomObjectId, userId, position));
+                        btnDelete.setOnClickListener(v -> confirmDeleteRoom(roomObjectId, userId, roomId, position));
                     }
                 }
             });
@@ -251,6 +253,29 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MessageViewH
                 }
 
             });
+        }
+
+        public void confirmDeleteRoom(String roomId, String userId, String roomName, int position) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setCancelable(true);
+            StringBuilder title = new StringBuilder();
+            title.append(context.getString(R.string.room_deletion_title)).append(" ").append(roomName);
+            builder.setTitle(title);
+            builder.setMessage(R.string.room_deletion_message);
+            builder.setPositiveButton(R.string.confirm,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            deleteRoom(roomId, userId, position);
+                        }
+                    });
+            builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
 
         public void deleteRoom(String roomId, String userId, int position) {
