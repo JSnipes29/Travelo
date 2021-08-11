@@ -87,9 +87,9 @@
         android:id="@+id/svSearchLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/map"
+        android:layout_above="@+id/btnReady"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="6dp"
+        android:layout_marginBottom="20dp"
         android:iconifiedByDefault="false"
         android:queryHint="@string/search_location" />
 
