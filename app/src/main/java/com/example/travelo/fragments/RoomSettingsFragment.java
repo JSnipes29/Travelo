@@ -62,6 +62,8 @@ public class RoomSettingsFragment extends DialogFragment {
                     if (ParseUser.getCurrentUser().getObjectId().equals(ownerId)) {
                         binding.btnSave.setVisibility(View.VISIBLE);
                         binding.btnSave.setOnClickListener(v -> saveSettings());
+                    } else {
+                        binding.cbInviteOnly.setClickable(false);
                     }
                 }
             }
