@@ -66,7 +66,7 @@ import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
-public class ProfileFragment extends Fragment implements ComposeBioFragment.ComposeBioListener  {
+public class ProfileFragment extends Fragment implements ComposeBioFragment.ComposeBioListener, MainFragment  {
 
     public static final String TAG = "ProfileFragment";
     FragmentProfileBinding binding;
@@ -115,7 +115,7 @@ public class ProfileFragment extends Fragment implements ComposeBioFragment.Comp
         binding.rvPosts.setAdapter(postAdapter);
         postLayoutManager = new LinearLayoutManager(getContext());
         binding.rvPosts.setLayoutManager(postLayoutManager);
-        scrollListener = new EndlessRecyclerViewScrollListener(postLayoutManager, binding.swipeContainer) {
+        scrollListener = new EndlessRecyclerViewScrollListener(postLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 queryPosts(1);
@@ -975,9 +975,6 @@ public class ProfileFragment extends Fragment implements ComposeBioFragment.Comp
                 android.R.color.holo_red_light);
     }
 
-    public void setSwipeToRefreshEnabled(boolean enabled) {
-        binding.swipeContainer.setEnabled(enabled);
-    }
 
     public int getIndex() {
         return index;
@@ -994,6 +991,12 @@ public class ProfileFragment extends Fragment implements ComposeBioFragment.Comp
         super.onStop();
     }
 
-
+    @Override
+    public void scrollToTop() {
+        if (binding != null) {
+            binding.rvPosts.smoothScrollToPosition(0);
+            binding.appBarLayout.setExpanded(true);
+        }
+    }
 
 }

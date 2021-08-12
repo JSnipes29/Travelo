@@ -44,7 +44,7 @@ import java.util.List;
 import es.dmoral.toasty.Toasty;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements MainFragment {
 
 
     public static final int LIMIT = 10;
@@ -378,6 +378,14 @@ public class HomeFragment extends Fragment {
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void scrollToTop() {
+        if (binding != null) {
+            binding.rvPosts.smoothScrollToPosition(0);
+            binding.appBarLayout.setExpanded(true);
         }
     }
 }

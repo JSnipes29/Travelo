@@ -12,20 +12,12 @@ import android.view.ViewGroup;
 import com.example.travelo.databinding.FragmentAddTripBinding;
 
 
-public class AddTripFragment extends Fragment {
+public class AddTripFragment extends Fragment implements MainFragment {
 
     FragmentAddTripBinding binding;
 
     public AddTripFragment() {
         // Required empty public constructor
-    }
-
-
-    public static AddTripFragment newInstance() {
-        AddTripFragment fragment = new AddTripFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -65,5 +57,10 @@ public class AddTripFragment extends Fragment {
         FragmentManager fm = getParentFragmentManager();
         CreateRoomFragment joinRoom = new CreateRoomFragment();
         joinRoom.show(fm, "JoinRoom");
+    }
+
+    @Override
+    public void scrollToTop() {
+
     }
 }

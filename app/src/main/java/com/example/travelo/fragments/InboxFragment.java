@@ -49,7 +49,7 @@ import es.dmoral.toasty.Toasty;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 
-public class InboxFragment extends Fragment {
+public class InboxFragment extends Fragment implements MainFragment{
 
     FragmentInboxBinding binding;
     InboxAdapter inboxAdapter;
@@ -512,6 +512,13 @@ public class InboxFragment extends Fragment {
                 });
             }
         });
+    }
+
+    @Override
+    public void scrollToTop() {
+        if (binding != null) {
+            binding.rvInbox.smoothScrollToPosition(0);
+        }
     }
 
 }

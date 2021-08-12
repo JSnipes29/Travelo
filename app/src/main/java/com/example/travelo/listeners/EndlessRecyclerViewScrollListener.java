@@ -20,17 +20,11 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
     private boolean loading = true;
     // Sets the starting page index
     private int startingPageIndex = 0;
-    SwipeRefreshLayout swipeContainer;
 
     RecyclerView.LayoutManager mLayoutManager;
 
     public EndlessRecyclerViewScrollListener(LinearLayoutManager layoutManager) {
         this.mLayoutManager = layoutManager;
-    }
-
-    public EndlessRecyclerViewScrollListener(LinearLayoutManager layoutManager, final SwipeRefreshLayout swipeContainer) {
-        this.mLayoutManager = layoutManager;
-        this.swipeContainer = swipeContainer;
     }
 
     public EndlessRecyclerViewScrollListener(GridLayoutManager layoutManager) {
@@ -100,9 +94,6 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
             loading = true;
         }
 
-        if (swipeContainer != null) {
-            swipeContainer.setEnabled(((LinearLayoutManager)mLayoutManager).findFirstCompletelyVisibleItemPosition() == 0);
-        }
     }
 
     // Call this method whenever performing new searches

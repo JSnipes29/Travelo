@@ -25,6 +25,7 @@ import com.example.travelo.fragments.CreateRoomFragment;
 import com.example.travelo.fragments.HomeFragment;
 import com.example.travelo.fragments.InboxFragment;
 import com.example.travelo.fragments.JoinRoomFragment;
+import com.example.travelo.fragments.MainFragment;
 import com.example.travelo.fragments.ProfileFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.parse.ParseException;
@@ -62,8 +63,14 @@ public class MainActivity extends AppCompatActivity {
         // handle navigation selection
         binding.bottomNavigation.setOnNavigationItemSelectedListener(
                 item -> {
-                    int currentTabPosition = getPage(item.getItemId());
-                    binding.viewPager.setCurrentItem(currentTabPosition, swipe);
+                    int tabPosition = getPage(item.getItemId());
+                    if (!swipe) {
+                        int currentTabPosition = binding.viewPager.getCurrentItem();
+                        if (currentTabPosition == tabPosition) {
+                            ((MainFragment)pagerAdapter.createFragment(tabPosition)).scrollToTop();
+                        }
+                    }
+                    binding.viewPager.setCurrentItem(tabPosition, swipe);
                     return true;
                 });
         // Set default selection
