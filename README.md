@@ -158,3 +158,6 @@ App that lets users build maps of their favorite places and share it.
    ----------|----------|------------
     `GET`    | /businesses/search | Search for businesses by keyword, category, location, price level, etc
     `GET`    | /businesses/{id} | Get rich business data, such as name, address, phone number, photos, Yelp rating, price levels and hours of operation
+    
+    ## Walkthrough
+    <img src='walkthrough.gif' title='Wireframe Walkthrough' width='' alt='Wireframe Walkthrough' />
